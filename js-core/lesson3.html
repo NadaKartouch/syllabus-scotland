@@ -555,6 +555,7 @@
                                 <h1 id="javascript-core-3">JavaScript Core 3</h1>
 <p><strong> What we will learn today?</strong></p>
 <ul>
+<li>Modules</li>
 <li>Unit Testing</li>
 <li>TDD</li>
 <li>Intro to JavaScript in the browser<ul>
@@ -564,13 +565,61 @@
 </li>
 </ul>
 <hr>
+<h1 id="todo">TODO</h1>
+<ul>
+<li>Create repo with boilerplate, function (<code>third-party.js</code>) they can <code>require()</code></li>
+<li>Provide a problem in a non-testable way, so they can refactor it (for exercise in )</li>
+</ul>
+<h1 id="modules">Modules</h1>
+<ul>
+<li>Import third-party code</li>
+<li><code>require()</code></li>
+</ul>
+<blockquote>
+<p><em>Exercise:</em> In your <code>main.js</code> file, import the provided <code>third-party.js</code> and console.log its result.</p>
+</blockquote>
+<ul>
+<li>Split code into separate files</li>
+<li><code>module.exports</code></li>
+</ul>
+<blockquote>
+<p><em>Exercise:</em> Take a function that you created in last week&apos;s homework. Put it in a separate file and <em>export</em> it.
+Then <code>require()</code> is in another file and make sure this program runs.</p>
+</blockquote>
 <h1 id="unit-testing">Unit Testing</h1>
+<ul>
+<li>Why is testing important?</li>
+<li>Different levels of testing?</li>
+<li>Regression?</li>
+<li>What is TDD? Red, Green, Refactor</li>
+</ul>
 <p>We go through the problems they&apos;ve already solved in the last week, refactor and do them in a testable way - introduce TDD etc..</p>
-<p>Why is testing important?
-Different levels of testing?
-Regression?</p>
-<p>maybe we start with not using a framework at all?
-We use <code>JEST</code> after</p>
+<ul>
+<li>Use a bad version of the &quot;needle in haystack&quot; code<ul>
+<li>First version isn&apos;t even a function (red)</li>
+<li>Second version is a function (green)</li>
+<li>Third version uses <code>.indexOf</code></li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><em>Exercise:</em> Now you! Take the provided <code>magic.js</code> and turn it into a function that returns a result instead of
+printing it. Then run it using multiple inputs and make sure it returns the correct results <em>TODO: ELABORATE</em></p>
+</blockquote>
+<ul>
+<li>Let them write their own &quot;expectEqual&quot; function</li>
+</ul>
+<h2 id="separating-code-and-tests">Separating code and tests</h2>
+<ul>
+<li>Refer back to the section on &quot;Modules&quot;</li>
+<li>Put leave code in its file, put test in separate file or even folder</li>
+</ul>
+<h2 id="unit-testing-frameworks">Unit testing frameworks</h2>
+<ul>
+<li>Introduce Jest (it&apos;s great because it combines test framework and runner)</li>
+<li>Talk about some other tech, like Jasmine, Karma, Mocha, and explain the difference between framework and runner</li>
+<li>Test coverage</li>
+</ul>
 <h1 id="js-in-the-browser">JS in the browser</h1>
 <p><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Examples" target="_blank">https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Examples</a></p>
 <h2 id="topic-1">Topic 1</h2>
@@ -679,7 +728,7 @@ If it makes sense, great! If not, don&apos;t worry, we&apos;ll be going over the
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Week 3","level":"1.4.3","depth":2,"next":{"title":"JavaScript Core II","level":"1.5","depth":1,"ref":"","articles":[{"title":"Week 1","level":"1.5.1","depth":2,"path":"js-core-2/lesson1.md","ref":"js-core-2/lesson1.md","articles":[]},{"title":"Week 2","level":"1.5.2","depth":2,"path":"js-core-2/lesson2.md","ref":"js-core-2/lesson2.md","articles":[]},{"title":"Week 3","level":"1.5.3","depth":2,"path":"js-core-2/lesson3.md","ref":"js-core-2/lesson3.md","articles":[]}]},"previous":{"title":"Week 2","level":"1.4.2","depth":2,"path":"js-core/lesson2.md","ref":"js-core/lesson2.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["prism","-highlight"],"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"js-core/lesson3.md","mtime":"2017-05-26T12:43:42.299Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-05-26T12:44:59.577Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Week 3","level":"1.4.3","depth":2,"next":{"title":"JavaScript Core II","level":"1.5","depth":1,"ref":"","articles":[{"title":"Week 1","level":"1.5.1","depth":2,"path":"js-core-2/lesson1.md","ref":"js-core-2/lesson1.md","articles":[]},{"title":"Week 2","level":"1.5.2","depth":2,"path":"js-core-2/lesson2.md","ref":"js-core-2/lesson2.md","articles":[]},{"title":"Week 3","level":"1.5.3","depth":2,"path":"js-core-2/lesson3.md","ref":"js-core-2/lesson3.md","articles":[]}]},"previous":{"title":"Week 2","level":"1.4.2","depth":2,"path":"js-core/lesson2.md","ref":"js-core/lesson2.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["prism","-highlight"],"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"js-core/lesson3.md","mtime":"2017-06-01T09:23:54.668Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-06-01T09:25:06.106Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
