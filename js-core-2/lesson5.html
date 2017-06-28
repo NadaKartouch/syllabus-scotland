@@ -572,8 +572,7 @@
 <p><strong>What will we learn today?</strong></p>
 <ul>
 <li>Functions and  Good Design</li>
-<li>Callbacks</li>
-<li>Objects</li>
+<li>Object Oriented Programming</li>
 </ul>
 <hr>
 <h1 id="functions">Functions</h1>
@@ -609,23 +608,87 @@ Find all the bad design issues with this function</p>
 <p>Exercise
 We have some problem to solve, write really bad code that gives the right result. Tell us why it is bad.</p>
 </blockquote>
+<h1 id="object-oriented-programming">Object Oriented Programming</h1>
+<p><strong>The contents of this section are based on the MDN articles mentioned inthe resources</strong></p>
+<blockquote>
+<p>What are abstractions?</p>
+</blockquote>
+<p>In software engineering and computer science, abstraction is a technique for arranging complexity of computer systems. It works by establishing a level of complexity on which a person interacts with the system, suppressing the more complex details below the current level. </p>
+<blockquote>
+<p>Abstractions help us with managing complexity, and achieve better reusability.</p>
+</blockquote>
+<p>So far, in the solutions we wrote, we think in terms of steps: DoStep1, DoStep2, DoStep3 until we solve a problem. We&apos;re thinking in the <strong>Verbs</strong> that constitute a solution. Our abstractions are <strong>functions</strong> that <em>do</em> things to reach a solution. We can use a function without knowing how it works (think about <code>console.log()</code>) - the abstraction of that function hides the complexity of how <code>console.log</code> actually works.</p>
+<p>Now we will step into a new level of abstractions - Objects.</p>
+<blockquote>
+<p>The basic idea of OOP is that we use objects to model real world things that we want to represent inside our programs, and/or provide a simple way to access functionality that would otherwise be hard or impossible to make use of.</p>
+</blockquote>
+<h2 id="oo-overview">OO overview</h2>
+<h3 id="defining-an-object-template">Defining an object template</h3>
+<p><img src="https://mdn.mozillademos.org/files/13889/person-diagram.png" alt=""></p>
+<h3 id="creating-actual-objects">Creating actual objects</h3>
+<p><img src="https://mdn.mozillademos.org/files/15163/MDN-Graphics-instantiation-2-fixed.png" alt=""></p>
+<h3 id="specialist-classes">Specialist classes</h3>
+<p><img src="https://mdn.mozillademos.org/files/13881/MDN-Graphics-inherited-3.png" alt=""></p>
+<blockquote>
+<p>Some people argue that JavaScript is not a true object-oriented language &#x2014; for example, it doesn&apos;t have a class statement for creating classes, unlike many OO languages. JavaScript, instead, uses special functions called constructor functions to define objects and their features. They are useful because you&apos;ll often come across situations in which you don&apos;t know how many objects you will be creating; constructors provide the means to create as many objects as you need in an effective way, attaching data and functions to them as required.</p>
+<p>Exercise: On a paper, <strong>model</strong> how you would create a system to represent an <strong>animal</strong>  - what class do you have, what objects, what properties, create specialised classes for
+(ToDo: better exercise)</p>
+</blockquote>
+<h2 id="object-literals">Object literals</h2>
+<p>There are several ways to create objects - we&apos;ve already used one before. It is called <code>object literals</code></p>
+<p><code>var person = {}</code></p>
+<p>The line before created an empty object. Let&apos;s create a more sophisticated object</p>
+<pre class="language-"><code class="lang-javascript"><span class="token keyword">var</span> person <span class="token operator">=</span> <span class="token punctuation">{</span>
+  name<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">&apos;Bob&apos;</span><span class="token punctuation">,</span> <span class="token string">&apos;Smith&apos;</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+  age<span class="token punctuation">:</span> <span class="token number">32</span><span class="token punctuation">,</span>
+  gender<span class="token punctuation">:</span> <span class="token string">&apos;male&apos;</span><span class="token punctuation">,</span>
+  interests<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">&apos;music&apos;</span><span class="token punctuation">,</span> <span class="token string">&apos;skiing&apos;</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+  bio<span class="token punctuation">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">alert</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>name<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token string">&apos; &apos;</span> <span class="token operator">+</span> <span class="token keyword">this</span><span class="token punctuation">.</span>name<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token string">&apos; is &apos;</span> <span class="token operator">+</span> <span class="token keyword">this</span><span class="token punctuation">.</span>age <span class="token operator">+</span> <span class="token string">&apos; years old. He likes &apos;</span> <span class="token operator">+</span> <span class="token keyword">this</span><span class="token punctuation">.</span>interests<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token string">&apos; and &apos;</span> <span class="token operator">+</span> <span class="token keyword">this</span><span class="token punctuation">.</span>interests<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token string">&apos;.&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  greeting<span class="token punctuation">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">alert</span><span class="token punctuation">(</span><span class="token string">&apos;Hi! I\&apos;m &apos;</span> <span class="token operator">+</span> <span class="token keyword">this</span><span class="token punctuation">.</span>name<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token string">&apos;.&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre>
+<p>So what is going on here? Well, an object is made up of multiple members, each of which have a name (e.g. name and age above), and a value (e.g. [&apos;Bob&apos;, &apos;Smith&apos;] and 32). Each name/value pair must be separated by a comma, and the name and value in each case are separated by a colon. The syntax always follows this pattern:</p>
+<p>The value of an object member can be pretty much anything &#x2014; in our person object we&apos;ve got a string, a number, two arrays, and two functions. The first four items are <code>data items</code>, and are referred to as the object&apos;s properties. The last two items are functions that allow the object to do something with that data, and are referred to as the object&apos;s <code>methods</code>.</p>
+<blockquote>
+<p>Methods are functions that allow the object to do something with its data.</p>
+<p>The <em>this</em> keyword refers to the current object the code is being written inside &#x2014; so in this case this is equivalent to person. So why not just write person instead? </p>
+</blockquote>
+<p>An object like this is referred to as an object literal &#x2014; we&apos;ve <strong>literally</strong> written out the object contents as we&apos;ve come to create it. This is in contrast to objects instantiated from classes, which we&apos;ll look at next.</p>
+<blockquote>
+<p>Exercise: (ToDo)</p>
+</blockquote>
+<h2 id="constructor-functions">Constructor functions</h2>
+<blockquote>
+<p>Exercise: Let&apos;s create a function called <code>createPerson</code> that takes a <code>name</code> as a parameter and returns an object.</p>
+</blockquote>
+<p>Now let&apos;s look at another way for creating this object.</p>
+<pre class="language-"><code class="lang-javascript"><span class="token keyword">function</span> <span class="token function">Person</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> name<span class="token punctuation">;</span>
+  <span class="token keyword">this</span><span class="token punctuation">.</span>greeting <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">alert</span><span class="token punctuation">(</span><span class="token string">&apos;Hi! I am &apos;</span> <span class="token operator">+</span> <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">+</span> <span class="token string">&apos;.&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>This is called a <strong>constructor function</strong>.</p>
+<blockquote>
+<p>The constructor function is JavaScript&apos;s version of a class. You&apos;ll notice that it has all the features you&apos;d expect in a function, although it doesn&apos;t return anything or explicitly create an object &#x2014; it basically just defines properties and methods. You&apos;ll see the this keyword being used here as well &#x2014; it is basically saying that whenever one of these object instances is created, the object&apos;s name property will be equal to the name value passed to the constructor call, and the greeting() method will use the name value passed to the constructor call too.</p>
+<p>Exercise: (ToDO)</p>
+</blockquote>
+<h2 id="inheritance-maybe">Inheritance (maybe)</h2>
 <h1 id="homework">Homework</h1>
 <ul>
 <li>Read Chapter 5 of Code Complete 2 (Design In Construction)</li>
 <li>Read Chapter 7 (High Quality Routines)</li>
 </ul>
-<p>Tbc</p>
-<ol>
-<li><p>Work through this quiz: <a href="http://madebyknight.com/javascript-scope/" target="_blank">Scope quiz</a></p>
-</li>
-<li><p>Next week we&apos;ll be moving on to more advanced JavaScript. The key to becoming a good developer is constant practice. Practice your JavaScript basics by signing up for <a href="https://www.codewars.com/" target="_blank">Codewars</a> and try to do a couple of exercises every day.</p>
-</li>
-</ol>
 <h1 id="resources">Resources</h1>
 <ol>
 <li><a href="http://bdcampbell.net/javascript/book/javascript_the_good_parts.pdf" target="_blank">JavaScript: The Good Parts by Douglas Crockford, chapter 4 - Functions</a></li>
-<li><a href="https://github.com/getify/You-Dont-Know-JS/blob/master/this%20%26%20object%20prototypes/ch1.md" target="_blank">You Don&apos;t Know Javascript - this or That?</a></li>
-<li><a href="https://github.com/getify/You-Dont-Know-JS/blob/master/this%20%26%20object%20prototypes/ch2.md" target="_blank">You Don&apos;t Know JavaScript - this all makes sense now!</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/Basics" target="_blank">MDN Objects basics</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/Object-oriented_JS" target="_blank">MDN OOP in JS</a></li>
 </ol>
 
                                 
@@ -670,7 +733,7 @@ We have some problem to solve, write really bad code that gives the right result
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Week 2","level":"1.5.2","depth":2,"next":{"title":"Week 3","level":"1.5.3","depth":2,"path":"js-core-2/lesson6.md","ref":"js-core-2/lesson6.md","articles":[]},"previous":{"title":"Week 1","level":"1.5.1","depth":2,"path":"js-core-2/lesson4.md","ref":"js-core-2/lesson4.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["prism","-highlight"],"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"js-core-2/lesson5.md","mtime":"2017-06-27T17:57:32.280Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-06-27T17:58:41.506Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Week 2","level":"1.5.2","depth":2,"next":{"title":"Week 3","level":"1.5.3","depth":2,"path":"js-core-2/lesson6.md","ref":"js-core-2/lesson6.md","articles":[]},"previous":{"title":"Week 1","level":"1.5.1","depth":2,"path":"js-core-2/lesson4.md","ref":"js-core-2/lesson4.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["prism","-highlight"],"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"js-core-2/lesson5.md","mtime":"2017-06-28T10:36:23.369Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-06-28T10:38:08.696Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
