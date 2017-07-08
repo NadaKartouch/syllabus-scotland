@@ -565,25 +565,20 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <p><img src="https://img.shields.io/badge/status-draft-darkred.svg" alt=""></p>
-<h1 id="javascript-core-6">JavaScript Core 6</h1>
+                                <h1 id="javascript-core-6">JavaScript Core 6</h1>
 <p><strong> What we will learn today?</strong></p>
 <ul>
-<li>Callbacks</li>
-<li>Value Vs reference types</li>
-<li>Scoping</li>
-<li>this</li>
+<li>Built in constructor functions and methods</li>
+<li>Inheritance using Constructor.prototype</li>
+<li>Array methods and callbacks</li>
+<li>Intro to ES6</li>
+<li>TDD revisited<ul>
+<li>Modules</li>
+</ul>
+</li>
 </ul>
 <hr>
-<ul>
-<li>OO, Object creation, constructors, new keyword</li>
-<li>Inheritance?</li>
-<li>Functional programming (.map .filter etc..P)</li>
-<li>Promises?</li>
-<li>ES6?</li>
-</ul>
-<hr>
-<h2 id="built-in-constructor-functions-and-methods">Built in constructor functions and methods</h2>
+<h1 id="built-in-constructor-functions-and-methods">Built in constructor functions and methods</h1>
 <p>In the first lesson we learnt about some of the data types available in JavaScript: &apos;String&apos;, &apos;Boolean&apos;, &apos;Array&apos;, &apos;Object&apos; and &apos;Number&apos;.</p>
 <p>So far we&apos;ve learnt how to create data using literal syntax. For example to create a string you can write</p>
 <pre class="language-"><code class="lang-js"><span class="token keyword">var</span> myString <span class="token operator">=</span> <span class="token string">&apos;Hello&apos;</span><span class="token punctuation">;</span>
@@ -647,7 +642,7 @@ myString<span class="token punctuation">.</span><span class="token function">end
 <li>Call a method e.g. <code>.toUpperCase()</code> on a string you created using the <code>String</code> constructor function</li>
 </ul>
 <p>Learn about split and join</p>
-<h2 id="inheritance-using-constructorprototype">Inheritance using Constructor.prototype</h2>
+<h1 id="inheritance-using-constructorprototype">Inheritance using Constructor.prototype</h1>
 <p>In the previous lesson we learnt how to write methods like this:</p>
 <pre class="language-"><code>function Person(name) {
   this.name = name;
@@ -712,7 +707,7 @@ alice<span class="token punctuation">.</span><span class="token function">greeti
 console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>alice<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// { name: &apos;Bob&apos;, greeting: function() {} }</span>
 bob<span class="token punctuation">.</span><span class="token function">greeting</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// Hello, my name is Bob</span>
 </code></pre>
-<h2 id="array-methods-and-callbacks">Array methods and callbacks</h2>
+<h1 id="array-methods-and-callbacks">Array methods and callbacks</h1>
 <p>The most useful built in methods in JavaScript are the <code>Array.prototype</code> methods. Every array has access to these methods (because Arrays are created by the <code>Array</code> constructor function they inherit the the properties of <code>Array.prototype</code>).</p>
 <p>Of particular use are the <code>Array</code> methods that enable you to <em>iterate</em> over an array. We&apos;ve covered iteration already when we learnt how to use <code>for</code> loops. Well, I have some amazing news for you - you will probably never need to write a <code>for</code> loop again!</p>
 <p>Let&apos;s take a look at <code>Array.prototype.forEach</code> first. This is pretty much a straight replacement for <code>for</code> loops.</p>
@@ -727,7 +722,7 @@ myArr<span class="token punctuation">.</span><span class="token function">forEac
 <span class="token comment" spellcheck="true">// 3</span>
 </code></pre>
 <p>OOOOF! Wasn&apos;t that glorious?! Much nicer than writing a <code>for</code> loop! So how exactly does this work? <code>forEach</code> <em>iterates</em> over each item the array. For each item is calls a function - the one that was provided as an parameter to <code>forEach</code>.</p>
-<h3 id="callback-functions">Callback functions</h3>
+<h2 id="callback-functions">Callback functions</h2>
 <p>Functions that are provided as parameters to another function are called <em>callback functions</em>. Often we will write these functions inside the function call like did in the <code>forEach</code> example, but we can also pass in reference to an already defined function:</p>
 <pre class="language-"><code class="lang-js"><span class="token keyword">function</span> <span class="token function">callback</span><span class="token punctuation">(</span>item<span class="token punctuation">)</span> <span class="token punctuation">{</span>
   console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>item<span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -736,10 +731,10 @@ myArr<span class="token punctuation">.</span><span class="token function">forEac
 myArr<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span>callback<span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre>
 <p>Whether you define your function beforehand or write it straight into the function call will depend on whether you intend on re-using that callback again. </p>
-<h3 id="more-array-methods">More array methods</h3>
+<h2 id="more-array-methods">More array methods</h2>
 <p>.map()
 .filter()</p>
-<h3 id="chaining-methods">Chaining methods</h3>
+<h2 id="chaining-methods">Chaining methods</h2>
 <pre class="language-"><code class="lang-js"><span class="token keyword">var</span> transformedArr <span class="token operator">=</span> myArr
   <span class="token punctuation">.</span><span class="token function">sort</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
   <span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span>item<span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -755,26 +750,114 @@ myArr<span class="token punctuation">.</span><span class="token function">forEac
   <span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span>double<span class="token punctuation">)</span>
   <span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span>lessThan10<span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre>
+<h1 id="intro-to-es6">Intro to ES6</h1>
+<p>ECMAScript 2015 (or ES6) is a significant update to JavaScript that introduces new syntax for writing complex applications including classes and modules and other features.</p>
+<h2 id="const-and-let">const and let</h2>
+<p>on JS Bin, let&apos;s write this simple code snippet</p>
+<pre class="language-"><code class="lang-javascript"><span class="token keyword">function</span> <span class="token function">sayGreeting</span><span class="token punctuation">(</span>name<span class="token punctuation">,</span> gender<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">var</span> greeting <span class="token operator">=</span> <span class="token string">&apos;Hello&apos;</span><span class="token punctuation">;</span>
+    <span class="token keyword">var</span> nameWithTitle<span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>gender <span class="token operator">===</span> <span class="token string">&apos;female&apos;</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        nameWithTitle <span class="token operator">=</span> <span class="token string">&apos;Ms. &apos;</span> <span class="token operator">+</span> name<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+        nameWithTitle <span class="token operator">=</span> <span class="token string">&apos;Mr. &apos;</span> <span class="token operator">+</span> name<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> greeting <span class="token operator">+</span> name<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">// sayGreeting(&apos;Rares&apos;, &apos;male&apos;) should return &apos;Hello Mr. Rares&apos;</span>
+<span class="token comment" spellcheck="true">// sayGreeting(&apos;Irina&apos;, &apos;female&apos;) should return &apos; Hello Ms. Irina&apos;</span>
+</code></pre>
+<blockquote>
+<p>Exercise: Let&apos;s update this code to use <code>let</code> and <code>const</code> instead of <code>var</code></p>
+</blockquote>
+<h2 id="template-literals">Template literals</h2>
+<blockquote>
+<p>Exercise: We do a lot of string concatenation in JavaScript - ES6 introduces a more elegant way of accomplishing the same. Let&apos;s try it.</p>
+</blockquote>
+<h2 id="arrow-functions">Arrow functions</h2>
+<blockquote>
+<p>Exercise: ES6 also has a new way of declaring functions. Let&apos;s see how it works.</p>
+<p>Exercise: Refactor the previous code to have a separate function that checks if gender is &apos;female&apos; or not, and use it in sayGreeting. Let&apos;s try and make the code as compact as possible together using ES6 features.</p>
+</blockquote>
+<h2 id="more-es6">More ES6</h2>
+<p>There are so many features in ES6. They&apos;re mostly what we call <code>syntax sugar</code>. They don&apos;t provide new functionality, but new (more elegant) ways of accomplishing the same tasks.</p>
+<p>Since not all ES6 features are supported in all browsers, many developers and projects use what is called <code>Transpilation</code> - a process that transpiles/translates ES6 code to ES5 syntax that is supported by all browsers.</p>
+<p>On Node, most ES6 features are now natively supported in Node 8.</p>
+<blockquote>
+<p>From now on, we expect you to use ES6 syntax in your assignments and the code you write.</p>
+</blockquote>
+<h1 id="tdd-again">TDD again</h1>
+<blockquote>
+<p>Exercise: Clone the repo <a href="https://github.com/CodeYourFuture/js-core-2-exercises" target="_blank">https://github.com/CodeYourFuture/js-core-2-exercises</a></p>
+<p>Let&apos;s talk about TDD again?</p>
+<ol>
+<li>Why do we do TDD</li>
+<li>How do we run the tests? Read some of the tests</li>
+<li>Notice we&apos;re separating our tests from our code now. We are making use of <strong>modules</strong></li>
+<li>Also notice the <strong>coverage</strong></li>
+</ol>
+</blockquote>
+<h2 id="how-do-modules-work">How do modules work?</h2>
+<p>So far, all our programs have been in their own single files. But Node programs can become really large, and having all our code in only one file will not be maintainable.</p>
+<p>We can therefore split our code into so-called <em>modules</em>. A module is basically a JavaScript file that makes its functionality available to other modules and programs.</p>
+<h2 id="creating-modules-exporting-code">Creating modules, exporting code</h2>
+<p>It is really simple to take existing JavaScript code and turn it into a module by exporting its functionality:</p>
+<pre class="language-"><code class="lang-js"><span class="token keyword">function</span> <span class="token function">printName</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&quot;My name is &quot;</span> <span class="token operator">+</span> name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+module<span class="token punctuation">.</span>exports <span class="token operator">=</span> printName<span class="token punctuation">;</span>
+</code></pre>
+<p>The key here is the line containing <code>module.exports</code>. As you see, this is an assignment, and whatever is assigned to <code>module.exports</code> will be made available to other modules and program when this file is imported.</p>
+<h2 id="using-modules-importing-code">Using modules, importing code</h2>
+<p>But how do we make use of another module in our program? We need to <em>import</em> it, and this is done using a function called <code>require()</code>.</p>
+<blockquote>
+<p>There are different module formats for JavaScript. The one we are using here, which is natively supported by Node, is called <strong>CommonJS</strong>.</p>
+</blockquote>
+<pre class="language-"><code class="lang-js"><span class="token keyword">var</span> printName <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">&apos;./printName.js&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<blockquote>
+<p>The string passed to the <code>require()</code> function is a <em>path</em> to the file you are importing. <code>./</code> signifies the current directory, so the above command will import a file called &quot;printName.js&quot; that is in the same directory as our program.</p>
+</blockquote>
+<p>Assuming our program is in the same folder as <code>printName.js</code>, we can use the above code to import the functionality provided by that module and store it in the <code>printName</code> variable.</p>
+<p>We can then continue to use the <code>printName</code> function as if it we defined it in our own program!</p>
+<pre class="language-"><code>var printName = require(&apos;./printName.js&apos;);
+
+printName();
+</code></pre><blockquote>
+<p>Modules can not only export functions, but all variable types you already learned about. Most commonly, they export a function or an object containing multiple functions.</p>
+<p><em>Together:</em> Edit the file <code>modules/main.js</code> and follow the instructions.</p>
+</blockquote>
+<h2 id="separating-code-and-tests">Separating code and tests</h2>
+<p>Exporting and importing modules is really useful for testing, too.</p>
+<p>As a rule of thumb, we never want to mix our actual code with our tests. It is therefore common to put them in separate files. We are going to call the file containing the tests after the file containing the code to be tested, just appending <code>.test</code> at the end of the filename. Like so:</p>
+<pre class="language-"><code>main.js               # Our main program
+main.test.js          # Tests for our main program
+someOtherCode.js      # A module called &quot;someOtherCode&quot;
+someOtherCode.test.js # Tests for the &quot;someOtherCode&quot; module
+</code></pre><blockquote>
+<p>The naming is really up to convention - you can even put your tests in a different folder! However, for Jest it is important to call test files &quot;*.test.js&quot;.</p>
+</blockquote>
 <h1 id="resources">Resources</h1>
 <ol>
 <li><a href="https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/Inheritance" target="_blank">https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/Inheritance</a></li>
 <li><a href="http://sporto.github.io/blog/2013/02/22/a-plain-english-guide-to-javascript-prototypes/" target="_blank">http://sporto.github.io/blog/2013/02/22/a-plain-english-guide-to-javascript-prototypes/</a></li>
 <li><a href="https://johnresig.com/apps/learn/#64" target="_blank">https://johnresig.com/apps/learn/#64</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" target="_blank">Array Methods</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" target="_blank">String Methods</a></li>
+<li><a href="http://es6-features.org/" target="_blank">ES6 features</a></li>
+<li><a href="http://wesbos.com/let-vs-const/" target="_blank">Let and const</a></li>
 </ol>
 <h1 id="homework">Homework</h1>
 <ol>
-<li><p>First part of Homework - Easy</p>
+<li><p>Watch Wes Bos videos about ES6 - <a href="https://es6.io/" target="_blank">https://es6.io/</a> (if you don&apos;t have access, let us know)</p>
 </li>
-<li><p>Second part of Homework - Intermediate/Hard</p>
-</li>
-<li><p><strong>[Bonus/Optional]</strong> Third part/optional - Hardest</p>
-</li>
-<li><p><strong>Research:</strong></p>
+<li><p>Fork, Clone and Do the exercises in this repo - <a href="https://github.com/CodeYourFuture/js-core-2-exercises" target="_blank">https://github.com/CodeYourFuture/js-core-2-exercises</a></p>
 </li>
 </ol>
 <h2 id="prepare-for-the-next-class">Prepare for the next class</h2>
 <ol>
-<li>Read this <a href="https://google.com" target="_blank">Some Tutorial or Video etc...</a></li>
+<li>Finish this tutorial about Chrome Dev Tools(<a href="https://developers.google.com/web/tools/chrome-devtools/javascript/" target="_blank">https://developers.google.com/web/tools/chrome-devtools/javascript/</a>)</li>
 </ol>
 
                                 
@@ -815,7 +898,7 @@ myArr<span class="token punctuation">.</span><span class="token function">forEac
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Week 3","level":"1.5.3","depth":2,"next":{"title":"Node and DB","level":"1.6","depth":1,"ref":"","articles":[{"title":"Week 1","level":"1.6.1","depth":2,"path":"node-db/lesson1.md","ref":"node-db/lesson1.md","articles":[]},{"title":"Week 2","level":"1.6.2","depth":2,"path":"node-db/lesson2.md","ref":"node-db/lesson2.md","articles":[]},{"title":"Week 3","level":"1.6.3","depth":2,"path":"node-db/lesson3.md","ref":"node-db/lesson3.md","articles":[]},{"title":"Week 4","level":"1.6.4","depth":2,"path":"node-db/lesson4.md","ref":"node-db/lesson4.md","articles":[]},{"title":"Week 5","level":"1.6.5","depth":2,"path":"node-db/lesson5.md","ref":"node-db/lesson5.md","articles":[]}]},"previous":{"title":"Week 2","level":"1.5.2","depth":2,"path":"js-core-2/lesson5.md","ref":"js-core-2/lesson5.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["prism","-highlight"],"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"js-core-2/lesson6.md","mtime":"2017-07-08T06:32:41.689Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-07-08T06:34:43.278Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Week 3","level":"1.5.3","depth":2,"next":{"title":"Node and DB","level":"1.6","depth":1,"ref":"","articles":[{"title":"Week 1","level":"1.6.1","depth":2,"path":"node-db/lesson1.md","ref":"node-db/lesson1.md","articles":[]},{"title":"Week 2","level":"1.6.2","depth":2,"path":"node-db/lesson2.md","ref":"node-db/lesson2.md","articles":[]},{"title":"Week 3","level":"1.6.3","depth":2,"path":"node-db/lesson3.md","ref":"node-db/lesson3.md","articles":[]},{"title":"Week 4","level":"1.6.4","depth":2,"path":"node-db/lesson4.md","ref":"node-db/lesson4.md","articles":[]},{"title":"Week 5","level":"1.6.5","depth":2,"path":"node-db/lesson5.md","ref":"node-db/lesson5.md","articles":[]}]},"previous":{"title":"Week 2","level":"1.5.2","depth":2,"path":"js-core-2/lesson5.md","ref":"js-core-2/lesson5.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["prism","-highlight"],"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"js-core-2/lesson6.md","mtime":"2017-07-08T06:39:38.339Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-07-08T06:41:33.448Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

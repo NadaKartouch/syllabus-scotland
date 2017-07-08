@@ -582,11 +582,6 @@
 <li>Red, green, refactoring</li>
 </ul>
 </li>
-<li>Modules<ul>
-<li><code>require()</code></li>
-<li><code>module.exports</code></li>
-</ul>
-</li>
 </ul>
 <hr>
 <h1 id="before-we-get-started">Before we get started</h1>
@@ -667,55 +662,6 @@ printing it. Then run it using multiple inputs and make sure it returns the corr
 <blockquote>
 <p><em>Exercise:</em> Check your code coverage for the tests you wrote. Is any of the numbers below 100%? If so, try and bring it up to 100%!</p>
 </blockquote>
-<h1 id="modules">Modules</h1>
-<blockquote>
-<p>This is a bit of an advanced topic at this point. Don&apos;t worry if you don&apos;t understand all of it - we are going to pick up modules again in a later lesson!</p>
-</blockquote>
-<p>So far, all our programs have been in their own single files. But Node programs can become really large, and having all our code in only one file will not be maintainable.</p>
-<p>We can therefore split our code into so-called <em>modules</em>. A module is basically a JavaScript file that makes its functionality available to other modules and programs.</p>
-<h2 id="creating-modules-exporting-code">Creating modules, exporting code</h2>
-<p>It is really simple to take existing JavaScript code and turn it into a module by exporting its functionality:</p>
-<pre class="language-"><code class="lang-js"><span class="token keyword">function</span> <span class="token function">printName</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&quot;My name is &quot;</span> <span class="token operator">+</span> name<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-
-module<span class="token punctuation">.</span>exports <span class="token operator">=</span> printName<span class="token punctuation">;</span>
-</code></pre>
-<p>The key here is the line containing <code>module.exports</code>. As you see, this is an assignment, and whatever is assigned to <code>module.exports</code> will be made available to other modules and program when this file is imported.</p>
-<blockquote>
-<p><em>Together:</em> Let&apos;s do this: Edit the file <code>modules/findNeedle.js</code> and export the function defined there.</p>
-</blockquote>
-<h2 id="using-modules-importing-code">Using modules, importing code</h2>
-<p>But how do we make use of another module in our program? We need to <em>import</em> it, and this is done using a function called <code>require()</code>.</p>
-<blockquote>
-<p>There are different module formats for JavaScript. The one we are using here, which is natively supported by Node, is called <strong>CommonJS</strong>.</p>
-</blockquote>
-<pre class="language-"><code class="lang-js"><span class="token keyword">var</span> printName <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">&apos;./printName.js&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-</code></pre>
-<blockquote>
-<p>The string passed to the <code>require()</code> function is a <em>path</em> to the file you are importing. <code>./</code> signifies the current directory, so the above command will import a file called &quot;printName.js&quot; that is in the same directory as our program.</p>
-</blockquote>
-<p>Assuming our program is in the same folder as <code>printName.js</code>, we can use the above code to import the functionality provided by that module and store it in the <code>printName</code> variable.</p>
-<p>We can then continue to use the <code>printName</code> function as if it we defined it in our own program!</p>
-<pre class="language-"><code>var printName = require(&apos;./printName.js&apos;);
-
-printName();
-</code></pre><blockquote>
-<p>Modules can not only export functions, but all variable types you already learned about. Most commonly, they export a function or an object containing multiple functions.</p>
-<p><em>Together:</em> Edit the file <code>modules/main.js</code> and follow the instructions.</p>
-</blockquote>
-<h2 id="separating-code-and-tests">Separating code and tests</h2>
-<p>Exporting and importing modules is really useful for testing, too.</p>
-<p>As a rule of thumb, we never want to mix our actual code with our tests. It is therefore common to put them in separate files. We are going to call the file containing the tests after the file containing the code to be tested, just appending <code>.test</code> at the end of the filename. Like so:</p>
-<pre class="language-"><code>main.js               # Our main program
-main.test.js          # Tests for our main program
-someOtherCode.js      # A module called &quot;someOtherCode&quot;
-someOtherCode.test.js # Tests for the &quot;someOtherCode&quot; module
-</code></pre><blockquote>
-<p>The naming is really up to convention - you can even put your tests in a different folder! However, for Jest it is important to call test files &quot;*.test.js&quot;.</p>
-<p><em>Exercise:</em> Edit <code>jest/sum.test.js</code>. Move the actual <code>sum</code> function to a different file (<code>jest/sum.js</code>) and export it from there. The go back to your test file and import the sum function from <code>sum.js</code>.</p>
-<p><em>Exercise:</em> Do the above with the other test file (<code>findNeedle.test.js</code>) you should have in your <code>jest/</code> folder by now.</p>
-</blockquote>
 <h1 id="resources">Resources</h1>
 <ol>
 <li><a href="https://en.wikipedia.org/wiki/Test-driven_development" target="_blank">Test-driven development</a></li>
@@ -777,7 +723,7 @@ someOtherCode.test.js # Tests for the &quot;someOtherCode&quot; module
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Week 3","level":"1.4.3","depth":2,"next":{"title":"Week 3.5 - Pair Programming Day","level":"1.4.4","depth":2,"path":"js-core/lesson3.5.md","ref":"js-core/lesson3.5.md","articles":[]},"previous":{"title":"Week 2","level":"1.4.2","depth":2,"path":"js-core/lesson2.md","ref":"js-core/lesson2.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["prism","-highlight"],"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"js-core/lesson3.md","mtime":"2017-07-08T06:32:41.689Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-07-08T06:34:43.278Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Week 3","level":"1.4.3","depth":2,"next":{"title":"Week 3.5 - Pair Programming Day","level":"1.4.4","depth":2,"path":"js-core/lesson3.5.md","ref":"js-core/lesson3.5.md","articles":[]},"previous":{"title":"Week 2","level":"1.4.2","depth":2,"path":"js-core/lesson2.md","ref":"js-core/lesson2.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["prism","-highlight"],"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"js-core/lesson3.md","mtime":"2017-07-08T06:39:38.343Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-07-08T06:41:33.448Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
