@@ -583,17 +583,183 @@
 <li>ES6?</li>
 </ul>
 <hr>
-<h2 id="topic-1">Topic 1</h2>
-<p>High level explanation of Topic 1 - rely on the exercises</p>
+<h2 id="built-in-constructor-functions-and-methods">Built in constructor functions and methods</h2>
+<p>In the first lesson we learnt about some of the data types available in JavaScript: &apos;String&apos;, &apos;Boolean&apos;, &apos;Array&apos;, &apos;Object&apos; and &apos;Number&apos;.</p>
+<p>So far we&apos;ve learnt how to create data using literal syntax. For example to create a string you can write</p>
+<pre class="language-"><code class="lang-js"><span class="token keyword">var</span> myString <span class="token operator">=</span> <span class="token string">&apos;Hello&apos;</span><span class="token punctuation">;</span>
+</code></pre>
+<p>And to create an array:</p>
+<pre class="language-"><code class="lang-js"><span class="token keyword">var</span> myArray <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">&apos;hello&apos;</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+</code></pre>
+<p>And an object, just for fun:</p>
+<pre class="language-"><code class="lang-js"><span class="token keyword">var</span> myObject <span class="token operator">=</span> <span class="token punctuation">{</span>
+  name<span class="token punctuation">:</span> <span class="token string">&apos;Daniel&apos;</span><span class="token punctuation">,</span>
+  age<span class="token punctuation">:</span> <span class="token number">10</span><span class="token punctuation">,</span>
+  interests<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">&apos;JavaScript&apos;</span><span class="token punctuation">,</span> <span class="token string">&apos;Cycling&apos;</span><span class="token punctuation">]</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre>
+<p>This is the best way to create new data, but it&apos;s helpful to know that you can also create new data using the <code>new</code> operator and a built in constructor function.</p>
+<p>For example, you <em>could</em> also create a new string like this:</p>
+<pre class="language-"><code class="lang-js"><span class="token keyword">var</span> myString <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">String</span><span class="token punctuation">(</span><span class="token string">&apos;Hello&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>Or an array:</p>
+<pre class="language-"><code class="lang-js"><span class="token keyword">var</span> myArray <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Array</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
 <blockquote>
-<p><strong>Exercise</strong>: Always have exercises</p>
+<p>Do not actually create data using this approach in practice. These examples are for learning purposes only!</p>
 </blockquote>
-<h2 id="topic-2">Topic 2</h2>
-<h2 id="topic-3">Topic 3</h2>
+<p><code>String</code> is a constructor function just like the constructor functions we learnt to write in the previous session, and <code>myString</code> is an instance of <code>String</code>. (Kinda cool how JavaScript is built on JavaScript, huh?!)</p>
+<p>When you check what a string looks like created in this way, things get a bit weird though:</p>
+<pre class="language-"><code class="lang-js"><span class="token keyword">var</span> myString <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">String</span><span class="token punctuation">(</span><span class="token string">&apos;Hello&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>myString<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>Will log:</p>
+<pre class="language-"><code class="lang-js">String <span class="token punctuation">{</span>
+  <span class="token number">0</span><span class="token punctuation">:</span> <span class="token string">&quot;h&quot;</span><span class="token punctuation">,</span>
+  <span class="token number">1</span><span class="token punctuation">:</span> <span class="token string">&quot;e&quot;</span><span class="token punctuation">,</span>
+  <span class="token number">2</span><span class="token punctuation">:</span> <span class="token string">&quot;l&quot;</span><span class="token punctuation">,</span>
+  <span class="token number">3</span><span class="token punctuation">:</span> <span class="token string">&quot;l&quot;</span><span class="token punctuation">,</span>
+  <span class="token number">4</span><span class="token punctuation">:</span> <span class="token string">&quot;o&quot;</span><span class="token punctuation">,</span>
+  length<span class="token punctuation">:</span> <span class="token number">5</span><span class="token punctuation">,</span>
+  <span class="token punctuation">[</span><span class="token punctuation">[</span>PrimitiveValue<span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">:</span> <span class="token string">&quot;hello&quot;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>Whoa! What happened to my string?! Why does this happen? Why isn&apos;t <code>myString</code> just <code>&apos;hello&apos;</code>?</p>
+<p>The first reason is that, if you remember back to the previous session, constructor functions create objects. Calling <code>new <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Constructor</span><span class="token punctuation">&gt;</span></span></code> always returns an object.</p>
+<p>The second reason is that any objects a constructor creates can be given methods, and methods for built in data types turn out to be extremely useful.</p>
+<blockquote>
+<p>Recap: methods are functions that belong to an object</p>
+</blockquote>
+<p>We can try calling some of the methods given to strings.</p>
+<pre class="language-"><code class="lang-js">myString<span class="token punctuation">.</span><span class="token function">toUpperCase</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// hello</span>
+myString<span class="token punctuation">.</span><span class="token function">split</span><span class="token punctuation">(</span><span class="token string">&apos;&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// [&apos;h&apos;, &apos;e&apos;, &apos;l&apos;, &apos;l&apos;, &apos;o&apos;]</span>
+myString<span class="token punctuation">.</span><span class="token function">endsWith</span><span class="token punctuation">(</span><span class="token string">&apos;o&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// true</span>
+</code></pre>
+<p>You might also have noticed that our instance of <code>String</code> also has a <code>length</code> property, so we can go ahead and find out the length of our string:</p>
+<pre class="language-"><code class="lang-js">myString<span class="token punctuation">.</span>length<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 5</span>
+</code></pre>
+<p>Before we move onto the next section, just remember that the purpose of this lesson was to improve our understanding of how JavaScript work. You don&apos;t need to actually create data using <code>new String()</code> to get access to all the methods provided by <code>String</code> (JavaScript does this for you behind the scenes).</p>
+<p><strong>Exercises</strong>:</p>
+<ul>
+<li>Create a string using literal syntax and call the <code>.toUpperCase()</code> method on it</li>
+<li>Create an array and call the <code>.push()</code> method on it</li>
+<li>Create a string using the built in <code>String</code> constructor function and note any differences from using literal syntax</li>
+<li>Call a method e.g. <code>.toUpperCase()</code> on a string you created using the <code>String</code> constructor function</li>
+</ul>
+<p>Learn about split and join</p>
+<h2 id="inheritance-using-constructorprototype">Inheritance using Constructor.prototype</h2>
+<p>In the previous lesson we learnt how to write methods like this:</p>
+<pre class="language-"><code>function Person(name) {
+  this.name = name;
+  this.greeting = function greeting() {
+    alert(&apos;Hello my name is &apos; + this.name);
+  }
+}
+</code></pre><p>Using this approach, every time that <code>Person</code> is instantiated, a new <code>greeting</code> function is created. If you create a <code>new Person()</code> 100 times, 100 <code>greeting</code> functions will be created for each one. This seems wasteful considering all the <code>greeting</code> functions are exactly the same.</p>
+<p>One way to solve this is using <em>prototypal inheritance</em>. That sounds a bit scary so let&apos;s take it a step at a time.</p>
+<p>We can say that a property is inherited when it is passed down from a parent. For example, perhaps one of the properties your parents passed to you was being really good looking. You might say that it&apos;s a family trait.</p>
+<p>In JavaScript, there are 2 ways that a new objects receives properties. The first is <em>copying</em>, the way we&apos;ve being doing it so far: inside the constructor function properties are added to the new object (<code>this</code>) when it is created. The properties are inherited from the (parent) constructor function, but once the object has been created the constructor function cannot change it.</p>
+<h3 id="prototype"><code>prototype</code></h3>
+<p>The other way that objects can receive properties from their constructor function is by <em>inheritance</em>. This happens via the constructor function&apos;s <code>prototype</code>, which is an object containing hidden properties and methods.  </p>
+<blockquote>
+<p>Exercise</p>
+<p>Open up the console in your web browser and type in <code>String.prototype</code>. An object with will be returned. If you expand this object you&apos;ll see that it contains several hidden methods.</p>
+<p>You can also search on the internet for &quot;String prototype&quot;, &quot;Array prototype&quot; etc. and find documentation for the associated methods.</p>
+</blockquote>
+<p>When you create a new object, a hidden link is made between the new object and it&apos;s constructor function&apos;s <code>prototype</code>.</p>
+<p>We can test that this link exists in our browser&apos;s console:</p>
+<pre class="language-"><code class="lang-js"><span class="token keyword">function</span> MyConstructor <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+<span class="token keyword">var</span> myObj <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">MyConstructor</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+Object<span class="token punctuation">.</span><span class="token function">getPrototypeOf</span><span class="token punctuation">(</span>myObj<span class="token punctuation">)</span> <span class="token operator">===</span> MyConstructor<span class="token punctuation">.</span>prototype<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// true</span>
+</code></pre>
+<p>Let&apos;s add a method to our constructor function&apos;s prototype:</p>
+<pre class="language-"><code class="lang-js">MyConstructor<span class="token punctuation">.</span>prototype<span class="token punctuation">.</span>greeting <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&apos;Hello&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>The <code>greeting</code> method will now be inherited by objects created with <code>MyConstructor</code>.</p>
+<pre class="language-"><code class="lang-js"><span class="token keyword">var</span> myObj2 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Constructor</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+myObj2<span class="token punctuation">.</span><span class="token function">greeting</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// Hello</span>
+</code></pre>
+<p>Remember that when objects are created a link between them and their constructor is created? Well, even though <code>myObj</code> was created before we added the <code>greeting</code> method, <code>myObj</code> is linked to <code>MyConstructor.prototype</code>, so it will inherit the newly created method as well.</p>
+<pre class="language-"><code class="lang-js">myObj<span class="token punctuation">.</span><span class="token function">greeting</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// Hello</span>
+</code></pre>
+<p>Both <code>myObj</code> and <code>myObj2</code> inherit properties from <code>MyConstructor</code> via <em>prototypal inheritance</em>.</p>
+<pre class="language-"><code class="lang-js">Object<span class="token punctuation">.</span><span class="token function">getPrototypeOf</span><span class="token punctuation">(</span>myObj<span class="token punctuation">)</span> <span class="token operator">===</span> Object<span class="token punctuation">.</span><span class="token function">getPrototypeOf</span><span class="token punctuation">(</span>myObj2<span class="token punctuation">)</span> <span class="token operator">===</span> MyConstructor<span class="token punctuation">.</span>prototype<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// true</span>
+</code></pre>
+<h3 id="the-prototype-chain">The prototype chain</h3>
+<p>When you access a property of an object, JavaScript first checks if the object has such a property itself. If it does it will use that. If not, it will check the object&apos;s prototype.</p>
+<pre class="language-"><code class="lang-js"><span class="token keyword">function</span> Person <span class="token punctuation">(</span>name<span class="token punctuation">,</span> formal<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> name<span class="token punctuation">;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>formal<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>greeting <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&apos;Hello, my name is &apos;</span> <span class="token operator">+</span> <span class="token keyword">this</span><span class="token punctuation">.</span>name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+Person<span class="token punctuation">.</span>prototype<span class="token punctuation">.</span>greeting <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&apos;Hey, it\&apos;s &apos;</span> <span class="token operator">+</span> <span class="token keyword">this</span><span class="token punctuation">.</span>name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">var</span> alice <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Person</span><span class="token punctuation">(</span><span class="token string">&apos;Alice&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">// No greeting method on alice</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>alice<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// { name: &apos;Alice&apos; }</span>
+alice<span class="token punctuation">.</span><span class="token function">greeting</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// Hey it&apos;s Alice</span>
+
+<span class="token keyword">var</span> bob <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Person</span><span class="token punctuation">(</span><span class="token string">&apos;Bob&apos;</span><span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">// bob was instantiated with a greeting method</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>alice<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// { name: &apos;Bob&apos;, greeting: function() {} }</span>
+bob<span class="token punctuation">.</span><span class="token function">greeting</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// Hello, my name is Bob</span>
+</code></pre>
+<h2 id="array-methods-and-callbacks">Array methods and callbacks</h2>
+<p>The most useful built in methods in JavaScript are the <code>Array.prototype</code> methods. Every array has access to these methods (because Arrays are created by the <code>Array</code> constructor function they inherit the the properties of <code>Array.prototype</code>).</p>
+<p>Of particular use are the <code>Array</code> methods that enable you to <em>iterate</em> over an array. We&apos;ve covered iteration already when we learnt how to use <code>for</code> loops. Well, I have some amazing news for you - you will probably never need to write a <code>for</code> loop again!</p>
+<p>Let&apos;s take a look at <code>Array.prototype.forEach</code> first. This is pretty much a straight replacement for <code>for</code> loops.</p>
+<pre class="language-"><code class="lang-js"><span class="token keyword">var</span> myArr <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+myArr<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span>item<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>item<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">// 1</span>
+<span class="token comment" spellcheck="true">// 2</span>
+<span class="token comment" spellcheck="true">// 3</span>
+</code></pre>
+<p>OOOOF! Wasn&apos;t that glorious?! Much nicer than writing a <code>for</code> loop! So how exactly does this work? <code>forEach</code> <em>iterates</em> over each item the array. For each item is calls a function - the one that was provided as an parameter to <code>forEach</code>.</p>
+<h3 id="callback-functions">Callback functions</h3>
+<p>Functions that are provided as parameters to another function are called <em>callback functions</em>. Often we will write these functions inside the function call like did in the <code>forEach</code> example, but we can also pass in reference to an already defined function:</p>
+<pre class="language-"><code class="lang-js"><span class="token keyword">function</span> <span class="token function">callback</span><span class="token punctuation">(</span>item<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>item<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+myArr<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span>callback<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>Whether you define your function beforehand or write it straight into the function call will depend on whether you intend on re-using that callback again. </p>
+<h3 id="more-array-methods">More array methods</h3>
+<p>.map()
+.filter()</p>
+<h3 id="chaining-methods">Chaining methods</h3>
+<pre class="language-"><code class="lang-js"><span class="token keyword">var</span> transformedArr <span class="token operator">=</span> myArr
+  <span class="token punctuation">.</span><span class="token function">sort</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span>item<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> item <span class="token operator">*</span> <span class="token number">2</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span>item<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> item <span class="token operator">&lt;</span> <span class="token number">10</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>Reusuable callbacks.</p>
+<pre class="language-"><code class="lang-js"><span class="token keyword">var</span> transformedArr <span class="token operator">=</span> myArr
+  <span class="token punctuation">.</span><span class="token function">sort</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span>double<span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span>lessThan10<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
 <h1 id="resources">Resources</h1>
 <ol>
-<li><a href="https://google.com" target="_blank">Resource 1 to learn more about Topic 1</a></li>
-<li><a href="https://google.com" target="_blank">Resource 2 for Topic 2</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/Inheritance" target="_blank">https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/Inheritance</a></li>
+<li><a href="http://sporto.github.io/blog/2013/02/22/a-plain-english-guide-to-javascript-prototypes/" target="_blank">http://sporto.github.io/blog/2013/02/22/a-plain-english-guide-to-javascript-prototypes/</a></li>
+<li><a href="https://johnresig.com/apps/learn/#64" target="_blank">https://johnresig.com/apps/learn/#64</a></li>
 </ol>
 <h1 id="homework">Homework</h1>
 <ol>
@@ -649,7 +815,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Week 3","level":"1.5.3","depth":2,"next":{"title":"Node and DB","level":"1.6","depth":1,"ref":"","articles":[{"title":"Week 1","level":"1.6.1","depth":2,"path":"node-db/lesson1.md","ref":"node-db/lesson1.md","articles":[]},{"title":"Week 2","level":"1.6.2","depth":2,"path":"node-db/lesson2.md","ref":"node-db/lesson2.md","articles":[]},{"title":"Week 3","level":"1.6.3","depth":2,"path":"node-db/lesson3.md","ref":"node-db/lesson3.md","articles":[]},{"title":"Week 4","level":"1.6.4","depth":2,"path":"node-db/lesson4.md","ref":"node-db/lesson4.md","articles":[]},{"title":"Week 5","level":"1.6.5","depth":2,"path":"node-db/lesson5.md","ref":"node-db/lesson5.md","articles":[]}]},"previous":{"title":"Week 2","level":"1.5.2","depth":2,"path":"js-core-2/lesson5.md","ref":"js-core-2/lesson5.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["prism","-highlight"],"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"js-core-2/lesson6.md","mtime":"2017-07-01T08:56:27.518Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-07-01T08:58:28.396Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Week 3","level":"1.5.3","depth":2,"next":{"title":"Node and DB","level":"1.6","depth":1,"ref":"","articles":[{"title":"Week 1","level":"1.6.1","depth":2,"path":"node-db/lesson1.md","ref":"node-db/lesson1.md","articles":[]},{"title":"Week 2","level":"1.6.2","depth":2,"path":"node-db/lesson2.md","ref":"node-db/lesson2.md","articles":[]},{"title":"Week 3","level":"1.6.3","depth":2,"path":"node-db/lesson3.md","ref":"node-db/lesson3.md","articles":[]},{"title":"Week 4","level":"1.6.4","depth":2,"path":"node-db/lesson4.md","ref":"node-db/lesson4.md","articles":[]},{"title":"Week 5","level":"1.6.5","depth":2,"path":"node-db/lesson5.md","ref":"node-db/lesson5.md","articles":[]}]},"previous":{"title":"Week 2","level":"1.5.2","depth":2,"path":"js-core-2/lesson5.md","ref":"js-core-2/lesson5.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["prism","-highlight"],"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"js-core-2/lesson6.md","mtime":"2017-07-08T06:32:41.689Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-07-08T06:34:43.278Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
