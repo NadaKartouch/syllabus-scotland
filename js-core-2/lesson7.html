@@ -726,27 +726,79 @@ Write a function that takes in the wallet as an argument, and returns the total 
 </li>
 </ol>
 </blockquote>
-<h1 id="value-vs-reference-types">Value vs Reference Types</h1>
-<pre class="language-"><code class="lang-js"><span class="token keyword">var</span> increaseAge <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span>age<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  age <span class="token operator">=</span> age<span class="token operator">++</span><span class="token punctuation">;</span>
+<h2 id="value-vs-reference-types">Value vs Reference Types</h2>
+<p>A variable can hold two types of values: primitives (value types) and reference types.
+The distinction between them is very important and will be a fundamental addition
+to your JavaScript arsenal.</p>
+<p>Primitives are:</p>
+<ul>
+<li>string (example: <code>John Doe</code>)</li>
+<li>number (example: <code>100</code>)</li>
+<li>boolean (example: <code>true</code> or <code>false</code>)</li>
+</ul>
+<p>Reference types are:</p>
+<ul>
+<li>Objects (example: <code>{greeting: &quot;hello&quot;}</code>)</li>
+<li>Arrays (example: <code>[1,2,3]</code>)</li>
+<li>Functions (example: <code>function doNothing() { }</code>)</li>
+</ul>
+<p>Variables can only hold a few bytes of data. 
+Because primitives have fixed sizes, when you assign a primitive to a variable, 
+it will hold the actual value of the primitive (hence the name &quot;value type&quot;).
+But reference types can have practically infinite sizes, so when you assign a reference type 
+to a variable, that variable will hold a reference to it only: an identifier which will tell our program
+where to look for that object in memory.</p>
+<p><img src="assets/stack_heap.png" alt="Memory assignment"></p>
+<h2 id="pass-by-value--reference">Pass by value / reference</h2>
+<p>Consider the example below.</p>
+<pre class="language-"><code class="lang-javascript">
+<span class="token keyword">function</span> <span class="token function">addFive</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    value <span class="token operator">=</span> value <span class="token operator">+</span> <span class="token number">5</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 
-<span class="token keyword">var</span> initialAge <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
-<span class="token function">increaseAge</span><span class="token punctuation">(</span>initialAge<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-<span class="token comment" spellcheck="true">// What is the value of initialAge after calling the function?</span>
+<span class="token keyword">var</span> ten <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+<span class="token function">addFive</span><span class="token punctuation">(</span>ten<span class="token punctuation">)</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>ten<span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre>
-<pre class="language-"><code class="lang-js"><span class="token keyword">var</span> increasePersonAge <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span>person<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  person<span class="token punctuation">.</span>age<span class="token operator">++</span><span class="token punctuation">;</span>
+<p>We have a function that accepts a value as an argument. The function then adds five to the
+argument and logs the value.
+After invoking the function with the variable <code>ten</code>, the variable is logged.</p>
+<p>What will be the values logged?
+Answer: 10 (not 15)</p>
+<p>Explanation:
+In JavaScript, variables are always passed to function by value. That means only the value
+the variables was holding is passed to the function, and not a reference to the variable&apos;s
+location in memory. That means that inside a function call, any changes we make to its
+arguments will only apply inside the function (as seen in the previous example).</p>
+<p><strong>Be careful though</strong>, as the value of an argument might be a reference to a JavaScript
+object, in which case, changing a property on that object will also reflect everywhere
+else we use a reference to that object.</p>
+<p>For example:</p>
+<pre class="language-"><code class="lang-javascript">
+<span class="token keyword">function</span> <span class="token function">a</span><span class="token punctuation">(</span>primitive<span class="token punctuation">,</span> object<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    primitive <span class="token operator">=</span> primitive <span class="token operator">+</span> <span class="token number">5</span><span class="token punctuation">;</span>
+    object<span class="token punctuation">.</span>greeting <span class="token operator">=</span> <span class="token string">&quot;how are you?&quot;</span><span class="token punctuation">;</span>
+    object <span class="token operator">=</span> <span class="token punctuation">{</span>
+      greeting<span class="token punctuation">:</span> <span class="token string">&quot;holla!&quot;</span>  
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
-
-<span class="token keyword">var</span> person <span class="token operator">=</span> <span class="token punctuation">{</span> name<span class="token punctuation">:</span> <span class="token string">&apos;Tom&apos;</span><span class="token punctuation">,</span> age<span class="token punctuation">:</span> <span class="token number">10</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
-<span class="token function">increasePersonAge</span><span class="token punctuation">(</span>person<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-<span class="token comment" spellcheck="true">// What is the value of person.age?</span>
+<span class="token keyword">var</span> primitive <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+<span class="token keyword">var</span> object <span class="token operator">=</span> <span class="token punctuation">{</span>
+  greeting<span class="token punctuation">:</span> <span class="token string">&apos;hello&apos;</span>  
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token function">a</span><span class="token punctuation">(</span>primitive<span class="token punctuation">,</span> object<span class="token punctuation">)</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>primitive<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 10</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>object<span class="token punctuation">.</span>greeting<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// &quot;how are you?&quot;</span>
 </code></pre>
 <blockquote>
 <p>Let&apos;s look at the illustrations here: <a href="http://www.javascripttutorial.net/javascript-primitive-vs-reference-values/" target="_blank">http://www.javascripttutorial.net/javascript-primitive-vs-reference-values/</a> to understand this behavior better</p>
+<p><strong>Exercise</strong></p>
+<ul>
+<li>Open up the <a href="https://codepen.io/rarmatei/pen/EXraWG?editors=0012" target="_blank">CodePen here</a></li>
+<li>Create a new <code>index.html</code> and <code>main.js</code> file</li>
+<li>Link the <code>main.js</code> from the <code>index.html</code> so that it runs in the browser</li>
+<li>Copy the exercises from the CodePen above into <code>main.js</code> and follow the instructions in the comments</li>
+</ul>
 </blockquote>
 <h1 id="scope">Scope</h1>
 <p>Before we get into what scope is, let&apos;s try a little exercise.</p>
@@ -824,8 +876,14 @@ console<span class="token punctuation">.</span><span class="token function">log<
 
 console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>test<span class="token punctuation">)</span><span class="token punctuation">;</span>     <span class="token comment" spellcheck="true">// output: I&apos;m global</span>
 </code></pre>
-<h1 id="higher-order-function">Higher Order Function</h1>
-<p><a href="https://medium.com/functional-javascript/higher-order-functions-78084829fff4" target="_blank">https://medium.com/functional-javascript/higher-order-functions-78084829fff4</a></p>
+<blockquote>
+<p><strong>Exercise</strong></p>
+<ul>
+<li>Continue working on your <code>main.js</code> from your previous exercises</li>
+<li>Copy the exercises from this <a href="https://codepen.io/rarmatei/pen/OgqZaR?editors=0011" target="_blank">CodePen</a></li>
+<li>Remember to comment/uncomment each set once you&apos;re done with them</li>
+</ul>
+</blockquote>
 <h1 id="resources">Resources</h1>
 <ol>
 <li>Objects vs Arrays - <a href="https://www.metaltoad.com/blog/javascript-understanding-objects-vs-arrays-and-when-use-them-part-1" target="_blank">https://www.metaltoad.com/blog/javascript-understanding-objects-vs-arrays-and-when-use-them-part-1</a></li>
@@ -833,15 +891,14 @@ console<span class="token punctuation">.</span><span class="token function">log<
 </ol>
 <h1 id="homework">Homework</h1>
 <ol>
-<li><h1 id="research">Research</h1>
-</li>
-<li>Closures</li>
-<li>.call and .apply</li>
-<li>Higher Order Functions</li>
+<li>Create an account on <a href="http://www.codewars.com/" target="_blank">CodeWars</a> and do at least 15 challenges.</li>
+<li>Sign up for the <a href="https://javascript30.com/" target="_blank">JavaScript 30</a> course and do at least 2 project. You can find the starter files for the project here: <a href="https://github.com/wesbos/JavaScript30" target="_blank">https://github.com/wesbos/JavaScript30</a></li>
 </ol>
-<h2 id="prepare-for-the-next-class">Prepare for the next class</h2>
+<h1 id="research">Research</h1>
 <ol>
-<li>Read this <a href="https://google.com" target="_blank">Some Tutorial or Video etc...</a></li>
+<li><a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Closures" target="_blank">Closures</a></li>
+<li><strong>.call</strong>, <strong>.apply* and </strong>.bind**: <a href="https://alexperry.io/personal/2016/04/03/How-to-use-apply-bind-and-call.html" target="_blank">https://alexperry.io/personal/2016/04/03/How-to-use-apply-bind-and-call.html</a></li>
+<li>Higher-order functions: <a href="https://medium.com/functional-javascript/higher-order-functions-78084829fff4" target="_blank">https://medium.com/functional-javascript/higher-order-functions-78084829fff4</a></li>
 </ol>
 
                                 
@@ -882,7 +939,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Week 10 - More Objects and core JS","level":"1.5.4","depth":2,"next":{"title":"Node and DB","level":"1.6","depth":1,"ref":"","articles":[{"title":"Week 11","level":"1.6.1","depth":2,"path":"node-db/lesson1.md","ref":"node-db/lesson1.md","articles":[]},{"title":"Week 12","level":"1.6.2","depth":2,"path":"node-db/lesson2.md","ref":"node-db/lesson2.md","articles":[]},{"title":"Week 13","level":"1.6.3","depth":2,"path":"node-db/lesson3.md","ref":"node-db/lesson3.md","articles":[]},{"title":"Week 14","level":"1.6.4","depth":2,"path":"node-db/lesson4.md","ref":"node-db/lesson4.md","articles":[]},{"title":"Week 15","level":"1.6.5","depth":2,"path":"node-db/lesson5.md","ref":"node-db/lesson5.md","articles":[]}]},"previous":{"title":"Week 9 - More Arrays and ES6","level":"1.5.3","depth":2,"path":"js-core-2/lesson6.md","ref":"js-core-2/lesson6.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["prism","-highlight"],"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"js-core-2/lesson7.md","mtime":"2017-07-14T21:07:33.928Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-07-14T21:08:58.243Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Week 10 - More Objects and core JS","level":"1.5.4","depth":2,"next":{"title":"Node and DB","level":"1.6","depth":1,"ref":"","articles":[{"title":"Week 11","level":"1.6.1","depth":2,"path":"node-db/lesson1.md","ref":"node-db/lesson1.md","articles":[]},{"title":"Week 12","level":"1.6.2","depth":2,"path":"node-db/lesson2.md","ref":"node-db/lesson2.md","articles":[]},{"title":"Week 13","level":"1.6.3","depth":2,"path":"node-db/lesson3.md","ref":"node-db/lesson3.md","articles":[]},{"title":"Week 14","level":"1.6.4","depth":2,"path":"node-db/lesson4.md","ref":"node-db/lesson4.md","articles":[]},{"title":"Week 15","level":"1.6.5","depth":2,"path":"node-db/lesson5.md","ref":"node-db/lesson5.md","articles":[]}]},"previous":{"title":"Week 9 - More Arrays and ES6","level":"1.5.3","depth":2,"path":"js-core-2/lesson6.md","ref":"js-core-2/lesson6.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["prism","-highlight"],"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"js-core-2/lesson7.md","mtime":"2017-07-14T21:33:55.080Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-07-14T21:35:10.499Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
