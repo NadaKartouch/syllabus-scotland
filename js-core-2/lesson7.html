@@ -599,7 +599,9 @@
 <p>We have been dealing mainly with two types of data structures so far - <em>Arrays</em> and <em>Objects</em>.</p>
 <p>When we are you solving a problem, one of your main decisions as a developer is to choose the data structures you will use to solve it. So when do you use an Array and when do you use an Object.</p>
 <blockquote>
-<p>Let&apos;s talk about the differences between Arrays and Objects - when can you use or the other</p>
+<p>&quot;Bad programmers worry about the code. Good programmers worry about data structures and their relationships.&quot;
+Linus Torvalds</p>
+<p>Let&apos;s talk about the differences between Arrays and Objects - when can you use or the other. As a general rule of thumb:</p>
 </blockquote>
 <ol>
 <li>Does the order of data matter? Then use Arrays.</li>
@@ -611,24 +613,26 @@
 <p>Exercise: Think of a scenario where we might need to combine both?</p>
 </blockquote>
 <h2 id="object-exercises">Object Exercises</h2>
-<p>Checking if Property or Value Exists</p>
-<pre class="language-"><code class="lang-js"><span class="token comment" spellcheck="true">// Exercise</span>
-<span class="token comment" spellcheck="true">// Write a function &quot;printProperties&quot; that takes an object and prints its properties</span>
-<span class="token keyword">var</span> student <span class="token operator">=</span> <span class="token punctuation">{</span> 
-    name<span class="token punctuation">:</span> <span class="token string">&quot;Simon&quot;</span><span class="token punctuation">,</span> 
-    age<span class="token punctuation">:</span> <span class="token string">&quot;21&quot;</span><span class="token punctuation">,</span> 
+<blockquote>
+<p>Exercise
+Write a function &quot;printProperties&quot; that takes an object and prints its properties</p>
+</blockquote>
+<pre class="language-"><code class="lang-js"><span class="token keyword">var</span> student <span class="token operator">=</span> <span class="token punctuation">{</span>
+    name<span class="token punctuation">:</span> <span class="token string">&quot;Simon&quot;</span><span class="token punctuation">,</span>
+    age<span class="token punctuation">:</span> <span class="token string">&quot;21&quot;</span><span class="token punctuation">,</span>
     interests <span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">&quot;javascript&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;react&quot;</span><span class="token punctuation">]</span>
 <span class="token punctuation">}</span><span class="token punctuation">;</span>
 
 <span class="token function">printProperties</span><span class="token punctuation">(</span>student<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token comment" spellcheck="true">// Output in this case should be name, age, interests</span>
 </code></pre>
-<pre class="language-"><code class="lang-js"><span class="token comment" spellcheck="true">// Exercise</span>
-<span class="token comment" spellcheck="true">// Write a function called hasProperty that takes an object and a property</span>
-<span class="token comment" spellcheck="true">// the function should return true if the property exists, false if it doesn&apos;t</span>
-<span class="token keyword">var</span> student <span class="token operator">=</span> <span class="token punctuation">{</span> 
-    name<span class="token punctuation">:</span> <span class="token string">&quot;Simon&quot;</span><span class="token punctuation">,</span> 
-    age<span class="token punctuation">:</span> <span class="token string">&quot;21&quot;</span><span class="token punctuation">,</span> 
+<blockquote>
+<p>Exercise
+Write a function called hasProperty that takes an object and a property. The function should return true if the property exists, false if it doesn&apos;t</p>
+</blockquote>
+<pre class="language-"><code class="lang-js"><span class="token keyword">var</span> student <span class="token operator">=</span> <span class="token punctuation">{</span>
+    name<span class="token punctuation">:</span> <span class="token string">&quot;Simon&quot;</span><span class="token punctuation">,</span>
+    age<span class="token punctuation">:</span> <span class="token string">&quot;21&quot;</span><span class="token punctuation">,</span>
     interests <span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">&quot;javascript&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;react&quot;</span><span class="token punctuation">]</span>
 <span class="token punctuation">}</span><span class="token punctuation">;</span>
 
@@ -637,25 +641,39 @@
 </code></pre>
 <blockquote>
 <p>Exercise: compare that to how you find an element in array?</p>
+<p>Exercise
+Write a function called ownProperty that takes an object which has a prototype, and a field. The function should return true only if the property exists on the object (and <em>not</em> it&apos;s prototype)
+```js
+var person = {
+    name: &quot;Simon&quot;
+}</p>
 </blockquote>
-<pre class="language-"><code class="lang-js"><span class="token comment" spellcheck="true">// Exercise</span>
-<span class="token comment" spellcheck="true">// Write a function called printObject that takes an object and iterates through</span>
-<span class="token comment" spellcheck="true">// all its properties and prints a string formatted property: value</span>
-<span class="token comment" spellcheck="true">// Bonus point if you can format the list of interests properly</span>
-<span class="token keyword">var</span> student <span class="token operator">=</span> <span class="token punctuation">{</span> 
-    name<span class="token punctuation">:</span> <span class="token string">&quot;Simon&quot;</span><span class="token punctuation">,</span> 
-    age<span class="token punctuation">:</span> <span class="token string">&quot;21&quot;</span><span class="token punctuation">,</span> 
-    interests <span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">&quot;javascript&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;react&quot;</span><span class="token punctuation">]</span>
-<span class="token punctuation">}</span><span class="token punctuation">;</span>
+<p>var student = {
+    interests: [&quot;javascript&quot;, &quot;react&quot;]
+}</p>
+<p>student.<strong>proto</strong> = person // this is setting the prototype of student to be person</p>
+<p>ownProperty(student, &quot;name&quot;) // should return false
+ownProperty(student, &quot;interests&quot;) // should return true</p>
+<pre class="language-"><code>
+&gt;Exercise
+&gt;Write a function called printObject that takes an object and iterates through all its properties and prints a string formatted property: value
+&gt;Bonus points if you can format the list of interests properly
 
-<span class="token function">printObject</span><span class="token punctuation">(</span>student<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//output: &quot;name is Simon, age is 21, interests are [&quot;javascript&quot;, &quot;react&quot;]</span>
-</code></pre>
-<pre class="language-"><code class="lang-js"><span class="token comment" spellcheck="true">// Exercise</span>
-<span class="token comment" spellcheck="true">// Write a function called &quot;printArray&quot; that use the previous function &quot;printObject&quot;</span>
-<span class="token comment" spellcheck="true">// It should loop through the array of students and print each item</span>
-<span class="token keyword">var</span> students <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">{</span> 
-    name<span class="token punctuation">:</span> <span class="token string">&quot;Etza&quot;</span><span class="token punctuation">,</span> 
-    age<span class="token punctuation">:</span> <span class="token string">&quot;21&quot;</span><span class="token punctuation">,</span> 
+```js
+var student = {
+    name: &quot;Simon&quot;,
+    age: &quot;21&quot;,
+    interests : [&quot;javascript&quot;, &quot;react&quot;]
+};
+
+printObject(student); //output: &quot;name is Simon, age is 21, interests are [&quot;javascript&quot;, &quot;react&quot;]
+</code></pre><blockquote>
+<p>Exercise
+Write a function called &quot;printArray&quot; that use the previous function &quot;printObject&quot;. It should loop through the array of students and print each item</p>
+</blockquote>
+<pre class="language-"><code class="lang-js"><span class="token keyword">var</span> students <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>
+    name<span class="token punctuation">:</span> <span class="token string">&quot;Etza&quot;</span><span class="token punctuation">,</span>
+    age<span class="token punctuation">:</span> <span class="token string">&quot;21&quot;</span><span class="token punctuation">,</span>
     interests <span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">&quot;javascript&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;css&quot;</span><span class="token punctuation">]</span>
 <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
     name<span class="token punctuation">:</span> <span class="token string">&apos;Mohamed&apos;</span><span class="token punctuation">,</span>
@@ -668,6 +686,46 @@
 <span class="token comment" spellcheck="true">// &quot;name is Simon, age is 21, interests are [&quot;javascript&quot;, &quot;react&quot;]&quot;</span>
 <span class="token comment" spellcheck="true">// &quot;name is Mohamed, age is 22, interests are [&quot;javascript&quot;, &quot;c#&quot;]&quot;</span>
 </code></pre>
+<h2 id="more-advanced-working-with-objects">More advanced working with objects</h2>
+<p>Let&apos;s say you have the following object in javascript, where each key/property is the type of note (&#xA3;5, &#xA3;10 and &#xA3;20 note), and the value is the number of notes in the wallet.</p>
+<pre class="language-"><code class="lang-js"><span class="token keyword">var</span> wallet <span class="token operator">=</span> <span class="token punctuation">{</span>
+  <span class="token number">5</span><span class="token punctuation">:</span> <span class="token number">3</span><span class="token punctuation">,</span>
+  <span class="token number">10</span><span class="token punctuation">:</span> <span class="token number">7</span><span class="token punctuation">,</span>
+  <span class="token number">20</span><span class="token punctuation">:</span> <span class="token number">2</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<blockquote>
+<p>Exercise
+Write a function that takes in the wallet as an argument, and returns the total money in the wallet.</p>
+</blockquote>
+<p>Next you&apos;re given another wallet, and it&apos;s put in an array with the first:</p>
+<pre class="language-"><code class="lang-js"><span class="token keyword">var</span> walletA <span class="token operator">=</span> <span class="token punctuation">{</span> <span class="token comment" spellcheck="true">// our original wallet</span>
+  <span class="token number">5</span><span class="token punctuation">:</span> <span class="token number">3</span><span class="token punctuation">,</span>
+  <span class="token number">10</span><span class="token punctuation">:</span> <span class="token number">7</span><span class="token punctuation">,</span>
+  <span class="token number">20</span><span class="token punctuation">:</span> <span class="token number">2</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">var</span> walletB <span class="token operator">=</span> <span class="token punctuation">{</span>
+  <span class="token number">5</span><span class="token punctuation">:</span> <span class="token number">6</span><span class="token punctuation">,</span>
+  <span class="token number">10</span><span class="token punctuation">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+  <span class="token number">20</span><span class="token punctuation">:</span> <span class="token number">1</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">var</span> wallets <span class="token operator">=</span> <span class="token punctuation">[</span>walletA<span class="token punctuation">,</span> walletB<span class="token punctuation">]</span>
+</code></pre>
+<blockquote>
+<p>Exercises</p>
+<ol>
+<li><p>Write a function - <code>sumWallets</code> - that takes the array <code>wallets</code> and returns the total amount of money for all of the wallets.</p>
+</li>
+<li><p>Write another function - <code>combineWallets</code> - that takes the array of wallets and combines all of the notes in each of them, returning a single wallet with all of the other wallets&apos; notes.</p>
+</li>
+<li><p>See if you can write a function - <code>sumDynamicWallet</code> - that will sum up and return the total amount in a single wallet, but it could have any number of different notes inside it (&#xA3;7 note or a &#xA3;13 or any other number).</p>
+</li>
+<li><p>See if you can write a function that takes in any number of wallets, which could contain any denomination/type of notes inside them (each being different). Tip: have a think about if you could re-use a function from a previous example...</p>
+</li>
+</ol>
+</blockquote>
 <h1 id="value-vs-reference-types">Value vs Reference Types</h1>
 <pre class="language-"><code class="lang-js"><span class="token keyword">var</span> increaseAge <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span>age<span class="token punctuation">)</span> <span class="token punctuation">{</span>
   age <span class="token operator">=</span> age<span class="token operator">++</span><span class="token punctuation">;</span>
@@ -824,7 +882,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Week 10 - More Objects and core JS","level":"1.5.4","depth":2,"next":{"title":"Node and DB","level":"1.6","depth":1,"ref":"","articles":[{"title":"Week 11","level":"1.6.1","depth":2,"path":"node-db/lesson1.md","ref":"node-db/lesson1.md","articles":[]},{"title":"Week 12","level":"1.6.2","depth":2,"path":"node-db/lesson2.md","ref":"node-db/lesson2.md","articles":[]},{"title":"Week 13","level":"1.6.3","depth":2,"path":"node-db/lesson3.md","ref":"node-db/lesson3.md","articles":[]},{"title":"Week 14","level":"1.6.4","depth":2,"path":"node-db/lesson4.md","ref":"node-db/lesson4.md","articles":[]},{"title":"Week 15","level":"1.6.5","depth":2,"path":"node-db/lesson5.md","ref":"node-db/lesson5.md","articles":[]}]},"previous":{"title":"Week 9 - More Arrays and ES6","level":"1.5.3","depth":2,"path":"js-core-2/lesson6.md","ref":"js-core-2/lesson6.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["prism","-highlight"],"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"js-core-2/lesson7.md","mtime":"2017-07-09T13:47:34.660Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-07-09T13:49:29.438Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Week 10 - More Objects and core JS","level":"1.5.4","depth":2,"next":{"title":"Node and DB","level":"1.6","depth":1,"ref":"","articles":[{"title":"Week 11","level":"1.6.1","depth":2,"path":"node-db/lesson1.md","ref":"node-db/lesson1.md","articles":[]},{"title":"Week 12","level":"1.6.2","depth":2,"path":"node-db/lesson2.md","ref":"node-db/lesson2.md","articles":[]},{"title":"Week 13","level":"1.6.3","depth":2,"path":"node-db/lesson3.md","ref":"node-db/lesson3.md","articles":[]},{"title":"Week 14","level":"1.6.4","depth":2,"path":"node-db/lesson4.md","ref":"node-db/lesson4.md","articles":[]},{"title":"Week 15","level":"1.6.5","depth":2,"path":"node-db/lesson5.md","ref":"node-db/lesson5.md","articles":[]}]},"previous":{"title":"Week 9 - More Arrays and ES6","level":"1.5.3","depth":2,"path":"js-core-2/lesson6.md","ref":"js-core-2/lesson6.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["prism","-highlight"],"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"js-core-2/lesson7.md","mtime":"2017-07-14T21:07:33.928Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-07-14T21:08:58.243Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
