@@ -994,6 +994,39 @@ app<span class="token punctuation">.</span><span class="token keyword">get</span
 <p>Your <code>script.js</code> file will want to receive the JSON containing your blog posts.  Your job is to make that happen!</p>
 <p>Express has a handy method called <code>res.sendFile()</code> that makes it easy to send files back to the client.  Feel free to use this with your JSON.</p>
 <p>If all goes well, you should have a fully functional CMS!</p>
+<h2 id="deploying-to-heroku">Deploying to Heroku</h2>
+<p>Heroku is a cloud platform as a service (PaaS) that lets companies build, deliver, monitor, and scale apps. Developers use Heroku to deploy, manage, and scale modern apps. Heroku is fully managed, giving developers the freedom to focus on their core product without the distraction of maintaining servers, hardware, or infrastructure.</p>
+<ol>
+<li>Go to <a href="https://signup.heroku.com/" target="_blank">https://signup.heroku.com/</a> and signup for an account<ul>
+<li>It will send a verification to your email so make sure you&apos;ve entered a valid email</li>
+</ul>
+</li>
+<li>Download the Heroku CLI from <a href="https://devcenter.heroku.com/articles/heroku-cli#download-and-install" target="_blank">https://devcenter.heroku.com/articles/heroku-cli#download-and-install</a></li>
+<li>We need to do a small tweak to our app to be ready to be deployed on Heroku.</li>
+</ol>
+<p>On server.js, add the <code>process.env.PORT</code> bit of code</p>
+<pre class="language-"><code class="lang-js">app<span class="token punctuation">.</span><span class="token function">listen</span><span class="token punctuation">(</span>process<span class="token punctuation">.</span>env<span class="token punctuation">.</span>PORT <span class="token operator">||</span> <span class="token number">3000</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&quot;Server is listening on port 3000. Ready to accept requests!&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>This tells our server to look for an <strong>environment variable</strong> called <code>PORT</code> and use it to run the server, otherwise use Port 3000. When the server runs on heroku, then Heroku sets the PORT to the correct value.</p>
+<p><code>git add</code> and <code>commit</code> your change.</p>
+<ol>
+<li>Now open the command line in the folder where you have your <strong>express-workshop</strong> repo running. If you run the command <code>git remote -v</code>, you should see one remote <strong>origin</strong> pointing to your repo.</li>
+</ol>
+<p>Run these commands:</p>
+<p><code>heroku login</code></p>
+<blockquote>
+<p>This will ask you for your heroku email and password that you used to register. Once you&apos;re logged in,</p>
+</blockquote>
+<p><code>heroku create</code></p>
+<blockquote>
+<p>The heroku create command creates a new application on Heroku &#x2013; along with a git remote that must be used to receive your application source.</p>
+</blockquote>
+<p>If you check <code>git remote -v</code>, you should see a second remote called <strong>heroku</strong>.</p>
+<p>Now push your code to heroku <code>git push heroku master</code>. The push will run few commands from Heroku, then you should see a url similar to <code>https://some-random-name-XXXX.herokuapp.com</code> - go to the Url and if all goes well, your app should be up and running.</p>
+<p>To read more about Heroku and deploying Node Apps to Heroku, check
+<a href="https://devcenter.heroku.com/articles/git" target="_blank">https://devcenter.heroku.com/articles/git</a> and <a href="https://devcenter.heroku.com/articles/getting-started-with-nodejs#set-up" target="_blank">https://devcenter.heroku.com/articles/getting-started-with-nodejs#set-up</a></p>
 <h1 id="homework">Homework</h1>
 <ul>
 <li>Finish the tasks from the workshop</li>
@@ -1015,13 +1048,15 @@ app<span class="token punctuation">.</span><span class="token keyword">get</span
 </ul>
 <p>More about HTTP:
 <a href="https://code.tutsplus.com/tutorials/http-headers-for-dummies--net-8039" target="_blank">Tutsplus tutorial</a></p>
-<p>Learn more about JSON:</p>
+<p>More about JSON:</p>
 <ul>
-<li><a href="http://www.json.org" target="_blank">http://www.json.org</a></li>
 <li><a href="https://en.wikipedia.org/wiki/JSON" target="_blank">https://en.wikipedia.org/wiki/JSON</a></li>
 <li><a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse" target="_blank">https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse</a></li>
 <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify" target="_blank">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify</a></li>
 </ul>
+<p>Heroku:
+Deploying from Git - <a href="https://devcenter.heroku.com/articles/git" target="_blank">https://devcenter.heroku.com/articles/git</a>
+Deploying Node Apps - <a href="https://devcenter.heroku.com/articles/getting-started-with-nodejs#set-up" target="_blank">https://devcenter.heroku.com/articles/getting-started-with-nodejs#set-up</a></p>
 
                                 
                                 </section>
@@ -1061,7 +1096,7 @@ app<span class="token punctuation">.</span><span class="token keyword">get</span
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Week 11","level":"1.6.1","depth":2,"next":{"title":"Week 12","level":"1.6.2","depth":2,"path":"node-db/lesson2.md","ref":"node-db/lesson2.md","articles":[]},"previous":{"title":"Node and DB","level":"1.6","depth":1,"ref":"","articles":[{"title":"Week 11","level":"1.6.1","depth":2,"path":"node-db/lesson1.md","ref":"node-db/lesson1.md","articles":[]},{"title":"Week 12","level":"1.6.2","depth":2,"path":"node-db/lesson2.md","ref":"node-db/lesson2.md","articles":[]},{"title":"Week 13","level":"1.6.3","depth":2,"path":"node-db/lesson3.md","ref":"node-db/lesson3.md","articles":[]},{"title":"Week 14","level":"1.6.4","depth":2,"path":"node-db/lesson4.md","ref":"node-db/lesson4.md","articles":[]},{"title":"Week 15","level":"1.6.5","depth":2,"path":"node-db/lesson5.md","ref":"node-db/lesson5.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["prism","-highlight"],"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"node-db/lesson1.md","mtime":"2017-07-21T19:50:04.624Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-07-21T19:51:17.509Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Week 11","level":"1.6.1","depth":2,"next":{"title":"Week 12","level":"1.6.2","depth":2,"path":"node-db/lesson2.md","ref":"node-db/lesson2.md","articles":[]},"previous":{"title":"Node and DB","level":"1.6","depth":1,"ref":"","articles":[{"title":"Week 11","level":"1.6.1","depth":2,"path":"node-db/lesson1.md","ref":"node-db/lesson1.md","articles":[]},{"title":"Week 12","level":"1.6.2","depth":2,"path":"node-db/lesson2.md","ref":"node-db/lesson2.md","articles":[]},{"title":"Week 13","level":"1.6.3","depth":2,"path":"node-db/lesson3.md","ref":"node-db/lesson3.md","articles":[]},{"title":"Week 14","level":"1.6.4","depth":2,"path":"node-db/lesson4.md","ref":"node-db/lesson4.md","articles":[]},{"title":"Week 15","level":"1.6.5","depth":2,"path":"node-db/lesson5.md","ref":"node-db/lesson5.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["prism","-highlight"],"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"node-db/lesson1.md","mtime":"2017-07-22T08:07:16.535Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-07-22T08:08:39.823Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
