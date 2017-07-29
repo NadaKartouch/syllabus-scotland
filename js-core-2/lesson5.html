@@ -347,7 +347,7 @@
                 <a href="../node-db/lesson1.html">
             
                     
-                    Week 11
+                    Week 11 - Node and Express 101
             
                 </a>
             
@@ -360,7 +360,7 @@
                 <a href="../node-db/lesson2.html">
             
                     
-                    Week 12
+                    Week 12 - Templating and APIs 
             
                 </a>
             
@@ -373,7 +373,7 @@
                 <a href="../node-db/lesson3.html">
             
                     
-                    Week 13
+                    Week 13 - Promises and Mongo
             
                 </a>
             
@@ -598,82 +598,83 @@
 <blockquote>
 <p>Exercise: Let&apos;s look at a really obvious example of a function with redundant code. What could we do to improve it?</p>
 </blockquote>
-<pre class="language-"><code class="lang-JavaScript">function printHelloFiveTimes(){
+<p>``js
+function printHelloFiveTimes(){
   console.log(&quot;Hello&quot;);
   console.log(&quot;Hello&quot;);
   console.log(&quot;Hello&quot;);
   console.log(&quot;Hello&quot;);
   console.log(&quot;Hello&quot;);
-}
-</code></pre>
-<p>Introducing a simple for loop makes our lives a lot easier. This way we can more easily see what the function does and make modifications.</p>
-<pre class="language-"><code class="lang-JavaScript">function printHelloFiveTimes(){
+}</p>
+<pre class="language-"><code>
+Introducing a simple for loop makes our lives a lot easier. This way we can more easily see what the function does and make modifications.
+
+``js
+function printHelloFiveTimes(){
   for ( var i = 0; i &lt; 5; i++ ){
     console.log(&quot;Hello&quot;);
 }
-</code></pre>
-<blockquote>
+</code></pre><blockquote>
 <p>Exercise: Now, let&apos;s look at a different example. Let&apos;s say we wanted to welcome mentors:</p>
 </blockquote>
-<pre class="language-"><code class="lang-JavaScript">function welcomeMentors(){
+<p>``js
+function welcomeMentors(){
   console.log(&quot;Hello Mozafar&quot;);
   console.log(&quot;Hello Rares&quot;);
   console.log(&quot;Hello Tim&quot;);
   console.log(&quot;Hello Ashleigh&quot;);
   console.log(&quot;Hello Gordon&quot;);
-}
-</code></pre>
-<p>We could be lazy and change how we welcome the mentors.</p>
-<pre class="language-"><code class="lang-JavaScript">function welcomeMentors(){
+}</p>
+<pre class="language-"><code>
+We could be lazy and change how we welcome the mentors.
+
+``js
+function welcomeMentors(){
   var mentorNames = &quot;Mozafar, Rares, Tim, Ashleigh, Gordon&quot;;
   console.log(&quot;Hello &quot; + mentorNames);
 }
-</code></pre>
-<p>But it&apos;s not quite the output we wanted. And we can be smarter about it. Why not a loop?</p>
-<pre class="language-"><code class="lang-JavaScript">function welcomeMentors(){
+</code></pre><p>But it&apos;s not quite the output we wanted. And we can be smarter about it. Why not a loop?</p>
+<p>``js
+function welcomeMentors(){
   var mentorNames = [&quot;Mozafar&quot;, &quot;Rares&quot;, &quot;Tim&quot;, &quot;Ashleigh&quot;, &quot;Gordon&quot;];
   for ( var i = 0; i &lt; mentorNames.length; i++ ){
     console.log(&quot;Hello &quot; + mentorNames[i]);
   }
-}
-</code></pre>
-<p>So functions help us to organise and enhance our code. But what makes good design? Is it just &quot;shorter is always better&quot;?</p>
-<h2 id="good-design">Good Design</h2>
-<p>Design is important if we want our code to be understandable (both to other humans, but also to us in the future), to be easy to use and easy to expand.</p>
-<p>There are three main principles you need to know now: clarity, reusability and extensibility. There are also others, but they are deeply related to these three.</p>
-<p>To</p>
-<ul>
-<li><p>Ease of Maintenance / Clarity</p>
-<ul>
-<li>Naming</li>
-<li>Formatting</li>
-<li>Commenting</li>
-<li>Clear logic</li>
-<li>Concise</li>
-<li>Avoiding Redundancy</li>
-</ul>
-</li>
-<li><p>Reusability</p>
-<ul>
-<li>DRY</li>
-<li>Single Reponsibility<ul>
-<li>Avoiding global state (scope)</li>
-<li>Predictability and Ease of testing</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>Extensibility</p>
-<ul>
-<li>Avoiding being unnecessarily specific (e.g. magic numbers)</li>
-</ul>
-</li>
-</ul>
-<blockquote>
-<p>Exercise: Find all the design issues with this function.</p>
-</blockquote>
-<p>As an aside: if you try to run the code it won&apos;t work, but not because it&apos;s not correct. It&apos;s only because it is a fragment of a larger program and lacks some code such as the function updateCorpDatabase(), the initialisation of the global variables referenced (e.g. quarter, profit) and, of course, the HandlesStuff() function also hasn&apos;t been called.</p>
-<pre class="language-"><code class="lang-JavaScript">function HandlesStuff(inputRecord, savedrecord, income1, income2, expenseType, revenue, expense0, expense1, expense2, screenx, screeny, success){
+}</p>
+<pre class="language-"><code>
+So functions help us to organise and enhance our code. But what makes good design? Is it just &quot;shorter is always better&quot;?
+
+## Good Design
+
+Design is important if we want our code to be understandable (both to other humans, but also to us in the future), to be easy to use and easy to expand.
+
+There are three main principles you need to know now: clarity, reusability and extensibility. There are also others, but they are deeply related to these three.
+
+To
+
+- Ease of Maintenance / Clarity
+    - Naming
+    - Formatting
+    - Commenting
+    - Clear logic
+    - Concise
+    - Avoiding Redundancy
+
+- Reusability
+    - DRY
+    - Single Reponsibility
+        - Avoiding global state (scope)
+        - Predictability and Ease of testing
+
+- Extensibility
+    - Avoiding being unnecessarily specific (e.g. magic numbers)
+
+&gt; Exercise: Find all the design issues with this function.
+
+As an aside: if you try to run the code it won&apos;t work, but not because it&apos;s not correct. It&apos;s only because it is a fragment of a larger program and lacks some code such as the function updateCorpDatabase(), the initialisation of the global variables referenced (e.g. quarter, profit) and, of course, the HandlesStuff() function also hasn&apos;t been called.
+
+``js
+function HandlesStuff(inputRecord, savedrecord, income1, income2, expenseType, revenue, expense0, expense1, expense2, screenx, screeny, success){
 
   var i;
   for ( i = 0; i &lt; 100; i++ ) {
@@ -694,8 +695,7 @@
       profit = revenue - expense2;
     }
 }
-</code></pre>
-<p>What is wrong with this function?</p>
+</code></pre><p>What is wrong with this function?</p>
 <ol>
 <li><p>Naming: the function has a bad name, HandleStuff() tells you nothing about what the function does. It&apos;s also considered bad practice to name variables vaguely by separating them through numbers (debt1, expense1, etc). If you find yourself doing this then you should either use an array (such as expenses[]) or use a more specific name for each variable (such as pastIncome and currentIncome). There is also inconsistency in the use of camel casing (inputRecord versus savedrecord).</p>
 </li>
@@ -714,23 +714,21 @@
 <li><p>Magic numbers: the function uses several magic numbers: 100, 4.0, 1, 2 and 3. These are numbers that are used directly in an expression rather than saving them first in a variable. This is discouraged as it makes it more difficult to manipulate the values. If we were to save them in a variable they would be easier to find and modify.</p>
 </li>
 </ol>
-<pre class="language-"><code class="lang-JavaScript">tenSquared =  10*10
-tenCubed = 10*10*10
+<p>``js
+tenSquared =  10<em>10
+tenCubed = 10</em>10*10</p>
+<p>x = 10
+xSquared =  x<em>x
+xCubed = x</em>x*x</p>
+<pre class="language-"><code>
+9. Useless parameters: some of the function&apos;s parameters are never used (screenx, screeny and success). They should be removed because they are confusing. It is tempting when you&apos;re starting to code a function to add more parameters thinking that you might need them, but it&apos;s important to remove them if you don&apos;t end up using them.
 
-x = 10
-xSquared =  x*x
-xCubed = x*x*x
-</code></pre>
-<ol>
-<li><p>Useless parameters: some of the function&apos;s parameters are never used (screenx, screeny and success). They should be removed because they are confusing. It is tempting when you&apos;re starting to code a function to add more parameters thinking that you might need them, but it&apos;s important to remove them if you don&apos;t end up using them.</p>
-</li>
-<li><p>DRY principle: the function breaks the DRY (Don&apos;t Repeat Yourself) rule. The expression profit = revenue - expense0 is written 3 times unnecessarily, the only difference being whether it&apos;s the first, second or third expense. This variable can be restructured into an array.</p>
-</li>
-</ol>
-<pre class="language-"><code class="lang-JavaScript">var expense = [expense1,expense2,expense3];
+10. DRY principle: the function breaks the DRY (Don&apos;t Repeat Yourself) rule. The expression profit = revenue - expense0 is written 3 times unnecessarily, the only difference being whether it&apos;s the first, second or third expense. This variable can be restructured into an array.
+
+``js
+var expense = [expense1,expense2,expense3];
 profit = revenue - expense[expenseType];
-</code></pre>
-<blockquote>
+</code></pre><blockquote>
 <p>Exercise: We have the following problem to solve, write really bad code that gives the right result. Tell us why it is bad.</p>
 </blockquote>
 <p>Write a function that will print out the number of vowels that are in mentors&apos; names.</p>
@@ -770,46 +768,54 @@ profit = revenue - expense[expenseType];
 <p>There are several ways to create objects - we&apos;ve already used one before: <em>object literals</em>.</p>
 <p><code>var person = {}</code></p>
 <p>In the example above an empty object is created. Let&apos;s create a more sophisticated object.</p>
-<pre class="language-"><code class="lang-javascript"><span class="token keyword">var</span> person <span class="token operator">=</span> <span class="token punctuation">{</span>
-  name<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">&apos;Simon&apos;</span><span class="token punctuation">,</span> <span class="token string">&apos;Muong&apos;</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-  age<span class="token punctuation">:</span> <span class="token number">32</span><span class="token punctuation">,</span>
-  gender<span class="token punctuation">:</span> <span class="token string">&apos;male&apos;</span><span class="token punctuation">,</span>
-  interests<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">&apos;javascript&apos;</span><span class="token punctuation">,</span> <span class="token string">&apos;html&apos;</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-  greeting<span class="token punctuation">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token function">alert</span><span class="token punctuation">(</span><span class="token string">&apos;Hi! I\&apos;m &apos;</span> <span class="token operator">+</span> <span class="token keyword">this</span><span class="token punctuation">.</span>name<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token string">&apos;.&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span class="token punctuation">;</span>
-</code></pre>
-<p>So what is going on here? Well, an object is made up of multiple <em>properties</em>, each of which have a <em>name</em> (e.g. <code>name</code> and <code>age</code> above), and a <em>value</em> (e.g. <code>[&apos;Bob&apos;, &apos;Smith&apos;]</code> and <code>32</code>). Each name/value pair must be separated by a comma, and the name and value in each case are separated by a colon. The syntax always follows this pattern.</p>
-<p>The value of an object property can be pretty much anything &#x2014; in our person object we&apos;ve got a string, a number, two arrays, and two functions. The first four items are <em>data items</em>, and are referred to as the object&apos;s properties. The last two items are functions that allow the object to do something with that data, and are referred to as the object&apos;s <code>methods</code>.</p>
-<blockquote>
-<p>Methods are functions that allow the object to do something with its data.</p>
-<p>The <code>this</code> keyword refers to the context when the method is called. In this case, when calling <code>person.greeting()</code> the context is <code>person</code>, so <code>this</code> refers to that person object. <code>this</code> is a much more complicated and confusing topic in JavaScript but we will come back to it again and again.</p>
-</blockquote>
-<p>An object like the one in our example is referred to as an object literal &#x2014; we&apos;ve <strong>literally</strong> written out the object contents as we&apos;ve come to create it. This is in contrast to objects instantiated from classes, which we&apos;ll look at next.</p>
-<blockquote>
-<p>Exercise: write this Person object that we just implemented. Add a <code>method</code> called <code>printBio</code> that prints the interests of that person.</p>
-<p>Exercise: create another object for a different person with the same <code>methods</code> but different data (different name, interests etc...)</p>
-</blockquote>
-<h2 id="constructor-functions">Constructor functions</h2>
-<blockquote>
-<p>Exercise: Let&apos;s create a function called <code>createPerson</code> that takes a <code>name</code> as a parameter and returns an object.</p>
-</blockquote>
-<p>Some programming languages have a <code>class</code> keyword that allows programmers to create that template of an Object. 
-JavaScript, instead, uses special functions called constructor functions to define objects and their features. They are useful because you&apos;ll often come across situations in which you don&apos;t know how many objects you will be creating; constructors provide the means to create as many objects as you need in an effective way, attaching data and functions to them as required.</p>
-<p>Let&apos;s look at how <code>constructor functions</code> work.</p>
-<pre class="language-"><code class="lang-javascript"><span class="token keyword">function</span> <span class="token function">Person</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> name<span class="token punctuation">;</span>
-  <span class="token keyword">this</span><span class="token punctuation">.</span>greeting <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token function">alert</span><span class="token punctuation">(</span><span class="token string">&apos;Hi! I am &apos;</span> <span class="token operator">+</span> <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">+</span> <span class="token string">&apos;.&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-</code></pre>
-<p>This is the <em>template</em> that defines what a Person should look like. Now let&apos;s create a specific object, an instance of Person.</p>
-<pre class="language-"><code class="lang-javascript"><span class="token keyword">var</span> sally <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Person</span><span class="token punctuation">(</span><span class="token string">&apos;Sally&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>sally<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// { name: &apos;Sally&apos;: greeting: &lt;Function&gt; }</span>
-console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>sally <span class="token keyword">instanceof</span> <span class="token class-name">Person</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// true</span>
-</code></pre>
+<p>``js
+var person = {
+  name: [&apos;Simon&apos;, &apos;Muong&apos;],
+  age: 32,
+  gender: &apos;male&apos;,
+  interests: [&apos;javascript&apos;, &apos;html&apos;],
+  greeting: function() {
+    alert(&apos;Hi! I\&apos;m &apos; + this.name[0] + &apos;.&apos;);
+  }
+};</p>
+<pre class="language-"><code>
+So what is going on here? Well, an object is made up of multiple _properties_, each of which have a _name_ (e.g. `name` and `age` above), and a _value_ (e.g. `[&apos;Bob&apos;, &apos;Smith&apos;]` and `32`). Each name/value pair must be separated by a comma, and the name and value in each case are separated by a colon. The syntax always follows this pattern.
+
+The value of an object property can be pretty much anything &#x2014; in our person object we&apos;ve got a string, a number, two arrays, and two functions. The first four items are _data items_, and are referred to as the object&apos;s properties. The last two items are functions that allow the object to do something with that data, and are referred to as the object&apos;s `methods`.
+
+&gt; Methods are functions that allow the object to do something with its data.
+
+&gt; The `this` keyword refers to the context when the method is called. In this case, when calling `person.greeting()` the context is `person`, so `this` refers to that person object. `this` is a much more complicated and confusing topic in JavaScript but we will come back to it again and again.
+
+An object like the one in our example is referred to as an object literal &#x2014; we&apos;ve **literally** written out the object contents as we&apos;ve come to create it. This is in contrast to objects instantiated from classes, which we&apos;ll look at next.
+
+&gt; Exercise: write this Person object that we just implemented. Add a `method` called `printBio` that prints the interests of that person.
+
+&gt; Exercise: create another object for a different person with the same `methods` but different data (different name, interests etc...)
+
+## Constructor functions
+
+&gt; Exercise: Let&apos;s create a function called `createPerson` that takes a `name` as a parameter and returns an object.
+
+Some programming languages have a `class` keyword that allows programmers to create that template of an Object. 
+JavaScript, instead, uses special functions called constructor functions to define objects and their features. They are useful because you&apos;ll often come across situations in which you don&apos;t know how many objects you will be creating; constructors provide the means to create as many objects as you need in an effective way, attaching data and functions to them as required.
+
+Let&apos;s look at how `constructor functions` work.
+
+
+``js
+function Person(name) {
+  this.name = name;
+  this.greeting = function() {
+    alert(&apos;Hi! I am &apos; + this.name + &apos;.&apos;);
+  };
+}
+</code></pre><p>This is the <em>template</em> that defines what a Person should look like. Now let&apos;s create a specific object, an instance of Person.</p>
+<p>``js
+var sally = new Person(&apos;Sally&apos;);
+console.log(sally); // { name: &apos;Sally&apos;: greeting: <function> }
+console.log(sally instanceof Person); // true
+```</function></p>
 <p>You&apos;ll see that the <code>this</code> keyword is being used again here. What exactly is <code>this</code>? When a constructor function is called with the <code>new</code> operator, a new object is created (called an instance), and the <code>this</code> keyword is a reference to that object. In our example we add a property (<code>name</code>) and a method (<code>greeting</code>) to <code>this</code>. Now, whenever Person is instantiated, it returns an object with a <code>name</code> property and a <code>greeting</code> method.</p>
 <p>You&apos;ll also notice that the constructor function take a parameter, <code>name</code> (which gets passed to Person in the example above). When Person is instantiated the <code>name</code> parameter is assigned to <code>this.name</code> (as well as being used to configure the greeting method).</p>
 <blockquote>
@@ -875,7 +881,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Week 8 - Good design and OO","level":"1.5.2","depth":2,"next":{"title":"Week 9 - More Arrays and ES6","level":"1.5.3","depth":2,"path":"js-core-2/lesson6.md","ref":"js-core-2/lesson6.md","articles":[]},"previous":{"title":"Week 7 - JS in the Browser","level":"1.5.1","depth":2,"path":"js-core-2/lesson4.md","ref":"js-core-2/lesson4.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["prism","-highlight"],"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"js-core-2/lesson5.md","mtime":"2017-07-22T13:44:01.196Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-07-22T13:45:04.157Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Week 8 - Good design and OO","level":"1.5.2","depth":2,"next":{"title":"Week 9 - More Arrays and ES6","level":"1.5.3","depth":2,"path":"js-core-2/lesson6.md","ref":"js-core-2/lesson6.md","articles":[]},"previous":{"title":"Week 7 - JS in the Browser","level":"1.5.1","depth":2,"path":"js-core-2/lesson4.md","ref":"js-core-2/lesson4.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["prism","-highlight"],"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"js-core-2/lesson5.md","mtime":"2017-07-29T08:16:56.110Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-07-29T08:18:07.835Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

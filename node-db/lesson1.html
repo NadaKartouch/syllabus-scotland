@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Week 11 · GitBook</title>
+        <title>Week 11 - Node and Express 101 · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.2">
@@ -345,7 +345,7 @@
                 <a href="lesson1.html">
             
                     
-                    Week 11
+                    Week 11 - Node and Express 101
             
                 </a>
             
@@ -358,7 +358,7 @@
                 <a href="lesson2.html">
             
                     
-                    Week 12
+                    Week 12 - Templating and APIs 
             
                 </a>
             
@@ -371,7 +371,7 @@
                 <a href="lesson3.html">
             
                     
-                    Week 13
+                    Week 13 - Promises and Mongo
             
                 </a>
             
@@ -563,7 +563,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >Week 11</a>
+        <a href=".." >Week 11 - Node and Express 101</a>
     </h1>
 </div>
 
@@ -578,8 +578,7 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <p><img src="https://img.shields.io/badge/status-draft-darkred.svg" alt=""> </p>
-<h1 id="node-1">Node 1</h1>
+                                <h1 id="node-1">Node 1</h1>
 <p><strong>What we will learn today?</strong></p>
 <ul>
 <li>Node and its ecosystem</li>
@@ -602,65 +601,63 @@
 </blockquote>
 <h1 id="what-is-it-used-for">What is it used for?</h1>
 <ul>
-<li>web servers, so creating a dynamic websites</li>
+<li>web servers, so creating dynamic websites</li>
 <li>set up a local web development environment</li>
 <li>easier to build desktop applications with Electron: Slack, Visual Code, Atom </li>
 <li>some of the biggest companies use Node.js in production: Netflix, Walmart, IBM, etc.</li>
 <li>JavaScript everywhere (used to be PHP, Python, JavaScript, MySQL, Apache, now JavaScript full stack)</li>
 </ul>
 <h1 id="a-simple-nodejs-server">A simple Node.js server</h1>
-<p><strong>Simple server</strong></p>
-<pre class="language-"><code class="lang-javascript"><span class="token keyword">const</span> http <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">&apos;http&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>     
+<p><strong>Simple server</strong>
+``js
+const http = require(&apos;http&apos;);     </p>
+<p>const server = http.createServer(function (req, res) {
+    res.end(&quot;Hello World!&quot;)
+});</p>
+<p>server.listen(5000);     </p>
+<p>console.log(&apos;Node.js web server at port 5000 is running..&apos;)</p>
+<pre class="language-"><code>
+**Server with two routes**    
+``js
+const http = require(&apos;http&apos;);     
 
-<span class="token keyword">const</span> server <span class="token operator">=</span> http<span class="token punctuation">.</span><span class="token function">createServer</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span>req<span class="token punctuation">,</span> res<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    res<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token string">&quot;Hello World!&quot;</span><span class="token punctuation">)</span>
-<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+const server = http.createServer(function (req, res) {
 
-server<span class="token punctuation">.</span><span class="token function">listen</span><span class="token punctuation">(</span><span class="token number">5000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>     
+    if (req.url === &apos;/&apos;) { //check the URL of the current request
 
-console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&apos;Node.js web server at port 5000 is running..&apos;</span><span class="token punctuation">)</span>
-</code></pre>
-<p><strong>Server with two routes</strong>    </p>
-<pre class="language-"><code class="lang-javascript"><span class="token keyword">const</span> http <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">&apos;http&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>     
+    console.log(&quot;New request to main page at &quot; + Date())
 
-<span class="token keyword">const</span> server <span class="token operator">=</span> http<span class="token punctuation">.</span><span class="token function">createServer</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span>req<span class="token punctuation">,</span> res<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        // set response header
+        res.writeHead(200, { &apos;Content-Type&apos;: &apos;text/html&apos; }); 
 
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>req<span class="token punctuation">.</span>url <span class="token operator">===</span> <span class="token string">&apos;/&apos;</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment" spellcheck="true">//check the URL of the current request</span>
+        // set response content    
+        res.write(&apos;<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h1</span><span class="token punctuation">&gt;</span></span>This is home Page.<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h1</span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">&gt;</span></span>&apos;);
+        res.write(&apos;<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h2</span><span class="token punctuation">&gt;</span></span>The time is: &apos; + Date() + &apos;<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h2</span><span class="token punctuation">&gt;</span></span>&apos;);
+        res.end();
 
-    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&quot;New request to main page at &quot;</span> <span class="token operator">+</span> <span class="token function">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    } else if (req.url === &quot;/student&quot;) {
 
-        <span class="token comment" spellcheck="true">// set response header</span>
-        res<span class="token punctuation">.</span><span class="token function">writeHead</span><span class="token punctuation">(</span><span class="token number">200</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token string">&apos;Content-Type&apos;</span><span class="token punctuation">:</span> <span class="token string">&apos;text/html&apos;</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+    console.log(&quot;New request to Student page at &quot; + Date())
 
-        <span class="token comment" spellcheck="true">// set response content    </span>
-        res<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span><span class="token string">&apos;&lt;html&gt;&lt;body&gt;&lt;h1&gt;This is home Page.&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        res<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span><span class="token string">&apos;&lt;h2&gt;The time is: &apos;</span> <span class="token operator">+</span> <span class="token function">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">&apos;&lt;/h2&gt;&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        res<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        res.writeHead(200, { &apos;Content-Type&apos;: &apos;text/html&apos; });
+        res.write(&apos;<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h1</span><span class="token punctuation">&gt;</span></span>This is student Page.<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h1</span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">&gt;</span></span>&apos;);
+        res.end();
 
-    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>req<span class="token punctuation">.</span>url <span class="token operator">===</span> <span class="token string">&quot;/student&quot;</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    } else {
+        res.end(&apos;<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h2</span><span class="token punctuation">&gt;</span></span>Invalid Request at &apos; + Date() + &apos;<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h2</span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">&gt;</span></span>&apos;);
+    }
+});
 
-    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&quot;New request to Student page at &quot;</span> <span class="token operator">+</span> <span class="token function">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+server.listen(5000);     
 
-        res<span class="token punctuation">.</span><span class="token function">writeHead</span><span class="token punctuation">(</span><span class="token number">200</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token string">&apos;Content-Type&apos;</span><span class="token punctuation">:</span> <span class="token string">&apos;text/html&apos;</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        res<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span><span class="token string">&apos;&lt;html&gt;&lt;body&gt;&lt;h1&gt;This is student Page.&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        res<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
-        res<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token string">&apos;&lt;html&gt;&lt;body&gt;&lt;h2&gt;Invalid Request at &apos;</span> <span class="token operator">+</span> <span class="token function">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">&apos;&lt;/h2&gt;&lt;/body&gt;&lt;/html&gt;&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-server<span class="token punctuation">.</span><span class="token function">listen</span><span class="token punctuation">(</span><span class="token number">5000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>     
-
-console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&apos;Node.js web server at port 5000 is running..&apos;</span><span class="token punctuation">)</span>
-</code></pre>
-<h3 id="exercise">Exercise</h3>
+console.log(&apos;Node.js web server at port 5000 is running..&apos;)
+</code></pre><h3 id="exercise">Exercise</h3>
 <p>Can you add another route <code>/mentor</code>?  </p>
 <h1 id="what-is-http">What is HTTP?</h1>
 <blockquote>
 <p>It is a protocol that browser and the server uses to talk to each other  </p>
 </blockquote>
-<p><img src="https://github.com/Michael-Antczak/syllabus/blob/scotland/node-db/http_diagram.png" alt="HTTP">  </p>
+<p><img src="https://github.com/CodeYourFuture/syllabus/blob/scotland/node-db/http_diagram.png" alt="HTTP">  </p>
 <p>Read more on Mozilla&apos;s <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Overview" target="_blank">An overview of HTTP</a></p>
 <h1 id="nodejs-and-express">Node.js and Express</h1>
 <p><a href="http://expressjs.com/" target="_blank">Express</a> is one of the most widely-used frameworks for Node.js. It simplifies base features of Node.js, making it easier and faster to build your application&apos;s backend. Learning Express gives you a great foundation for becoming a Node.js developer.</p>
@@ -686,53 +683,70 @@ console<span class="token punctuation">.</span><span class="token function">log<
 <h1 id="what-is-json">What is JSON?</h1>
 <p>JSON is a type of file for structuring data in a readable way. It is also a really popular format for sending data across the web.
 JSON is a string representation of a Javascript object. JSON objects convert really easily to Javascript objects, and vice versa, with <code>JSON.parse()</code> and <code>JSON.stringify()</code>.</p>
-<pre class="language-"><code class="lang-javascript"><span class="token punctuation">{</span>
-  <span class="token string">&quot;firstName&quot;</span><span class="token punctuation">:</span> <span class="token string">&quot;John&quot;</span><span class="token punctuation">,</span>
-  <span class="token string">&quot;lastName&quot;</span><span class="token punctuation">:</span> <span class="token string">&quot;Smith&quot;</span><span class="token punctuation">,</span>
-  <span class="token string">&quot;isAlive&quot;</span><span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
-  <span class="token string">&quot;age&quot;</span><span class="token punctuation">:</span> <span class="token number">25</span><span class="token punctuation">,</span>
-  <span class="token string">&quot;address&quot;</span><span class="token punctuation">:</span> <span class="token punctuation">{</span>
-    <span class="token string">&quot;streetAddress&quot;</span><span class="token punctuation">:</span> <span class="token string">&quot;21 2nd Street&quot;</span><span class="token punctuation">,</span>
-    <span class="token string">&quot;city&quot;</span><span class="token punctuation">:</span> <span class="token string">&quot;New York&quot;</span><span class="token punctuation">,</span>
-    <span class="token string">&quot;state&quot;</span><span class="token punctuation">:</span> <span class="token string">&quot;NY&quot;</span><span class="token punctuation">,</span>
-    <span class="token string">&quot;postalCode&quot;</span><span class="token punctuation">:</span> <span class="token string">&quot;10021-3100&quot;</span>
-  <span class="token punctuation">}</span><span class="token punctuation">,</span>
-  <span class="token string">&quot;phoneNumbers&quot;</span><span class="token punctuation">:</span> <span class="token punctuation">[</span>
-    <span class="token punctuation">{</span>
-      <span class="token string">&quot;type&quot;</span><span class="token punctuation">:</span> <span class="token string">&quot;home&quot;</span><span class="token punctuation">,</span>
-      <span class="token string">&quot;number&quot;</span><span class="token punctuation">:</span> <span class="token string">&quot;212 555-1234&quot;</span>
-    <span class="token punctuation">}</span><span class="token punctuation">,</span>
-    <span class="token punctuation">{</span>
-      <span class="token string">&quot;type&quot;</span><span class="token punctuation">:</span> <span class="token string">&quot;office&quot;</span><span class="token punctuation">,</span>
-      <span class="token string">&quot;number&quot;</span><span class="token punctuation">:</span> <span class="token string">&quot;646 555-4567&quot;</span>
-    <span class="token punctuation">}</span><span class="token punctuation">,</span>
-    <span class="token punctuation">{</span>
-      <span class="token string">&quot;type&quot;</span><span class="token punctuation">:</span> <span class="token string">&quot;mobile&quot;</span><span class="token punctuation">,</span>
-      <span class="token string">&quot;number&quot;</span><span class="token punctuation">:</span> <span class="token string">&quot;123 456-7890&quot;</span>
-    <span class="token punctuation">}</span>
-  <span class="token punctuation">]</span><span class="token punctuation">,</span>
-  <span class="token string">&quot;children&quot;</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-  <span class="token string">&quot;spouse&quot;</span><span class="token punctuation">:</span> <span class="token keyword">null</span>
-<span class="token punctuation">}</span>
-</code></pre>
-<h1 id="step-2---installing-express">Step 2 - Installing Express</h1>
-<p>Before we write any code, you&apos;ll need to install the Express library. We&apos;re going to use the <strong><a href="https://www.npmjs.com/" target="_blank">Node Package Manager (npm)</a></strong> to download it using the <strong><code>npm install</code></strong> command.</p>
-<p>NPM is the place to go to download other Node code written by other people.  There are thousands of open-source, 3rd-party Node modules (also known as &quot;packages&quot;) by other people that you can download and use in your own projects. </p>
-<p>As we install Express, we&apos;ll need to update the <code>package.json</code> to add Express as a dependency. We do this so that other people working on the project will know to install Express before running any of the code. This can be done by adding <strong><code>--save</code></strong> to the end of your command.</p>
-<p>Run the following command in your terminal:</p>
-<p><code>$ npm install express --save</code></p>
-<p>Express should now be installed. Check your <code>package.json</code> file to make sure it has been added as a dependency. It will look like this:</p>
-<p><img src="https://cloud.githubusercontent.com/assets/10683087/16382664/be35f0b4-3c79-11e6-82b6-ae9e4a037c3f.png" alt="package.json screenshot"></p>
-<h1 id="step-3---building-the-server">Step 3 - Building the server</h1>
-<p>The first thing we need to do is build our server. You will always need to build a server when writing back-end code. A server can be built in pure Node.js, but Express gives us simpler syntax to work with.</p>
-<h2 id="1-create-a-serverjs-file">1. Create a <code>server.js</code> file</h2>
-<p>Let&apos;s build our server! Before we do anything, let&apos;s create a new file called <code>server.js</code>. This is where all our server code is going to live.</p>
-<h2 id="2-require-the-express-library">2. <code>require</code> the <code>express</code> library</h2>
-<p>We already installed Express in Step 2, but we need to make sure it is included in this file specifically so we can make use of its methods. In Node.js, when you want to access the functionality of a library or module in another file, you <code>require</code> it.</p>
-<p>To import Express, write the following inside <code>server.js</code>:</p>
-<pre class="language-"><code class="lang-js"><span class="token keyword">const</span> express <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">&apos;express&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-</code></pre>
-<blockquote>
+<p>``js
+{
+  &quot;firstName&quot;: &quot;John&quot;,
+  &quot;lastName&quot;: &quot;Smith&quot;,
+  &quot;isAlive&quot;: true,
+  &quot;age&quot;: 25,
+  &quot;address&quot;: {
+    &quot;streetAddress&quot;: &quot;21 2nd Street&quot;,
+    &quot;city&quot;: &quot;New York&quot;,
+    &quot;state&quot;: &quot;NY&quot;,
+    &quot;postalCode&quot;: &quot;10021-3100&quot;
+  },
+  &quot;phoneNumbers&quot;: [
+    {
+      &quot;type&quot;: &quot;home&quot;,
+      &quot;number&quot;: &quot;212 555-1234&quot;
+    },
+    {
+      &quot;type&quot;: &quot;office&quot;,
+      &quot;number&quot;: &quot;646 555-4567&quot;
+    },
+    {
+      &quot;type&quot;: &quot;mobile&quot;,
+      &quot;number&quot;: &quot;123 456-7890&quot;
+    }
+  ],
+  &quot;children&quot;: [],
+  &quot;spouse&quot;: null
+}</p>
+<pre class="language-"><code>
+# Step 2 - Installing Express
+
+Before we write any code, you&apos;ll need to install the Express library. We&apos;re going to use the **[Node Package Manager (npm)](https://www.npmjs.com/)** to download it using the **`npm install`** command.
+
+NPM is the place to go to download other Node code written by other people.  There are thousands of open-source, 3rd-party Node modules (also known as &quot;packages&quot;) by other people that you can download and use in your own projects. 
+
+As we install Express, we&apos;ll need to update the `package.json` to add Express as a dependency. We do this so that other people working on the project will know to install Express before running any of the code. This can be done by adding **`--save`** to the end of your command.
+
+Run the following command in your terminal:
+
+`$ npm install express --save`
+
+Express should now be installed. Check your `package.json` file to make sure it has been added as a dependency. It will look like this:
+
+![package.json screenshot](https://cloud.githubusercontent.com/assets/10683087/16382664/be35f0b4-3c79-11e6-82b6-ae9e4a037c3f.png)
+
+# Step 3 - Building the server
+
+The first thing we need to do is build our server. You will always need to build a server when writing back-end code. A server can be built in pure Node.js, but Express gives us simpler syntax to work with.
+
+
+## 1. Create a `server.js` file
+
+Let&apos;s build our server! Before we do anything, let&apos;s create a new file called `server.js`. This is where all our server code is going to live.
+
+## 2. `require` the `express` library
+
+We already installed Express in Step 2, but we need to make sure it is included in this file specifically so we can make use of its methods. In Node.js, when you want to access the functionality of a library or module in another file, you `require` it.
+
+To import Express, write the following inside `server.js`:
+
+```js
+const express = require(&apos;express&apos;);
+</code></pre><blockquote>
 <p>We will try and get used to ES6 syntax - so use <code>const</code> and <code>let</code> instead of <code>var</code>.</p>
 </blockquote>
 <h2 id="3-initialise-the-server">3. Initialise the server</h2>
@@ -819,7 +833,7 @@ app<span class="token punctuation">.</span><span class="token function">listen</
 <h3 id="what-is-an-endpoint">What is an endpoint?</h3>
 <p>An endpoint is the part of the URL which comes after <code>/</code>. For example: <code>/chocolate</code> is the &quot;chocolate&quot; endpoint. It&apos;s the URL to which you send a request.</p>
 <h3 id="what-is-url">What is URL?</h3>
-<p><img src="https://github.com/Michael-Antczak/syllabus/blob/scotland/node-db/http1-url-structure.png" alt="alt text" title="URL"> </p>
+<p><img src="https://github.com/CodeYourFuture/syllabus/blob/scotland/node-db/http1-url-structure.png" alt="alt text" title="URL"> </p>
 <h2 id="1-create-your-own-endpoints-and-send-different-responses">1. Create your own endpoints and send different responses</h2>
 <p>We&apos;re going to try sending different responses at different endpoints. Remember the <code>app.get()</code> method? To set up routing in your server, we just need to repeat this method with different endpoints.</p>
 <p>For example:</p>
@@ -994,39 +1008,6 @@ app<span class="token punctuation">.</span><span class="token keyword">get</span
 <p>Your <code>script.js</code> file will want to receive the JSON containing your blog posts.  Your job is to make that happen!</p>
 <p>Express has a handy method called <code>res.sendFile()</code> that makes it easy to send files back to the client.  Feel free to use this with your JSON.</p>
 <p>If all goes well, you should have a fully functional CMS!</p>
-<h2 id="deploying-to-heroku">Deploying to Heroku</h2>
-<p>Heroku is a cloud platform as a service (PaaS) that lets companies build, deliver, monitor, and scale apps. Developers use Heroku to deploy, manage, and scale modern apps. Heroku is fully managed, giving developers the freedom to focus on their core product without the distraction of maintaining servers, hardware, or infrastructure.</p>
-<ol>
-<li>Go to <a href="https://signup.heroku.com/" target="_blank">https://signup.heroku.com/</a> and signup for an account<ul>
-<li>It will send a verification to your email so make sure you&apos;ve entered a valid email</li>
-</ul>
-</li>
-<li>Download the Heroku CLI from <a href="https://devcenter.heroku.com/articles/heroku-cli#download-and-install" target="_blank">https://devcenter.heroku.com/articles/heroku-cli#download-and-install</a></li>
-<li>We need to do a small tweak to our app to be ready to be deployed on Heroku.</li>
-</ol>
-<p>On server.js, add the <code>process.env.PORT</code> bit of code</p>
-<pre class="language-"><code class="lang-js">app<span class="token punctuation">.</span><span class="token function">listen</span><span class="token punctuation">(</span>process<span class="token punctuation">.</span>env<span class="token punctuation">.</span>PORT <span class="token operator">||</span> <span class="token number">3000</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&quot;Server is listening on port 3000. Ready to accept requests!&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-</code></pre>
-<p>This tells our server to look for an <strong>environment variable</strong> called <code>PORT</code> and use it to run the server, otherwise use Port 3000. When the server runs on heroku, then Heroku sets the PORT to the correct value.</p>
-<p><code>git add</code> and <code>commit</code> your change.</p>
-<ol>
-<li>Now open the command line in the folder where you have your <strong>express-workshop</strong> repo running. If you run the command <code>git remote -v</code>, you should see one remote <strong>origin</strong> pointing to your repo.</li>
-</ol>
-<p>Run these commands:</p>
-<p><code>heroku login</code></p>
-<blockquote>
-<p>This will ask you for your heroku email and password that you used to register. Once you&apos;re logged in,</p>
-</blockquote>
-<p><code>heroku create</code></p>
-<blockquote>
-<p>The heroku create command creates a new application on Heroku &#x2013; along with a git remote that must be used to receive your application source.</p>
-</blockquote>
-<p>If you check <code>git remote -v</code>, you should see a second remote called <strong>heroku</strong>.</p>
-<p>Now push your code to heroku <code>git push heroku master</code>. The push will run few commands from Heroku, then you should see a url similar to <code>https://some-random-name-XXXX.herokuapp.com</code> - go to the Url and if all goes well, your app should be up and running.</p>
-<p>To read more about Heroku and deploying Node Apps to Heroku, check
-<a href="https://devcenter.heroku.com/articles/git" target="_blank">https://devcenter.heroku.com/articles/git</a> and <a href="https://devcenter.heroku.com/articles/getting-started-with-nodejs#set-up" target="_blank">https://devcenter.heroku.com/articles/getting-started-with-nodejs#set-up</a></p>
 <h1 id="group-research-topics">Group Research Topics</h1>
 <ul>
 <li>Security: (https, same origin, cookies, xss etc..)</li>
@@ -1093,7 +1074,7 @@ Deploying Node Apps - <a href="https://devcenter.heroku.com/articles/getting-sta
             
                 
                 
-                <a href="lesson2.html" class="navigation navigation-next navigation-unique" aria-label="Next page: Week 12">
+                <a href="lesson2.html" class="navigation navigation-next navigation-unique" aria-label="Next page: Week 12 - Templating and APIs ">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -1104,7 +1085,7 @@ Deploying Node Apps - <a href="https://devcenter.heroku.com/articles/getting-sta
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Week 11","level":"1.6.1","depth":2,"next":{"title":"Week 12","level":"1.6.2","depth":2,"path":"node-db/lesson2.md","ref":"node-db/lesson2.md","articles":[]},"previous":{"title":"Node and DB","level":"1.6","depth":1,"ref":"","articles":[{"title":"Week 11","level":"1.6.1","depth":2,"path":"node-db/lesson1.md","ref":"node-db/lesson1.md","articles":[]},{"title":"Week 12","level":"1.6.2","depth":2,"path":"node-db/lesson2.md","ref":"node-db/lesson2.md","articles":[]},{"title":"Week 13","level":"1.6.3","depth":2,"path":"node-db/lesson3.md","ref":"node-db/lesson3.md","articles":[]},{"title":"Week 14","level":"1.6.4","depth":2,"path":"node-db/lesson4.md","ref":"node-db/lesson4.md","articles":[]},{"title":"Week 15","level":"1.6.5","depth":2,"path":"node-db/lesson5.md","ref":"node-db/lesson5.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["prism","-highlight"],"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"node-db/lesson1.md","mtime":"2017-07-22T13:44:01.200Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-07-22T13:45:04.157Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Week 11 - Node and Express 101","level":"1.6.1","depth":2,"next":{"title":"Week 12 - Templating and APIs ","level":"1.6.2","depth":2,"path":"node-db/lesson2.md","ref":"node-db/lesson2.md","articles":[]},"previous":{"title":"Node and DB","level":"1.6","depth":1,"ref":"","articles":[{"title":"Week 11 - Node and Express 101","level":"1.6.1","depth":2,"path":"node-db/lesson1.md","ref":"node-db/lesson1.md","articles":[]},{"title":"Week 12 - Templating and APIs ","level":"1.6.2","depth":2,"path":"node-db/lesson2.md","ref":"node-db/lesson2.md","articles":[]},{"title":"Week 13 - Promises and Mongo","level":"1.6.3","depth":2,"path":"node-db/lesson3.md","ref":"node-db/lesson3.md","articles":[]},{"title":"Week 14","level":"1.6.4","depth":2,"path":"node-db/lesson4.md","ref":"node-db/lesson4.md","articles":[]},{"title":"Week 15","level":"1.6.5","depth":2,"path":"node-db/lesson5.md","ref":"node-db/lesson5.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["prism","-highlight"],"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"node-db/lesson1.md","mtime":"2017-07-29T08:16:56.138Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-07-29T08:18:07.835Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

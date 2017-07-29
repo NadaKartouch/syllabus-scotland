@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Week 13 · GitBook</title>
+        <title>Week 13 - Promises and Mongo · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.2">
@@ -347,7 +347,7 @@
                 <a href="lesson1.html">
             
                     
-                    Week 11
+                    Week 11 - Node and Express 101
             
                 </a>
             
@@ -360,7 +360,7 @@
                 <a href="lesson2.html">
             
                     
-                    Week 12
+                    Week 12 - Templating and APIs 
             
                 </a>
             
@@ -373,7 +373,7 @@
                 <a href="lesson3.html">
             
                     
-                    Week 13
+                    Week 13 - Promises and Mongo
             
                 </a>
             
@@ -565,7 +565,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >Week 13</a>
+        <a href=".." >Week 13 - Promises and Mongo</a>
     </h1>
 </div>
 
@@ -580,72 +580,47 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h2 id="week-3---node-cv-app">WEEK 3 - Node CV App</h2>
-<h3 id="morning">Morning!</h3>
-<p>We&apos;ve set up another repository (<a href="https://github.com/Code-Your-Future/node-cv-app" target="_blank">https://github.com/Code-Your-Future/node-cv-app</a>) for you to fork (grab a mentor if you&apos;re curious or confused about all the boilerplate).</p>
-<h2 id="goal">Goal</h2>
-<p>Remember the CV you made all those months ago? This week you will be building an updated version powered by Node.js. You will fetch data from a real-world API (the Github API), perform some operations on that data, and then use it to populate Handlebars templates (this should sound familiar, because you did a similar thing last week). Finally, you will deploy your CV to the internet.</p>
-<h2 id="practical-tasks">Practical tasks</h2>
-<h3 id="api-client">API client</h3>
+                                <p><img src="https://img.shields.io/badge/status-draft-darkred.svg" alt=""> </p>
+<h1 id="node-3">Node 3</h1>
+<p><strong>What we will learn today?</strong></p>
 <ul>
-<li>complete the <code>fetchFromGithub</code> method in <code>/server/lib/github-client.js</code> so that the <strong>should retrieve user profile information</strong> test passes</li>
-<li><code>/users/{username}/events/public</code> is a github endpoint that returns all a user&apos;s activity on github. Use this, and the documentation about event types <a href="https://developer.github.com/v3/activity/events/types/" target="_blank">https://developer.github.com/v3/activity/events/types/</a>, to add a <code>getUserPullRequests</code> method to the github client which retrieves a list of a user&apos;s pull requests. The <strong>should retrieve user pull requests</strong> test should pass.</li>
+<li>Recap</li>
+<li>Promises</li>
+<li>MVC</li>
+<li>Mongo</li>
 </ul>
-<h3 id="controllers">Controllers</h3>
-<ul>
-<li>Set up a CV controller that outputs your existing HTML CV, using Handlebars templates (if you don&apos;t have your existing CV, make a simple one)</li>
-<li>Add your Github user profile and pull request information to this page by using the Github client</li>
-</ul>
-<h3 id="middleware">Middleware</h3>
-<ul>
-<li>add error handling middleware to send a 404 if the user requests some url not supported by your app, or 503 error if anything goes wrong</li>
-</ul>
-<h4 id="questions-to-think-about">Questions to think about</h4>
-<ul>
-<li>What approaches can you use to make it easier to work with complex data like the responses from the Github API?</li>
-<li>Why haven&apos;t we written all the code in a single <code>app.js</code> file?</li>
-<li>Why are we passing your Github user name from the controller to the github client? Why don&apos;t we just &apos;hard code&apos; it into the github client?</li>
-<li>How are controllers and middleware different? How are they similar?</li>
-</ul>
-<h3 id="extension-tasks">Extension tasks</h3>
-<ul>
-<li>use <code>?format=json</code> query string to send a json only response</li>
-<li>set up a user controller to send the same information, minus your CV, for any user. Try to minimise how much you copy and paste code - can some of the code you wrote be extracted into another shared module in your <code>/lib</code> directory</li>
-<li>using the documentation, find some other interesting data from the github api to put in your CV. Use <code>Promise.all()</code> to wait for all your api calls to respond, and output all the data in your CV page</li>
-<li>extend your error middleware to send a custom 404 response if a user is not found</li>
-</ul>
-<h3 id="deploying-to-heroku">Deploying to Heroku</h3>
-<ul>
-<li>follow this guide to get your app running on a server: <a href="https://devcenter.heroku.com/articles/getting-started-with-nodejs#introduction" target="_blank">https://devcenter.heroku.com/articles/getting-started-with-nodejs#introduction</a> (skip the &apos;prepare your app&apos; section)</li>
-</ul>
-<h2 id="important-concepts">Important concepts</h2>
-<ul>
-<li>Modular JavaScript:<ul>
-<li>D.R.Y.</li>
-<li><code>require</code> and <code>module.exports</code></li>
-<li>how and why to split your code out of <code>server.js</code> into <code>app.js</code>, <code>controllers/</code>, <code>lib/</code></li>
-</ul>
-</li>
-<li>Error handling<ul>
-<li>status codes: <code>404</code> vs <code>503</code></li>
-</ul>
-</li>
-<li>The lifecycle of a <code>request</code> and <code>response</code> in express<ul>
-<li>Middleware: <code>app.use()</code></li>
-<li>Routes: <code>app.get()</code>, <code>app.post()</code> etc.</li>
-<li>Route handling with Controllers</li>
-<li>sending a response: <code>response.render()</code>, <code>response.json()</code>, <code>response.send()</code> etc.</li>
-<li>what are the <code>req</code> &amp; <code>res</code> objects doing, really?</li>
-</ul>
-</li>
-<li>Requesting and using complex data from real-world APIs<ul>
-<li>doing async operations with callbacks and promises</li>
-<li>useful methods for dealing with JS data structures</li>
-<li>using documentation
-0Looking</li>
-</ul>
-</li>
-</ul>
+<hr>
+<h1 id="promises">Promises</h1>
+<p>Callbacks are a fundamental part of JavaScript - the fact that functions are <em>first-class citizens</em> and it&apos;s possible to pass them around is very powerful and makes JavaScript different from many other programming languages. You should learn how to read, write callbacks and be comfortable around them. Though, there are other more advanced solutions for tackling the callback hell.</p>
+<p><strong>Promises</strong> are a way to write async code that still appears as though it is executing in a top-down way, and handles more types of errors due to encouraged use of try/catch style error handling.</p>
+<blockquote>
+<p><strong>The Promise object</strong> represents the eventual completion (or failure) of an asynchronous operation, and its resulting value. <a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise" target="_blank">MDN</a></p>
+</blockquote>
+<p>This example from <a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise" target="_blank">MDN</a> helps to <strong>promisify</strong> the <code>setTimeout</code> example. </p>
+<p>``js
+let myFirstPromise = new Promise((resolve, reject) =&gt; {
+  // We call resolve(...) when what we were doing made async successful, and reject(...) when it failed.
+  // In this example, we use setTimeout(...) to simulate async code. 
+  // In reality, you will probably be using something like XHR or an HTML5 API.
+  setTimeout(function(){
+    resolve(&quot;Success!&quot;); // Yay! Everything went well!
+  }, 250);
+});</p>
+<p>myFirstPromise.then((successMessage) =&gt; {
+  // successMessage is whatever we passed in the resolve(...) function above.
+  // It doesn&apos;t have to be a string, but if it is only a succeed message, it probably will be.
+  console.log(&quot;Yay! &quot; + successMessage);
+});
+```</p>
+<blockquote>
+<p><strong>Exercise</strong>: Let&apos;s rewrite the code above using <code>fetch</code> which provides an alternative to <code>XmlHttpRequest</code> that uses a Promise-based API - <a href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch" target="_blank">https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch</a></p>
+</blockquote>
+<h1 id="mvc">MVC</h1>
+<blockquote>
+<p>Model&#x2013;view&#x2013;controller (MVC) is a software architectural pattern for implementing user interfaces on computers. It divides a given application into three interconnected parts in order to separate internal representations of information from the ways that information is presented to and accepted from the user. The MVC design pattern decouples these major components allowing for efficient code reuse and parallel development. (Wikipedia)</p>
+<p>Watch Wes Bos&apos; video about MVC together
+<strong>Exercise</strong>: create a <strong>controllers</strong> folder, add a <strong>blogController</strong> and move the logic for your routes (currently in <strong>routes/site-routes.js</strong>) to this new file.</p>
+</blockquote>
 
                                 
                                 </section>
@@ -673,7 +648,7 @@
 
             
                 
-                <a href="lesson2.html" class="navigation navigation-prev " aria-label="Previous page: Week 12">
+                <a href="lesson2.html" class="navigation navigation-prev " aria-label="Previous page: Week 12 - Templating and APIs ">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
@@ -689,7 +664,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Week 13","level":"1.6.3","depth":2,"next":{"title":"Week 14","level":"1.6.4","depth":2,"path":"node-db/lesson4.md","ref":"node-db/lesson4.md","articles":[]},"previous":{"title":"Week 12","level":"1.6.2","depth":2,"path":"node-db/lesson2.md","ref":"node-db/lesson2.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["prism","-highlight"],"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"node-db/lesson3.md","mtime":"2017-07-22T13:44:01.200Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-07-22T13:45:04.157Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Week 13 - Promises and Mongo","level":"1.6.3","depth":2,"next":{"title":"Week 14","level":"1.6.4","depth":2,"path":"node-db/lesson4.md","ref":"node-db/lesson4.md","articles":[]},"previous":{"title":"Week 12 - Templating and APIs ","level":"1.6.2","depth":2,"path":"node-db/lesson2.md","ref":"node-db/lesson2.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["prism","-highlight"],"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"node-db/lesson3.md","mtime":"2017-07-29T08:16:56.138Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-07-29T08:18:07.835Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
