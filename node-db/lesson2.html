@@ -587,7 +587,7 @@
 <li>Recap</li>
 <li>Templating</li>
 <li>Callbacks and Callback hell</li>
-<li>Middleware and Error handling</li>
+<li>APIs</li>
 <li>Deploying to Heroku</li>
 </ul>
 <hr>
@@ -647,25 +647,27 @@
 <p>To add it to your project:
 <code>npm install --save express-handlebars</code></p>
 <p>Then in your <code>server.js</code>, we need to configure the <code>middleware</code> for Handlebars.</p>
-<p>``js</p>
-<p>// Add this to the top of your file
-const exphbs  = require(&apos;express-handlebars&apos;);</p>
-<p>// Then these two lines after you initialise your express app 
-app.engine(&apos;handlebars&apos;, exphbs({ defaultLayout: &apos;main&apos; }));
-app.set(&apos;view engine&apos;, &apos;handlebars&apos;);</p>
-<pre class="language-"><code>
-&gt; Let&apos;s look at the folder `views/layouts/main.handlebars`
-&gt; - Notice the `{{{body}}}`. What do you think this is?
-&gt; - Notice the *index.handlebars*, *my-cv.handlebars* and *admin.handlebars*.
+<pre class="language-"><code class="lang-js">
+<span class="token comment" spellcheck="true">// Add this to the top of your file</span>
+<span class="token keyword">const</span> exphbs  <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">&apos;express-handlebars&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-
-Then add these routes:
-
-``js
-app.get(&apos;/&apos;, function (req, res) {
-    res.render(&apos;index&apos;);
-});
-</code></pre><blockquote>
+<span class="token comment" spellcheck="true">// Then these two lines after you initialise your express app </span>
+app<span class="token punctuation">.</span><span class="token function">engine</span><span class="token punctuation">(</span><span class="token string">&apos;handlebars&apos;</span><span class="token punctuation">,</span> <span class="token function">exphbs</span><span class="token punctuation">(</span><span class="token punctuation">{</span> defaultLayout<span class="token punctuation">:</span> <span class="token string">&apos;main&apos;</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+app<span class="token punctuation">.</span><span class="token keyword">set</span><span class="token punctuation">(</span><span class="token string">&apos;view engine&apos;</span><span class="token punctuation">,</span> <span class="token string">&apos;handlebars&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<blockquote>
+<p>Let&apos;s look at the folder <code>views/layouts/main.handlebars</code></p>
+</blockquote>
+<ul>
+<li>There is a <strong>placeholder for body</strong> where the &quot;body&quot; get injected - can you find it?</li>
+<li>Notice the <em>index.handlebars</em>, <em>my-cv.handlebars</em> and <em>admin.handlebars</em>.</li>
+</ul>
+<p>Then add these routes:</p>
+<pre class="language-"><code class="lang-js">app<span class="token punctuation">.</span><span class="token keyword">get</span><span class="token punctuation">(</span><span class="token string">&apos;/&apos;</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span>req<span class="token punctuation">,</span> res<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    res<span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span><span class="token string">&apos;index&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<blockquote>
 <p><strong>Exercise</strong>: Add similar endpoints for <code>/my-cv</code> and <code>/admin</code>.</p>
 <p><strong>Exercise</strong>: Let&apos;s create a template called <code>contact</code> and delete the endpoint we created earlier for <code>/contact</code> - render a view instead - similar to what we did with the previous endpoints.</p>
 <p><strong>Exercise</strong>: Remember how we changed <strong>Contact</strong> to <strong>Contact Information</strong>? Try to change now <strong>Contact Information</strong> to <strong>Get in touch</strong>. Was it any easier? </p>
@@ -675,13 +677,12 @@ app.get(&apos;/&apos;, function (req, res) {
 <p>How can we imitate that behavior without having to duplicate code or serve static files? <strong>Express</strong> and <strong>Handlebars</strong> allow you to pass data between the <strong>routes</strong> and the <strong>views</strong>. Here is how we can do it:</p>
 <ol>
 <li><p>Let&apos;s modify the <code>/</code> route to pass the title of the page.</p>
-<p> ``js
- app.get(&apos;/&apos;, function (req, res) {</p>
-<pre class="language-"><code> res.render(&apos;index&apos;, {
-     title: &apos;Etzali Profile&apos;, // insert your name instead 
- });
-</code></pre><p> });
- ```</p>
+<pre class="language-"><code class="lang-js"> app<span class="token punctuation">.</span><span class="token keyword">get</span><span class="token punctuation">(</span><span class="token string">&apos;/&apos;</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span>req<span class="token punctuation">,</span> res<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+     res<span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span><span class="token string">&apos;index&apos;</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+         title<span class="token punctuation">:</span> <span class="token string">&apos;Etzali Profile&apos;</span><span class="token punctuation">,</span> <span class="token comment" spellcheck="true">// insert your name instead </span>
+     <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
 </li>
 <li><p>In <code>/views/layouts/main.handlebars</code>, let&apos;s use the data we&apos;re passing to the template</p>
 <pre class="language-"><code class="lang-html"> <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>row<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>
@@ -726,32 +727,30 @@ app.get(&apos;/&apos;, function (req, res) {
 {{/each}}
 </code></pre>
 <p>In the <code>route</code>, let&apos;s load the file in <code>data/posts.json</code>:</p>
-<p>``js
-app.get(&apos;/&apos;, function (req, res) {
-    const filePath = __dirname + &apos;/data/posts.json&apos;;
-    const callbackFunction = function(error, file) {
-        // we call .toString() to turn the file buffer to a String
-        const fileData = file.toString();
-        // we use JSON.parse to get an object out the String
-        const postsJson = JSON.parse(fileData);
-        // send the json to the Template to render
-        res.render(&apos;index&apos;, {
-          title: &apos;Etzali Profile&apos;, // insert your name instead
-          posts: postsJson
-        });
-    };
-    fs.readFile(filePath, callbackFunction);
-});</p>
-<pre class="language-"><code>
-# Callbacks
-In JavaScript, functions are first-class objects. That means they can be used in a first class manner like any other object since they are objects themselves. We can pass them as arguments to functions which is common technique in JavaScript for dealing with **asynchronous** behaviour. We have in fact already encountered callbacks when we looked at array methods such as `.forEach()`, `.map()` and `.filter`.
-
-```js
-const evenNumbers = [2, 4, 6, 8];
-evenNumbers.forEach(function( num ) {
-    console.log(num);
-});
-</code></pre><p>Here we are passing the <code>function( num ) {console.log(num);}</code> function as an argument to <code>.forEach()</code> to execute with each item in the array <code>evenNumbers</code>.</p>
+<pre class="language-"><code class="lang-js">app<span class="token punctuation">.</span><span class="token keyword">get</span><span class="token punctuation">(</span><span class="token string">&apos;/&apos;</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span>req<span class="token punctuation">,</span> res<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> filePath <span class="token operator">=</span> __dirname <span class="token operator">+</span> <span class="token string">&apos;/data/posts.json&apos;</span><span class="token punctuation">;</span>
+    <span class="token keyword">const</span> callbackFunction <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span>error<span class="token punctuation">,</span> file<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">// we call .toString() to turn the file buffer to a String</span>
+        <span class="token keyword">const</span> fileData <span class="token operator">=</span> file<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// we use JSON.parse to get an object out the String</span>
+        <span class="token keyword">const</span> postsJson <span class="token operator">=</span> JSON<span class="token punctuation">.</span><span class="token function">parse</span><span class="token punctuation">(</span>fileData<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// send the json to the Template to render</span>
+        res<span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span><span class="token string">&apos;index&apos;</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+          title<span class="token punctuation">:</span> <span class="token string">&apos;Etzali Profile&apos;</span><span class="token punctuation">,</span> <span class="token comment" spellcheck="true">// insert your name instead</span>
+          posts<span class="token punctuation">:</span> postsJson
+        <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
+    fs<span class="token punctuation">.</span><span class="token function">readFile</span><span class="token punctuation">(</span>filePath<span class="token punctuation">,</span> callbackFunction<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<h1 id="callbacks">Callbacks</h1>
+<p>In JavaScript, functions are first-class objects. That means they can be used in a first class manner like any other object since they are objects themselves. We can pass them as arguments to functions which is common technique in JavaScript for dealing with <strong>asynchronous</strong> behaviour. We have in fact already encountered callbacks when we looked at array methods such as <code>.forEach()</code>, <code>.map()</code> and <code>.filter</code>.</p>
+<pre class="language-"><code class="lang-js"><span class="token keyword">const</span> evenNumbers <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+evenNumbers<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span> num <span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>num<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>Here we are passing the <code>function( num ) {console.log(num);}</code> function as an argument to <code>.forEach()</code> to execute with each item in the array <code>evenNumbers</code>.</p>
 <p>The above example is <strong>synchronous</strong> which means that code the callback is executed immediately. Let&apos;s look at an example where the code is executed <strong>asynchronously</strong>. We will use a <code>setTimeout</code> function to delay execution here. In most JavaScript applications asynchronous code execution could be in response to an event such as mouse click or data coming back from a server. We will look at both of those cases in detail in a future class.</p>
 <pre class="language-"><code class="lang-js"><span class="token keyword">function</span> <span class="token function">delay</span><span class="token punctuation">(</span>callback<span class="token punctuation">)</span><span class="token punctuation">{</span>
     <span class="token function">setTimeout</span><span class="token punctuation">(</span> callback<span class="token punctuation">,</span> <span class="token number">2000</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -782,71 +781,26 @@ evenNumbers.forEach(function( num ) {
 </blockquote>
 <h2 id="callback-hell">Callback hell</h2>
 <p>In the code where we retrieve the repos data from Github, imagine if we had a requirement, that for each repo retrieved, we have to make another API call to retrieve all the available branches (there is a property called <em>branches_url</em> that we can use to get that info). And then, once we have all the branches, make <em>another</em> API call to get the info for each branch.</p>
-<p>The code to do so, will look something similar to this:
-``js
-var oReq = new XMLHttpRequest();
-oReq.addEventListener(&apos;load&apos;, function() {
-    var oReq2 = new XMLHttpRequest();
-    oReq2.addEventListener(&apos;load&apos;, function() {
-        var oReq3 = new XMLHttpRequest();
-        oReq2.addEventListener(&apos;load&apos;, function() {
-            // 4. Now we finally have all the info we need and we can the info we retrieved from the three API calls.</p>
-<pre class="language-"><code>    });
-    oReq3.open(&apos;GET&apos;, url); // 3. third url for branch info
-    oReq3.send();
-});
-oReq.open(&apos;GET&apos;, url); // 2. second url for branches
-oReq.send();
-</code></pre><p>});
-oReq.open(&apos;GET&apos;, url); // 1. first url for Repo
-oReq.send();</p>
-<pre class="language-"><code>
-The code above is very hard to understand and follow. Notice the pyramid shape `})` - This is often called the **callback hell**.
+<p>The code to do so, will look something similar to this:</p>
+<pre class="language-"><code class="lang-js"><span class="token keyword">var</span> oReq <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">XMLHttpRequest</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+oReq<span class="token punctuation">.</span><span class="token function">addEventListener</span><span class="token punctuation">(</span><span class="token string">&apos;load&apos;</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">var</span> oReq2 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">XMLHttpRequest</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    oReq2<span class="token punctuation">.</span><span class="token function">addEventListener</span><span class="token punctuation">(</span><span class="token string">&apos;load&apos;</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">var</span> oReq3 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">XMLHttpRequest</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        oReq2<span class="token punctuation">.</span><span class="token function">addEventListener</span><span class="token punctuation">(</span><span class="token string">&apos;load&apos;</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token comment" spellcheck="true">// 4. Now we finally have all the info we need and we can the info we retrieved from the three API calls.</span>
 
-# Middleware
-Middleware functions are functions that have access to the request object, `req`, the response object, `res`, and the next middleware function in the application&#x2019;s request-response cycle. The next middleware function is commonly denoted by a variable named `next`.
-
-Middleware functions can perform the following tasks:
-
-- Execute any code
-- Make changes to the request and the response objects
-- End the request-response cycle
-- Call the next middleware function in the stack
-
-&gt; **Exercise**: We&apos;ve already used one built-in middleware in our app - what was it?
-
-## Handle Page Not found
-&gt; Try to navigate to a url that doesn&apos;t exist. What do you get? Open the **Developer tools** and check what status code do you get back.
-
-``js
-app.use(function (req, res, next) {
-  res.status(404).render(&apos;404&apos;);
-});
-</code></pre><h2 id="setup-an-error-handler">Setup an error handler</h2>
-<p>You define error-handling middleware in the same way as other middleware, except with four arguments instead of three; specifically with the signature (err, req, res, next):</p>
-<p>``js
-app.use(function (err, req, res, next) {
-  console.error(err.stack)
-  res.status(500).send(&apos;Something broke!&apos;)
-})</p>
-<pre class="language-"><code>
-### Let&apos;s write a custom middleware
-``js
-var myLogger = function (req, res, next) {
-  console.log(&apos;LOGGED&apos;)
-  next()
-}
-
-app.use(myLogger)
-</code></pre><blockquote>
-<p><strong>Exercise</strong>: Follow the tutorial for writing <code>requestTime</code> at <a href="https://expressjs.com/en/guide/writing-middleware.html" target="_blank">https://expressjs.com/en/guide/writing-middleware.html</a> and add it to your own application</p>
-</blockquote>
-<h1 id="using-expressrouter">Using Express.Router</h1>
-<p>We have lots of Routes in <strong>server.js</strong>, we can use the express.Router class to create modular, mountable route handlers. A Router instance is a complete middleware and routing system; for this reason, it is often referred to as a &#x201C;mini-app&#x201D;.
-<a href="https://expressjs.com/en/guide/routing.html#express-router" target="_blank">https://expressjs.com/en/guide/routing.html#express-router</a></p>
-<blockquote>
-<p><strong>Exercise</strong>: Use <code>express.Router</code> to organise the routes in <strong>server.js</strong> in a more <em>modular</em> fashion. Write your new file under <code>/routes/site-routes.js</code>.</p>
-</blockquote>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        oReq3<span class="token punctuation">.</span><span class="token function">open</span><span class="token punctuation">(</span><span class="token string">&apos;GET&apos;</span><span class="token punctuation">,</span> url<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 3. third url for branch info</span>
+        oReq3<span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    oReq<span class="token punctuation">.</span><span class="token function">open</span><span class="token punctuation">(</span><span class="token string">&apos;GET&apos;</span><span class="token punctuation">,</span> url<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 2. second url for branches</span>
+    oReq<span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+oReq<span class="token punctuation">.</span><span class="token function">open</span><span class="token punctuation">(</span><span class="token string">&apos;GET&apos;</span><span class="token punctuation">,</span> url<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 1. first url for Repo</span>
+oReq<span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>The code above is very hard to understand and follow. Notice the pyramid shape <code>})</code> - This is often called the <strong>callback hell</strong>.</p>
 <h1 id="apis">APIs</h1>
 <p>APIs (Application Programming Interfaces) provide a way for applications to communicate with each other. We already consumed an API earlier in the day: <strong>Github API</strong>. We managed to <em>communicate</em> with Github and get important information. We - the client - can use this information in a number of different ways. Our client, in this case, is a Web page but it could have easily been a Mobile Application, or a TV setbox etc...</p>
 <blockquote>
@@ -971,7 +925,7 @@ Hint: make use <code>res.sendFile</code></p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Week 12 - Templating and APIs ","level":"1.6.2","depth":2,"next":{"title":"Week 13 - Promises and Mongo","level":"1.6.3","depth":2,"path":"node-db/lesson3.md","ref":"node-db/lesson3.md","articles":[]},"previous":{"title":"Week 11 - Node and Express 101","level":"1.6.1","depth":2,"path":"node-db/lesson1.md","ref":"node-db/lesson1.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["prism","-highlight"],"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"node-db/lesson2.md","mtime":"2017-07-29T08:16:56.138Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-07-29T08:18:07.835Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Week 12 - Templating and APIs ","level":"1.6.2","depth":2,"next":{"title":"Week 13 - Promises and Mongo","level":"1.6.3","depth":2,"path":"node-db/lesson3.md","ref":"node-db/lesson3.md","articles":[]},"previous":{"title":"Week 11 - Node and Express 101","level":"1.6.1","depth":2,"path":"node-db/lesson1.md","ref":"node-db/lesson1.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["prism","-highlight"],"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"node-db/lesson2.md","mtime":"2017-07-30T07:05:14.774Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-07-30T07:06:40.355Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

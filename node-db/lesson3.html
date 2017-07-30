@@ -585,11 +585,57 @@
 <p><strong>What we will learn today?</strong></p>
 <ul>
 <li>Recap</li>
+<li>Middleware</li>
+<li>Express.Router</li>
 <li>Promises</li>
 <li>MVC</li>
 <li>Mongo</li>
 </ul>
 <hr>
+<h1 id="middleware">Middleware</h1>
+<p>Middleware functions are functions that have access to the request object, <code>req</code>, the response object, <code>res</code>, and the next middleware function in the application&#x2019;s request-response cycle. The next middleware function is commonly denoted by a variable named <code>next</code>.</p>
+<p>Middleware functions can perform the following tasks:</p>
+<ul>
+<li>Execute any code</li>
+<li>Make changes to the request and the response objects</li>
+<li>End the request-response cycle</li>
+<li>Call the next middleware function in the stack</li>
+</ul>
+<blockquote>
+<p><strong>Exercise</strong>: We&apos;ve already used one built-in middleware in our app - what was it?</p>
+</blockquote>
+<h2 id="handle-page-not-found">Handle Page Not found</h2>
+<blockquote>
+<p>Try to navigate to a url that doesn&apos;t exist. What do you get? Open the <strong>Developer tools</strong> and check what status code do you get back.</p>
+</blockquote>
+<pre class="language-"><code class="lang-js">app<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span>req<span class="token punctuation">,</span> res<span class="token punctuation">,</span> next<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  res<span class="token punctuation">.</span><span class="token function">status</span><span class="token punctuation">(</span><span class="token number">404</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span><span class="token string">&apos;404&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<h2 id="setup-an-error-handler">Setup an error handler</h2>
+<p>You define error-handling middleware in the same way as other middleware, except with four arguments instead of three; specifically with the signature (err, req, res, next):</p>
+<pre class="language-"><code class="lang-js">app<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span>err<span class="token punctuation">,</span> req<span class="token punctuation">,</span> res<span class="token punctuation">,</span> next<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span>err<span class="token punctuation">.</span>stack<span class="token punctuation">)</span>
+  res<span class="token punctuation">.</span><span class="token function">status</span><span class="token punctuation">(</span><span class="token number">500</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token string">&apos;Something broke!&apos;</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre>
+<h3 id="lets-write-a-custom-middleware">Let&apos;s write a custom middleware</h3>
+<pre class="language-"><code class="lang-js"><span class="token keyword">var</span> myLogger <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span>req<span class="token punctuation">,</span> res<span class="token punctuation">,</span> next<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&apos;LOGGED&apos;</span><span class="token punctuation">)</span>
+  <span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+app<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>myLogger<span class="token punctuation">)</span>
+</code></pre>
+<blockquote>
+<p><strong>Exercise</strong>: Follow the tutorial for writing <code>requestTime</code> at <a href="https://expressjs.com/en/guide/writing-middleware.html" target="_blank">https://expressjs.com/en/guide/writing-middleware.html</a> and add it to your own application</p>
+</blockquote>
+<h1 id="using-expressrouter">Using Express.Router</h1>
+<p>We have lots of Routes in <strong>server.js</strong>, we can use the express.Router class to create modular, mountable route handlers. A Router instance is a complete middleware and routing system; for this reason, it is often referred to as a &#x201C;mini-app&#x201D;.
+<a href="https://expressjs.com/en/guide/routing.html#express-router" target="_blank">https://expressjs.com/en/guide/routing.html#express-router</a></p>
+<blockquote>
+<p><strong>Exercise</strong>: Use <code>express.Router</code> to organise the routes in <strong>server.js</strong> in a more <em>modular</em> fashion. Write your new file under <code>/routes/site-routes.js</code>.</p>
+</blockquote>
 <h1 id="promises">Promises</h1>
 <p>Callbacks are a fundamental part of JavaScript - the fact that functions are <em>first-class citizens</em> and it&apos;s possible to pass them around is very powerful and makes JavaScript different from many other programming languages. You should learn how to read, write callbacks and be comfortable around them. Though, there are other more advanced solutions for tackling the callback hell.</p>
 <p><strong>Promises</strong> are a way to write async code that still appears as though it is executing in a top-down way, and handles more types of errors due to encouraged use of try/catch style error handling.</p>
@@ -664,7 +710,7 @@ let myFirstPromise = new Promise((resolve, reject) =&gt; {
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Week 13 - Promises and Mongo","level":"1.6.3","depth":2,"next":{"title":"Week 14","level":"1.6.4","depth":2,"path":"node-db/lesson4.md","ref":"node-db/lesson4.md","articles":[]},"previous":{"title":"Week 12 - Templating and APIs ","level":"1.6.2","depth":2,"path":"node-db/lesson2.md","ref":"node-db/lesson2.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["prism","-highlight"],"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"node-db/lesson3.md","mtime":"2017-07-29T08:16:56.138Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-07-29T08:18:07.835Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Week 13 - Promises and Mongo","level":"1.6.3","depth":2,"next":{"title":"Week 14","level":"1.6.4","depth":2,"path":"node-db/lesson4.md","ref":"node-db/lesson4.md","articles":[]},"previous":{"title":"Week 12 - Templating and APIs ","level":"1.6.2","depth":2,"path":"node-db/lesson2.md","ref":"node-db/lesson2.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["prism","-highlight"],"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"node-db/lesson3.md","mtime":"2017-07-30T07:05:14.774Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-07-30T07:06:40.355Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
