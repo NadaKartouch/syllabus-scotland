@@ -598,10 +598,12 @@
 <p><strong>What we will learn today?</strong></p>
 <ul>
 <li>Recap</li>
+<li>Transfering files to server</li>
+<li>Saving data to file</li>
+<li>Persisting Data - Intro to DB</li>
 <li>Express Generator</li>
 <li>Middleware</li>
 <li>Express.Router</li>
-<li>Promises</li>
 </ul>
 <hr>
 <h1 id="recap">Recap</h1>
@@ -621,6 +623,7 @@ Do you remember anything from our <a href="https://github.com/Michael-Antczak/In
 <li>ssh to the server and verify that Node.js is installed</li>
 <li>go to the IP address in the browser</li>
 </ol>
+<h1 id="transfering-files-to-server">Transfering files to server</h1>
 <h3 id="exercise---ftp">Exercise - ftp</h3>
 <ol>
 <li>download <a href="https://filezilla-project.org/download.php?type=client" target="_blank">FileZilla</a></li>
@@ -630,6 +633,7 @@ Do you remember anything from our <a href="https://github.com/Michael-Antczak/In
 <li>start the server with <code>npm start</code>. Does it work? Why not? (Hint: what is the port?)</li>
 <li>make small changes locally, upload and verify in the browser</li>
 </ol>
+<h1 id="saving-data-to-file">Saving data to file</h1>
 <h3 id="exercise---save-new-post-to-file">Exercise - save new post to file</h3>
 <p>We want to have an ability to create a new post when we go to <code>/admin</code>. When we click <code>Send</code> we want to add the new post to <code>data/posts.json</code>. Go!</p>
 <ol>
@@ -941,7 +945,7 @@ let myFirstPromise = new Promise((resolve, reject) =&gt; {
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Week 14 - Promises and Mongo","level":"1.6.3","depth":2,"next":{"title":"Week 15","level":"1.6.4","depth":2,"path":"node-db/lesson4.md","ref":"node-db/lesson4.md","articles":[]},"previous":{"title":"Week 13 - Templating and APIs ","level":"1.6.2","depth":2,"path":"node-db/lesson2.md","ref":"node-db/lesson2.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["prism","-highlight"],"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"node-db/lesson3.md","mtime":"2017-08-19T07:28:10.831Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2017-08-19T07:29:22.885Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Week 14 - Promises and Mongo","level":"1.6.3","depth":2,"next":{"title":"Week 15","level":"1.6.4","depth":2,"path":"node-db/lesson4.md","ref":"node-db/lesson4.md","articles":[]},"previous":{"title":"Week 13 - Templating and APIs ","level":"1.6.2","depth":2,"path":"node-db/lesson2.md","ref":"node-db/lesson2.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["prism","-highlight"],"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"node-db/lesson3.md","mtime":"2017-08-19T08:21:51.296Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2017-08-19T08:23:00.956Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
