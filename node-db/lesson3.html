@@ -719,7 +719,7 @@ Do you remember anything from our <a href="https://github.com/Michael-Antczak/In
   res<span class="token punctuation">.</span><span class="token function">status</span><span class="token punctuation">(</span><span class="token number">404</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span><span class="token string">&apos;404&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre>
-<h1 id="persisting-data---intro-to-db">Persisting Data - Intro to DB</h1>
+<h1 id="persisting-data---introduction-to-databases">Persisting Data - Introduction to Databases</h1>
 <p>What is wrong with the solution above? Why is it not a good idea to save the data to the server&apos;s local file? What would happen if you restart the server, or kill it and spin up another one?  Discuss. </p>
 <p>Let&apos;s look at the <a href="https://aws.amazon.com/products/databases/" target="_blank">AWS Database</a> section. What types of data storage can you see? What are the main two groups? </p>
 <p><img src="https://github.com/CodeYourFuture/syllabus/blob/scotland/node-db/assets/SQL-vs.-NoSQL-Comparative-Advantages-and-Disadvantages.jpg" alt="alt-text">
@@ -742,7 +742,7 @@ Do you remember anything from our <a href="https://github.com/Michael-Antczak/In
 We are going to use AWS SDK for this. </p>
 <ol>
 <li>run <code>npm install --save aws-sdk</code></li>
-<li><a href="http://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/loading-node-credentials-json-file.html" target="_blank">load credentials</a> - create in the root of the project a file called <code>config.json</code>. We will load are keys from there<pre class="language-"><code class="lang-javascript"> <span class="token punctuation">{</span>
+<li><a href="http://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/loading-node-credentials-json-file.html" target="_blank">load credentials</a> - create in the root of the project a file called <code>config.json</code>add your access and secret keys<pre class="language-"><code class="lang-javascript"> <span class="token punctuation">{</span>
      <span class="token string">&quot;accessKeyId&quot;</span><span class="token punctuation">:</span> <span class="token string">&quot;YOUR_ACCESS_KEY&quot;</span><span class="token punctuation">,</span>
      <span class="token string">&quot;secretAccessKey&quot;</span><span class="token punctuation">:</span> <span class="token string">&quot;YOUR_SECRET_KEY&quot;</span><span class="token punctuation">,</span>
      <span class="token string">&quot;region&quot;</span><span class="token punctuation">:</span> <span class="token string">&quot;eu-west-1&quot;</span><span class="token punctuation">,</span>
@@ -750,10 +750,9 @@ We are going to use AWS SDK for this. </p>
  <span class="token punctuation">}</span>
 </code></pre>
 </li>
-<li>change <code>us-east-1</code> to <code>eu-east-1</code> and add the access and secret keys</li>
 <li><p>add AWS to the project</p>
 <pre class="language-"><code class="lang-javascript"> <span class="token comment" spellcheck="true">// Load the SDK for JavaScript</span>
- <span class="token keyword">var</span> AWS <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">&apos;aws-sdk&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ <span class="token keyword">const</span> AWS <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">&apos;aws-sdk&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
  <span class="token comment" spellcheck="true">// Load credentials and set region from JSON file</span>
  AWS<span class="token punctuation">.</span>config<span class="token punctuation">.</span><span class="token function">loadFromPath</span><span class="token punctuation">(</span><span class="token string">&apos;./config.json&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -778,6 +777,8 @@ We are going to use AWS SDK for this. </p>
          <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
              <span class="token comment" spellcheck="true">// print all the posts</span>
              console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&quot;Scan succeeded.&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+             <span class="token comment" spellcheck="true">// Here you can test how to access the posts, not needed for the functionality to work, so could be deleted</span>
              data<span class="token punctuation">.</span>Items<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span>post<span class="token punctuation">)</span> <span class="token punctuation">{</span>
              console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>
                      post<span class="token punctuation">.</span>title <span class="token operator">+</span> <span class="token string">&quot;: &quot;</span><span class="token punctuation">,</span>
@@ -945,7 +946,7 @@ let myFirstPromise = new Promise((resolve, reject) =&gt; {
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Week 14 - Promises and Mongo","level":"1.6.3","depth":2,"next":{"title":"Week 15","level":"1.6.4","depth":2,"path":"node-db/lesson4.md","ref":"node-db/lesson4.md","articles":[]},"previous":{"title":"Week 13 - Templating and APIs ","level":"1.6.2","depth":2,"path":"node-db/lesson2.md","ref":"node-db/lesson2.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["prism","-highlight"],"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"node-db/lesson3.md","mtime":"2017-08-19T08:21:51.296Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2017-08-19T08:23:00.956Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Week 14 - Promises and Mongo","level":"1.6.3","depth":2,"next":{"title":"Week 15","level":"1.6.4","depth":2,"path":"node-db/lesson4.md","ref":"node-db/lesson4.md","articles":[]},"previous":{"title":"Week 13 - Templating and APIs ","level":"1.6.2","depth":2,"path":"node-db/lesson2.md","ref":"node-db/lesson2.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["prism","-highlight"],"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"node-db/lesson3.md","mtime":"2017-08-20T06:47:39.780Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2017-08-20T06:49:01.803Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
