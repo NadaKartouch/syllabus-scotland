@@ -394,9 +394,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.6.5" data-path="lesson5.md">
+        <li class="chapter " data-level="1.6.5" data-path="lesson5.html">
             
-                <span>
+                <a href="lesson5.html">
             
                     
                     Week 16
@@ -603,7 +603,6 @@
 <li>Persisting Data - Intro to DB</li>
 <li>Express Generator</li>
 <li>Middleware</li>
-<li>Express.Router</li>
 </ul>
 <hr>
 <h1 id="recap">Recap</h1>
@@ -866,43 +865,15 @@ app<span class="token punctuation">.</span><span class="token function">use</spa
 <blockquote>
 <p><strong>Exercise</strong>: Follow the tutorial for writing <code>requestTime</code> at <a href="https://expressjs.com/en/guide/writing-middleware.html" target="_blank">https://expressjs.com/en/guide/writing-middleware.html</a> and add it to your own application</p>
 </blockquote>
-<h1 id="using-expressrouter">Using Express.Router</h1>
-<p>We have lots of Routes in <strong>server.js</strong>, we can use the express.Router class to create modular, mountable route handlers. A Router instance is a complete middleware and routing system; for this reason, it is often referred to as a &#x201C;mini-app&#x201D;.
-<a href="https://expressjs.com/en/guide/routing.html#express-router" target="_blank">https://expressjs.com/en/guide/routing.html#express-router</a></p>
-<blockquote>
-<p><strong>Exercise</strong>: Use <code>express.Router</code> to organise the routes in <strong>server.js</strong> in a more <em>modular</em> fashion. Write your new file under <code>/routes/site-routes.js</code>.</p>
-</blockquote>
-<h1 id="promises">Promises</h1>
-<p>Callbacks are a fundamental part of JavaScript - the fact that functions are <em>first-class citizens</em> and it&apos;s possible to pass them around is very powerful and makes JavaScript different from many other programming languages. You should learn how to read, write callbacks and be comfortable around them. Though, there are other more advanced solutions for tackling the callback hell.</p>
-<p><strong>Promises</strong> are a way to write async code that still appears as though it is executing in a top-down way, and handles more types of errors due to encouraged use of try/catch style error handling.</p>
-<blockquote>
-<p><strong>The Promise object</strong> represents the eventual completion (or failure) of an asynchronous operation, and its resulting value. <a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise" target="_blank">MDN</a></p>
-</blockquote>
-<p>This example from <a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise" target="_blank">MDN</a> helps to <strong>promisify</strong> the <code>setTimeout</code> example. </p>
-<p>``js
-let myFirstPromise = new Promise((resolve, reject) =&gt; {
-  // We call resolve(...) when what we were doing made async successful, and reject(...) when it failed.
-  // In this example, we use setTimeout(...) to simulate async code. 
-  // In reality, you will probably be using something like XHR or an HTML5 API.
-  setTimeout(function(){
-    resolve(&quot;Success!&quot;); // Yay! Everything went well!
-  }, 250);
-});</p>
-<p>myFirstPromise.then((successMessage) =&gt; {
-  // successMessage is whatever we passed in the resolve(...) function above.
-  // It doesn&apos;t have to be a string, but if it is only a succeed message, it probably will be.
-  console.log(&quot;Yay! &quot; + successMessage);
-});
-```</p>
-<blockquote>
-<p><strong>Exercise</strong>: Let&apos;s rewrite the code above using <code>fetch</code> which provides an alternative to <code>XmlHttpRequest</code> that uses a Promise-based API - <a href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch" target="_blank">https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch</a></p>
-</blockquote>
-<h1 id="mvc">MVC</h1>
-<blockquote>
-<p>Model&#x2013;view&#x2013;controller (MVC) is a software architectural pattern for implementing user interfaces on computers. It divides a given application into three interconnected parts in order to separate internal representations of information from the ways that information is presented to and accepted from the user. The MVC design pattern decouples these major components allowing for efficient code reuse and parallel development. (Wikipedia)</p>
-<p>Watch Wes Bos&apos; video about MVC together
-<strong>Exercise</strong>: create a <strong>controllers</strong> folder, add a <strong>blogController</strong> and move the logic for your routes (currently in <strong>routes/site-routes.js</strong>) to this new file.</p>
-</blockquote>
+<h1 id="homework">Homework</h1>
+<p>You can use this as a starting point - <a href="https://github.com/Michael-Antczak/Express-workshop-3" target="_blank">https://github.com/Michael-Antczak/Express-workshop-3</a></p>
+<ol>
+<li>Exercise - Handle &quot;Page Not Found&quot;</li>
+<li>Walk through the code again and make sure you understand what it does</li>
+<li>if you have time you can try to expand on the My CV project that we worked on today:
+ a) sort posts alphabetically
+ b) when the new post is added to the database, send an email to yourself about that (edited)</li>
+</ol>
 
                                 
                                 </section>
@@ -946,7 +917,7 @@ let myFirstPromise = new Promise((resolve, reject) =&gt; {
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Week 14 - Promises and Mongo","level":"1.6.3","depth":2,"next":{"title":"Week 15","level":"1.6.4","depth":2,"path":"node-db/lesson4.md","ref":"node-db/lesson4.md","articles":[]},"previous":{"title":"Week 13 - Templating and APIs ","level":"1.6.2","depth":2,"path":"node-db/lesson2.md","ref":"node-db/lesson2.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["prism","-highlight"],"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"node-db/lesson3.md","mtime":"2017-08-20T06:47:39.780Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2017-08-20T06:49:01.803Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Week 14 - Promises and Mongo","level":"1.6.3","depth":2,"next":{"title":"Week 15","level":"1.6.4","depth":2,"path":"node-db/lesson4.md","ref":"node-db/lesson4.md","articles":[]},"previous":{"title":"Week 13 - Templating and APIs ","level":"1.6.2","depth":2,"path":"node-db/lesson2.md","ref":"node-db/lesson2.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["prism","-highlight"],"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"node-db/lesson3.md","mtime":"2017-08-20T08:52:51.986Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2017-08-20T08:53:59.151Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
