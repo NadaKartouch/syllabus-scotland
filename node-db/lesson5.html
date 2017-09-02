@@ -594,7 +594,270 @@
                                 <p>(<a href="https://img.shields.io/badge/status-draft-darkred.svg" target="_blank">https://img.shields.io/badge/status-draft-darkred.svg</a>) </p>
 <h1 id="node-5">Node 5</h1>
 <p><strong>What we will learn today?</strong></p>
-<h2 id="-more-mongo">- More Mongo</h2>
+<ul>
+<li>Mongoose</li>
+<li>Modeling Data</li>
+<li>Saving Data with HTML forms<ul>
+<li>A note on Progressive Enhancement</li>
+</ul>
+</li>
+<li>Modeling Relationships</li>
+<li>Debugging NodeJS</li>
+</ul>
+<hr>
+<h1 id="mongoose">Mongoose</h1>
+<p>Mongoose is a libray that provides a straight-forward, <strong>schema-based</strong> solution to model your application data. It includes built-in type casting, validation, query building, business logic hooks and more, out of the box.</p>
+<h2 id="what-is-a-schema">What is a Schema?</h2>
+<p>The term &quot;schema&quot; refers to the organization of data as a blueprint of how the database is constructed. In a Relational Database, the schema will define - among other things - what tables exist in the database, what columns they contain and what type of data they can accept (numbers, strings etc...).</p>
+<p>Databases like MongoDB are said to be <strong>schema-less</strong>. If we have a collection called <em>persons</em> containing <em>documents</em> looking like this:</p>
+<pre class="language-"><code class="lang-js"><span class="token punctuation">{</span>
+    name<span class="token punctuation">:</span> <span class="token string">&quot;Anthony&quot;</span><span class="token punctuation">,</span>
+    age<span class="token punctuation">:</span> <span class="token number">21</span><span class="token punctuation">,</span>
+    nationality<span class="token punctuation">:</span> <span class="token string">&quot;Kenya&quot;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>and we decide to add a new field <em>profession</em> to the <em>persons</em> documents, then we can just add that field in the new document. So we can have two documents like this:</p>
+<pre class="language-"><code class="lang-js"><span class="token punctuation">[</span><span class="token punctuation">{</span>
+    name<span class="token punctuation">:</span> <span class="token string">&quot;Anthony&quot;</span><span class="token punctuation">,</span>
+    age<span class="token punctuation">:</span> <span class="token number">21</span><span class="token punctuation">,</span>
+    nationality<span class="token punctuation">:</span> <span class="token string">&quot;Kenya&quot;</span>
+<span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+    name<span class="token punctuation">:</span> <span class="token string">&quot;Simon&quot;</span><span class="token punctuation">,</span>
+    age<span class="token punctuation">:</span> <span class="token number">23</span><span class="token punctuation">,</span>
+    nationality<span class="token punctuation">:</span> <span class="token string">&quot;South Africa&quot;</span><span class="token punctuation">,</span>
+    profession<span class="token punctuation">:</span> <span class="token string">&quot;Software Engineer&quot;</span>
+<span class="token punctuation">}</span><span class="token punctuation">]</span>
+</code></pre>
+<p>One document has the field <em>profession</em> while the other does not. The App consuming the documents can just handle not having that field (deciding for example that if there <em>profession</em> field then the Person is a Student).</p>
+<p>In an RDBMS (Relational Database Management System), we have to update the schema first to add the <em>profession</em> column, decide what to do with the existing records (do we default to some value or leave it <em>null</em>), decide its type (integer, string, how many characters etc...) then we can use it. There are pros and cons to both types of databases. </p>
+<blockquote>
+<p>One of the great benefits of these dynamic objects is that schema migrations become very easy. With a traditional RDBMS, releases of code might contain data migration scripts. Further, each release should have a reverse migration script in case a rollback is necessary. ALTER TABLE operations can be very slow and result in scheduled downtime.</p>
+<p>With a schemaless database, 90% of the time adjustments to the database become transparent and automatic. For example, if we wish to add GPA to the student objects, we add the attribute, resave, and all is well &#x2013; if we look up an existing student and reference GPA, we just get back null. Further, if we roll back our code, the new GPA fields in the existing objects are unlikely to cause problems if our code was well written.</p>
+</blockquote>
+<h2 id="mongoose-schema">Mongoose Schema</h2>
+<p>Even though being schema-less is one of the selling points of MongoDB, there is benefit to having a <em>schema</em> at the Application level, for example to do validation - at the moment, there is nothing stopping us from saving a <em>person</em> document as such</p>
+<pre class="language-"><code class="lang-js"><span class="token punctuation">{</span>
+    name<span class="token punctuation">:</span> <span class="token string">&quot;Simon&quot;</span><span class="token punctuation">,</span>
+    age<span class="token punctuation">:</span> <span class="token string">&quot;twenty three&quot;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>Mongoose helps us add a Schema to provide <strong>validation</strong>, business logic and also provides an easier interface in general to interact with MongoDB.</p>
+<h2 id="exercise">Exercise</h2>
+<p>Let&apos;s use Mongoose for our project we&apos;ve built so far.</p>
+<ol>
+<li><code>npm install --save mongoose</code></li>
+<li>First let&apos;s add a Schema for our Models<ul>
+<li>Create a file Post.js under <code>/models/Post.js</code></li>
+<li>We add the Schema to this file.</li>
+</ul>
+</li>
+</ol>
+<pre class="language-"><code class="lang-js"><span class="token keyword">const</span> mongoose <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">&apos;mongoose&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> <span class="token punctuation">{</span> Schema <span class="token punctuation">}</span> <span class="token operator">=</span> mongoose<span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> schema <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Schema</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    title<span class="token punctuation">:</span> String<span class="token punctuation">,</span>
+    contents<span class="token punctuation">:</span> String<span class="token punctuation">,</span>
+    summary<span class="token punctuation">:</span> String
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> Post <span class="token operator">=</span> mongoose<span class="token punctuation">.</span><span class="token function">model</span><span class="token punctuation">(</span><span class="token string">&apos;posts&apos;</span><span class="token punctuation">,</span> schema<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+module<span class="token punctuation">.</span>exports <span class="token operator">=</span> Post<span class="token punctuation">;</span>
+</code></pre>
+<ol>
+<li>Then to use the Model, require the file and <code>mongoose</code> in the top of your file
+```js</li>
+</ol>
+<p>// Top of your file
+const mongoConnection = process.env.MONGODB_URI || &apos;mongodb://localhost:27017/profile&apos;;
+const mongoose = require(&apos;mongoose&apos;);</p>
+<p>const Post = require(&apos;../models/Post&apos;);</p>
+<pre class="language-"><code>
+4. Then where you had the code to connect and get the posts - change it to:
+
+```js
+mongoose.connect(mongoConnection);
+Post.find({}, callback);
+// callback takes error as first argument, and posts as the second argument
+</code></pre><h1 id="form-data---post">Form Data - POST</h1>
+<blockquote>
+<p><strong>Discussion</strong>: What are the HTTP verbs? which is used to save data?</p>
+</blockquote>
+<p>Let&apos;s update our Admin HTML form to be able to save new Posts.</p>
+<ol>
+<li><p>Go to <code>admin.handlebars</code> - let&apos;s remove the script at the end of the file <code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>/js/posts-admin.js<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span></code> &lt;- Remove or comment this script</p>
+</li>
+<li><p>In the <code>form</code>, add the <code>action</code> and <code>method</code> attribute. It should something similar to this:
+<code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>form</span> <span class="token attr-name">action</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>/save-post<span class="token punctuation">&quot;</span></span> <span class="token attr-name">method</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>POST<span class="token punctuation">&quot;</span></span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>sentMessage<span class="token punctuation">&quot;</span></span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>contactForm<span class="token punctuation">&quot;</span></span> <span class="token attr-name">novalidate</span><span class="token punctuation">&gt;</span></span></code></p>
+<ul>
+<li><p>Open the Developer tools, try to save a Post and see what happens.</p>
+<p>We also need to add a <code>name</code> attribute to our form elements i.e.</p>
+<p><code>&lt;input type=&quot;text&quot; name=&quot;title&quot; ....</code></p>
+<p>Do the same for <code>contents</code> and <code>summary</code>.</p>
+<p>We can see that the browser is trying to perform a <code>POST</code> to <code>/save-post</code></p>
+<ul>
+<li>What HTTP status code is returned? What does it mean?</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Let&apos;s create that endpoint <code>/save-post</code> to handle this request.</p>
+<p> To be able to receive POST data easily, we will use a package called <em>express-formidable</em>, so let&apos;s start by installing it. <code>npm install --save express-formidable</code> then add these two lines on top of <code>siteController</code> before defining the routes.</p>
+<pre class="language-"><code class="lang-js"> <span class="token keyword">const</span> formidable <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">&apos;express-formidable&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ router<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span><span class="token function">formidable</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p> Then let&apos;s define the endpoint</p>
+<pre class="language-"><code class="lang-js"> router<span class="token punctuation">.</span><span class="token function">post</span><span class="token punctuation">(</span><span class="token string">&apos;/save-post&apos;</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>req<span class="token punctuation">,</span> res<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+ console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>req<span class="token punctuation">.</span>fields<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// contains non-file fields </span>
+ <span class="token comment" spellcheck="true">// req.files will contain files (if you upload images for example)</span>
+ <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p> At this point, if you hit save on the form. Our endpoint should log to the console an object containing the data you submitted.</p>
+</li>
+<li><p>Now that we&apos;re receiving the data on the server, let&apos;s save it to MongoDB. We can make use of our Mongoose models again.</p>
+<pre class="language-"><code class="lang-js"> <span class="token comment" spellcheck="true">// require the model in the top of the file</span>
+ router<span class="token punctuation">.</span><span class="token function">post</span><span class="token punctuation">(</span><span class="token string">&apos;/save-post&apos;</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>req<span class="token punctuation">,</span> res<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+ console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>req<span class="token punctuation">.</span>fields<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// contains non-file fields</span>
+ <span class="token keyword">const</span> callback <span class="token operator">=</span> <span class="token punctuation">(</span>error<span class="token punctuation">,</span> post<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+     <span class="token comment" spellcheck="true">// Notice the Erorr handling</span>
+     <span class="token keyword">if</span><span class="token punctuation">(</span>error<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+         console<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span>error<span class="token punctuation">)</span><span class="token punctuation">;</span>
+         <span class="token keyword">return</span> res<span class="token punctuation">.</span><span class="token function">redirect</span><span class="token punctuation">(</span><span class="token string">&apos;/error&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+     <span class="token punctuation">}</span>
+
+     console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&apos;post saved successfully&apos;</span><span class="token punctuation">,</span> post<span class="token punctuation">)</span><span class="token punctuation">;</span>
+     res<span class="token punctuation">.</span><span class="token function">redirect</span><span class="token punctuation">(</span><span class="token string">&apos;/&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ <span class="token punctuation">}</span>
+
+ mongoose<span class="token punctuation">.</span><span class="token function">connect</span><span class="token punctuation">(</span>mongoConnection<span class="token punctuation">)</span><span class="token punctuation">;</span>
+ <span class="token comment" spellcheck="true">// This is using the Model to create an object</span>
+ <span class="token comment" spellcheck="true">// based on the fields submitted from the form</span>
+ <span class="token keyword">const</span> newPost <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Post</span><span class="token punctuation">(</span>req<span class="token punctuation">.</span>fields<span class="token punctuation">)</span><span class="token punctuation">;</span>
+ newPost<span class="token punctuation">.</span><span class="token function">save</span><span class="token punctuation">(</span>callback<span class="token punctuation">)</span><span class="token punctuation">;</span>
+ <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+</li>
+</ol>
+<h2 id="mongoose-validation">Mongoose Validation</h2>
+<p>Notice how you can save a Post now without having a content, summary (or even a title), let&apos;s try to fix that.</p>
+<h3 id="exercise-make-title-mandatory">Exercise: Make Title mandatory</h3>
+<p>Update the Mongoose Model for Posts to be</p>
+<pre class="language-"><code class="lang-js"><span class="token keyword">const</span> schema <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Schema</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    title<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+        type<span class="token punctuation">:</span> String<span class="token punctuation">,</span>
+        required<span class="token punctuation">:</span> <span class="token boolean">true</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    contents<span class="token punctuation">:</span> String<span class="token punctuation">,</span>
+    summary<span class="token punctuation">:</span> String
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>Now let&apos;s try and save a post without a title and see the result.</p>
+<ul>
+<li>What is the result?</li>
+<li>Error Handling: Redirect to <code>/error</code> if an error is returned (the first argument to the callback is an error)<ul>
+<li>Happy Path</li>
+</ul>
+</li>
+<li>Make <code>contents</code> and <code>summary</code> required as well.</li>
+</ul>
+<h1 id="form-data---using-ajax">Form Data - Using AJAX</h1>
+<p>Now let&apos;s go to <code>admin.handlebars</code> and uncomment or add the script at the end of file
+<code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>/js/posts-admin.js<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span></code></p>
+<p>Open the Developer Tools and notice what happens.</p>
+<ul>
+<li>What is happening when you click on <code>Send</code>.</li>
+</ul>
+<p><strong>Exercise</strong>:</p>
+<ul>
+<li>Update your <code>POST /posts</code> endpoint in <code>apiController</code> to use Mongoose<ul>
+<li>Don&apos;t forget to <em>require</em> the modules that you need</li>
+</ul>
+</li>
+</ul>
+<pre class="language-"><code class="lang-js">router<span class="token punctuation">.</span><span class="token function">post</span><span class="token punctuation">(</span><span class="token string">&apos;/posts&apos;</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>req<span class="token punctuation">,</span> res<span class="token punctuation">,</span> next<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> callback <span class="token operator">=</span> <span class="token punctuation">(</span>error<span class="token punctuation">,</span> post<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+      <span class="token keyword">if</span><span class="token punctuation">(</span>error<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          console<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span>error<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+          <span class="token keyword">return</span> res<span class="token punctuation">.</span><span class="token function">sendStatus</span><span class="token punctuation">(</span><span class="token number">500</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+
+      console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&apos;post saved successfully&apos;</span><span class="token punctuation">,</span> post<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      res<span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span>post<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  mongoose<span class="token punctuation">.</span><span class="token function">connect</span><span class="token punctuation">(</span>mongoConnection<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">// we can access req.body because we&apos;re using body-parser middleware</span>
+  <span class="token keyword">const</span> newPost <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Post</span><span class="token punctuation">(</span>req<span class="token punctuation">.</span>body<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  newPost<span class="token punctuation">.</span><span class="token function">save</span><span class="token punctuation">(</span>callback<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<ul>
+<li>Notice how we&apos;re not rendering a view - we are just returning an HTTP response. <strong>Why is that</strong>?</li>
+</ul>
+<h2 id="note-on-progressive-enhancement">Note on Progressive Enhancement</h2>
+<p>Go to Chrome Developer tools and Disable JavaScript. Does our <em>Save Post</em> functionality still work?</p>
+<blockquote>
+<p>Progressive Enhancement is a powerful methodology that allows Web developers to concentrate on building the best possible websites while balancing the issues inherent in those websites being accessed by multiple unknown user-agents. Progressive Enhancement (PE) is the principle of starting with a rock-solid foundation and then adding enhancements to it if you know certain visiting user-agents can handle the improved experience.</p>
+</blockquote>
+<h1 id="modeling-data">Modeling Data</h1>
+<p>What if we want to add a comments sections to our Posts.</p>
+<ul>
+<li>What are ways to model that data?</li>
+<li>What if each Post has one Comment only</li>
+<li>What if each Post has more than one Comment</li>
+<li>What if we need to have more information about the comment (data added, and user)</li>
+</ul>
+<h2 id="embedded-documents">Embedded documents</h2>
+<p>With MongoDB, you can take advantage of MongoDB rich documents to embed related data in a single structure or documents.
+<img src="https://docs.mongodb.com/manual/_images/data-model-denormalized.bakedsvg.svg" alt=""></p>
+<h2 id="referencing-documents">Referencing documents</h2>
+<p>Another way of modeling data, is to use Reference documents.</p>
+<p><img src="https://docs.mongodb.com/manual/_images/data-model-normalized.bakedsvg.svg" alt=""></p>
+<blockquote>
+<p>References provides more flexibility than embedding. However, client-side applications must issue follow-up queries to resolve the references. In other words, normalized data models can require more round trips to the server.</p>
+</blockquote>
+<p><strong>Discussion</strong>: What do you think are the advantages and disadvantages of the approach?</p>
+<h2 id="reading">Reading</h2>
+<p>Let&apos;s read this blog post together<a href="https://alexanderzeitler.com/articles/mongoose-referencing-schema-in-properties-and-arrays/" target="_blank">https://alexanderzeitler.com/articles/mongoose-referencing-schema-in-properties-and-arrays/</a></p>
+<h2 id="exercise-data-modeling">Exercise: Data Modeling</h2>
+<p>Requirements: We&apos;re building a System for a Hospital. We want to keep track of Doctors and their Appointments with Patients. We need to have the basic information about the doctor (name, contact information and address), the patients (name, age, contact information). Each appointment will have a date, notes from the doctor and a list of prescriptions. A patient is assigned one doctor, and all the appointments will be with the same doctor. A doctor can have up to 20 patients.</p>
+<ul>
+<li>What collections do we need in our database</li>
+<li>Write a document representing a Patient. How will it look like?</li>
+<li>What will the other collections (if any) contain?</li>
+<li>Stretch: What if each prescription has one or more Medicines and we want to keep information about the Medicine including its price.</li>
+</ul>
+<h2 id="exercise-adding-comments">Exercise: Adding comments</h2>
+<p>In the <code>view single post</code> view, add this form</p>
+<pre class="language-"><code class="lang-html"> <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>form</span> <span class="token attr-name">method</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>POST<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>textarea</span> <span class="token attr-name">rows</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>5<span class="token punctuation">&quot;</span></span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>comment<span class="token punctuation">&quot;</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>form-control<span class="token punctuation">&quot;</span></span> <span class="token attr-name">placeholder</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>Contents<span class="token punctuation">&quot;</span></span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>contents<span class="token punctuation">&quot;</span></span> <span class="token attr-name">required</span> <span class="token attr-name">data-validation-required-message</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>Please enter the contents of the blog post.<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>textarea</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>button</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>btn btn-default<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>Add Comment<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>button</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>form</span><span class="token punctuation">&gt;</span></span>
+</code></pre>
+<ul>
+<li>Notice that the form does not an <code>action</code> attribute - what does that mean? Open the Developer tools and see what happens when you click the button</li>
+</ul>
+<p>Update the Post model to have an array of Comments</p>
+<pre class="language-"><code class="lang-js">comments<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>
+    content<span class="token punctuation">:</span> String
+<span class="token punctuation">}</span><span class="token punctuation">]</span>
+</code></pre>
+<p><strong>Exercise</strong>:</p>
+<ul>
+<li>Add a route that handles the data being sent by the Client and saves it to the database<ul>
+<li>Use the technique using <code>findById</code> described in this <a href="http://mongoosejs.com/docs/documents.html" target="_blank">documentation entry</a></li>
+<li>Also look at the documentation of $push to know how to add to an array <a href="https://docs.mongodb.com/manual/reference/operator/update/push/#up._S_push" target="_blank">https://docs.mongodb.com/manual/reference/operator/update/push/#up._S_push</a></li>
+</ul>
+</li>
+<li>Are there more way we could have modeled our comments?</li>
+</ul>
+<h1 id="resources">Resources</h1>
+<p>Why Schemaless - <a href="https://www.mongodb.com/blog/post/why-schemaless" target="_blank">https://www.mongodb.com/blog/post/why-schemaless</a>
+Progressive Enhancement - <a href="https://www.smashingmagazine.com/2009/04/progressive-enhancement-what-it-is-and-how-to-use-it/" target="_blank">https://www.smashingmagazine.com/2009/04/progressive-enhancement-what-it-is-and-how-to-use-it/</a>
+Mongoose CRUD - <a href="https://coursework.vschool.io/mongoose-crud/" target="_blank">https://coursework.vschool.io/mongoose-crud/</a></p>
+<h1 id="homework">Homework</h1>
+<p>Group project - <a href="https://github.com/CodeYourFuture/group-projects#expressmongodb-projects" target="_blank">https://github.com/CodeYourFuture/group-projects#expressmongodb-projects</a></p>
 
                                 
                                 </section>
@@ -634,7 +897,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Week 16","level":"1.6.5","depth":2,"next":{"title":"Week 17","level":"1.6.6","depth":2,"ref":"","articles":[]},"previous":{"title":"Week 15 - MongoDB","level":"1.6.4","depth":2,"path":"node-db/lesson4.md","ref":"node-db/lesson4.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["prism","-highlight"],"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"node-db/lesson5.md","mtime":"2017-08-25T21:00:05.829Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2017-08-25T21:01:22.159Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Week 16","level":"1.6.5","depth":2,"next":{"title":"Week 17","level":"1.6.6","depth":2,"ref":"","articles":[]},"previous":{"title":"Week 15 - MongoDB","level":"1.6.4","depth":2,"path":"node-db/lesson4.md","ref":"node-db/lesson4.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["prism","-highlight"],"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"node-db/lesson5.md","mtime":"2017-09-02T07:27:33.769Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2017-09-02T07:29:32.726Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
