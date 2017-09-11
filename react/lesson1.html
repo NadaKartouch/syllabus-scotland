@@ -591,29 +591,43 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h2 id="using-libraries">Using Libraries</h2>
-<p>Using good libraries is encourages where it makes sense. There are many of these which make your life easier, such as jQuery, Angular and others.</p>
+                                <h1 id="react-1">React 1</h1>
+<p><strong>What we will learn today?</strong></p>
 <ul>
-<li>Don&#x2019;t Reinvent The Wheel (solve problems already solved)</li>
-<li>Good Libraries solve browser compatibility issues</li>
-<li>Shared knowledge, reusable skills</li>
+<li>React<ul>
+<li>What is an SPA?</li>
+<li>create-react-app</li>
 </ul>
-<ul>
-<li>Compare code across libraries - <a href="http://todomvc.com/" target="_blank">TodoMVC</a></li>
+</li>
+<li>Components<ul>
+<li>JSX</li>
+<li>ES6 classes</li>
+<li>Thinking in React</li>
 </ul>
-<p>In this course we will be using React by Facebook.</p>
-<h2 id="node-and-npm">Node and NPM</h2>
-<p><a href="https://nodejs.org/en/" target="_blank">Node</a> is a runtime for Javascript which allows you to run Javascript code on your computer and servers, in addition to the client side/browser.</p>
-<p>In order to install it you need to get the installer <a href="https://nodejs.org/en/" target="_blank">Node</a> and then you will have access to thousands of libraries on <a href="https://www.npmjs.com/" target="_blank">npm</a>.</p>
-<p>Once it is installed you can use it like this:</p>
-<pre class="language-"><code class="lang-sh"><span class="token function">npm</span> <span class="token function">install</span> -g create-react-app
+</li>
+<li>JSX Patterns<ul>
+<li>Mapping Arrays</li>
+<li>Conditionals</li>
+<li>Embedding code</li>
+</ul>
+</li>
+<li>props and state</li>
+</ul>
+<h1 id="react">React</h1>
+<p><a href="https://facebook.github.io/react/" target="_blank">React</a> is a library by Facebook.</p>
+<h2 id="why-react">Why React?</h2>
+<p>ToDo</p>
+<h2 id="what-is-an-spa">What is an SPA?</h2>
+<p>ToDo</p>
+<h2 id="create-react-app">create-react-app</h2>
+<p>Let&apos;s create an app!</p>
+<pre class="language-"><code class="lang-bash"><span class="token function">npm</span> <span class="token function">install</span> -g create-react-app
 
 create-react-app my-app
 <span class="token function">cd</span> my-app/
 <span class="token function">npm</span> start
 </code></pre>
-<h2 id="react">React</h2>
-<p><a href="https://facebook.github.io/react/" target="_blank">React</a> is a library by Facebook.</p>
+<h1 id="jsx">JSX</h1>
 <ul>
 <li>Uses <a href="https://facebook.github.io/react/docs/introducing-jsx.html" target="_blank">JSX</a></li>
 </ul>
@@ -632,28 +646,134 @@ create-react-app my-app
 
 <span class="token keyword">export</span> <span class="token keyword">default</span> App<span class="token punctuation">;</span>
 </code></pre>
-<ul>
-<li>Many good Patterns: Single Responsibility, DRY, abstraction of state</li>
-</ul>
-<h2 id="lets-create-an-app">Let&apos;s create an app!</h2>
-<pre class="language-"><code class="lang-bash"><span class="token function">npm</span> <span class="token function">install</span> -g create-react-app
+<h1 id="components">Components</h1>
+<p>React components are best understood in terms of parents and children.</p>
+<p>Parent or <code>container</code> components may have access to the data that they need in order to pass on to multiple child components. These larger components often contain the actions (e.g. API calls) or data processing functions that their child components require and thus are referred to as <code>smart</code> components.</p>
+<p>Example:</p>
+<pre class="language-"><code class="lang-jsx"><span class="token keyword">import</span> React<span class="token punctuation">,</span> <span class="token punctuation">{</span> Component <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&apos;react&apos;</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> Organisation <span class="token keyword">from</span> <span class="token string">&apos;./Organisation&apos;</span><span class="token punctuation">;</span>
 
-create-react-app my-app
-<span class="token function">cd</span> my-app/
-<span class="token function">npm</span> start
+<span class="token keyword">class</span> <span class="token class-name">App</span> <span class="token keyword">extends</span> <span class="token class-name">Component</span> <span class="token punctuation">{</span>
+  <span class="token function">render</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token punctuation">(</span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">className</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>App<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Organisation</span>
+            <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>Refugee</span> <span class="token attr-name">Support</span> <span class="token attr-name">Network&quot;</span>
+            <span class="token attr-name">website</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>http://www.refugeesupportnetwork.org<span class="token punctuation">&quot;</span></span>
+        <span class="token punctuation">/&gt;</span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">export</span> <span class="token keyword">default</span> App<span class="token punctuation">;</span>
 </code></pre>
-<h2 id="es6">ES6</h2>
-<p>ES6 is a new standard for Javascript (ECMAScript). It is already supported in many browsers (check compatibility <a href="https://kangax.github.io/compat-table/es6/" target="_blank">here</a>).</p>
-<p>Some useful features:</p>
+<p>Child or <code>presentational</code> components are essentially smaller customisable to the data that they receive but usually do not have the data in themselves. These are often referred to as <code>dumb</code> components - because they do not process the data in themselves:</p>
+<pre class="language-"><code class="lang-jsx"><span class="token keyword">import</span> React<span class="token punctuation">,</span> <span class="token punctuation">{</span> Component <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&apos;react&apos;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Organisation</span> <span class="token keyword">extends</span> <span class="token class-name">Component</span> <span class="token punctuation">{</span>
+  <span class="token function">render</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> name <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>props<span class="token punctuation">.</span>name<span class="token punctuation">;</span>
+    <span class="token keyword">const</span> website <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>props<span class="token punctuation">.</span>website<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token punctuation">(</span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">&gt;</span></span>
+            Name<span class="token punctuation">:</span> <span class="token punctuation">{</span>name<span class="token punctuation">}</span> <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>br</span> <span class="token punctuation">/&gt;</span></span>
+            Website<span class="token punctuation">:</span> <span class="token punctuation">{</span>website<span class="token punctuation">}</span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">export</span> <span class="token keyword">default</span> Organisation<span class="token punctuation">;</span>
+</code></pre>
 <ul>
-<li>Let / Const</li>
-<li>Classes</li>
-<li>Export Modules / Importing</li>
-<li>Arrow functions / scope</li>
+<li><a href="https://jsfiddle.net/kabaros/1h9taf1e/" target="_blank">Props exercise</a></li>
 </ul>
-<p>Some features and their ES5 compatible code can be found <a href="http://es6-features.org/" target="_blank">here</a></p>
-<p><a href="https://github.com/ericdouglas/ES6-Learning/blob/master/README.md" target="_blank">Resource list</a></p>
-<h2 id="homework">Homework</h2>
+<h2 id="thinking-in-react">Thinking in React</h2>
+<p>In development you are often given specification of a piece work with example design and data:</p>
+<p><img src="https://facebook.github.io/react/img/blog/thinking-in-react-mock.png" alt="Inventory data table"></p>
+<pre class="language-"><code class="lang-json"><span class="token punctuation">[</span>
+  <span class="token punctuation">{</span><span class="token property">&quot;category&quot;</span><span class="token operator">:</span> <span class="token string">&quot;Sporting Goods&quot;</span><span class="token punctuation">,</span> <span class="token property">&quot;price&quot;</span><span class="token operator">:</span> <span class="token string">&quot;$49.99&quot;</span><span class="token punctuation">,</span> <span class="token property">&quot;stocked&quot;</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> <span class="token property">&quot;name&quot;</span><span class="token operator">:</span> <span class="token string">&quot;Football&quot;</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">{</span><span class="token property">&quot;category&quot;</span><span class="token operator">:</span> <span class="token string">&quot;Sporting Goods&quot;</span><span class="token punctuation">,</span> <span class="token property">&quot;price&quot;</span><span class="token operator">:</span> <span class="token string">&quot;$9.99&quot;</span><span class="token punctuation">,</span> <span class="token property">&quot;stocked&quot;</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> <span class="token property">&quot;name&quot;</span><span class="token operator">:</span> <span class="token string">&quot;Baseball&quot;</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">{</span><span class="token property">&quot;category&quot;</span><span class="token operator">:</span> <span class="token string">&quot;Sporting Goods&quot;</span><span class="token punctuation">,</span> <span class="token property">&quot;price&quot;</span><span class="token operator">:</span> <span class="token string">&quot;$29.99&quot;</span><span class="token punctuation">,</span> <span class="token property">&quot;stocked&quot;</span><span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span> <span class="token property">&quot;name&quot;</span><span class="token operator">:</span> <span class="token string">&quot;Basketball&quot;</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">{</span><span class="token property">&quot;category&quot;</span><span class="token operator">:</span> <span class="token string">&quot;Electronics&quot;</span><span class="token punctuation">,</span> <span class="token property">&quot;price&quot;</span><span class="token operator">:</span> <span class="token string">&quot;$99.99&quot;</span><span class="token punctuation">,</span> <span class="token property">&quot;stocked&quot;</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> <span class="token property">&quot;name&quot;</span><span class="token operator">:</span> <span class="token string">&quot;iPod Touch&quot;</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">{</span><span class="token property">&quot;category&quot;</span><span class="token operator">:</span> <span class="token string">&quot;Electronics&quot;</span><span class="token punctuation">,</span> <span class="token property">&quot;price&quot;</span><span class="token operator">:</span> <span class="token string">&quot;$399.99&quot;</span><span class="token punctuation">,</span> <span class="token property">&quot;stocked&quot;</span><span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span> <span class="token property">&quot;name&quot;</span><span class="token operator">:</span> <span class="token string">&quot;iPhone 5&quot;</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">{</span><span class="token property">&quot;category&quot;</span><span class="token operator">:</span> <span class="token string">&quot;Electronics&quot;</span><span class="token punctuation">,</span> <span class="token property">&quot;price&quot;</span><span class="token operator">:</span> <span class="token string">&quot;$199.99&quot;</span><span class="token punctuation">,</span> <span class="token property">&quot;stocked&quot;</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> <span class="token property">&quot;name&quot;</span><span class="token operator">:</span> <span class="token string">&quot;Nexus 7&quot;</span><span class="token punctuation">}</span>
+<span class="token punctuation">]</span><span class="token punctuation">;</span>
+</code></pre>
+<p>Steps to conceptualise the solution with <code>React</code>:</p>
+<ul>
+<li>1: <a href="https://facebook.github.io/react/img/blog/thinking-in-react-components.png" target="_blank">Break The UI Into A Component Hierarchy</a></li>
+<li>2: Build A Static Version</li>
+<li>3: Identify the State and where it should live</li>
+</ul>
+<p><a href="http://codepen.io/lacker/pen/vXpAgj" target="_blank">Exercise: Code Review</a></p>
+<h1 id="jsx-map-arrays-to-components">JSX: Map Arrays to Components</h1>
+<p>When working with APIs we often have collections of things in <code>Arrays</code> which we want to map to components. This means we can loop through that data and display the customisable <code>dumb</code> component for each one.</p>
+<pre class="language-"><code class="lang-jsx">
+<span class="token function">renderOrganisations</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> orgData <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">{</span> name<span class="token punctuation">:</span> <span class="token string">&apos;Organisation 1&apos;</span><span class="token punctuation">,</span> borough<span class="token punctuation">:</span> <span class="token string">&apos;Camden&apos;</span><span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>name<span class="token punctuation">:</span> <span class="token string">&apos;Organisation 2&apos;</span><span class="token punctuation">}</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> orgData<span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token function">renderData</span><span class="token punctuation">(</span>organisation<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token punctuation">(</span>
+            <span class="token operator">&lt;</span>Organisation
+                name<span class="token operator">=</span> <span class="token punctuation">{</span>organisation<span class="token punctuation">.</span>name<span class="token punctuation">}</span>
+                borough<span class="token operator">=</span><span class="token punctuation">{</span>organisation<span class="token punctuation">.</span>borough <span class="token operator">?</span> organisation<span class="token punctuation">.</span>borough <span class="token punctuation">:</span> <span class="token string">&apos;None&apos;</span><span class="token punctuation">}</span>
+                website<span class="token operator">=</span> <span class="token punctuation">{</span>organisation<span class="token punctuation">.</span>website<span class="token punctuation">}</span>
+            <span class="token operator">/</span><span class="token operator">&gt;</span>
+        <span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">class</span> <span class="token class-name">App</span> <span class="token keyword">extends</span> <span class="token class-name">Component</span> <span class="token punctuation">{</span>
+  <span class="token function">render</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">return</span> <span class="token punctuation">(</span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">className</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>App<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>
+          <span class="token punctuation">{</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">renderOrganisations</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">}</span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+      <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<ul>
+<li><a href="https://codepen.io/kabaros/pen/BpLzzE?editors=0010#0" target="_blank">Mapping Exercise</a></li>
+</ul>
+<h2 id="state">State</h2>
+<p>Props are a Component&apos;s configuration, they are received from above and they don&apos;t usually change by the component itself.
+State starts with a default value (set in the constructor typically) then it gets changed (mutated) by events of the application (user interactions, form input, API calls etc..)</p>
+<p>Example:</p>
+<pre class="language-"><code class="lang-jsx"><span class="token keyword">import</span> React<span class="token punctuation">,</span> <span class="token punctuation">{</span> Component <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&apos;react&apos;</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> Organisation <span class="token keyword">from</span> <span class="token string">&apos;./Organisation&apos;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">App</span> <span class="token keyword">extends</span> <span class="token class-name">Component</span> <span class="token punctuation">{</span>
+  <span class="token function">constructor</span><span class="token punctuation">(</span>props<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">super</span><span class="token punctuation">(</span>props<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>state <span class="token operator">=</span> <span class="token punctuation">{</span>
+        website<span class="token punctuation">:</span> <span class="token keyword">null</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token function">handleChange</span><span class="token punctuation">(</span>event<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">setState</span><span class="token punctuation">(</span><span class="token punctuation">{</span>website<span class="token punctuation">:</span> event<span class="token punctuation">.</span>target<span class="token punctuation">.</span>value<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  <span class="token function">render</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token punctuation">(</span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">className</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>App<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Organisation</span>
+            <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>Refugee</span> <span class="token attr-name">Support</span> <span class="token attr-name">Network&quot;</span>
+            <span class="token attr-name">website</span><span class="token script language-javascript"><span class="token punctuation">=</span><span class="token punctuation">{</span><span class="token keyword">this</span><span class="token punctuation">.</span>state<span class="token punctuation">.</span>website<span class="token punctuation">}</span></span>
+        <span class="token punctuation">/&gt;</span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>text<span class="token punctuation">&quot;</span></span> <span class="token attr-name">value</span><span class="token script language-javascript"><span class="token punctuation">=</span><span class="token punctuation">{</span><span class="token keyword">this</span><span class="token punctuation">.</span>state<span class="token punctuation">.</span>website<span class="token punctuation">}</span></span> <span class="token attr-name">onChange</span><span class="token script language-javascript"><span class="token punctuation">=</span><span class="token punctuation">{</span><span class="token keyword">this</span><span class="token punctuation">.</span>handleChange<span class="token punctuation">.</span><span class="token function">bind</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">}</span></span> <span class="token punctuation">/&gt;</span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">export</span> <span class="token keyword">default</span> App<span class="token punctuation">;</span>
+</code></pre>
+<ul>
+<li><a href="https://codepen.io/kabaros/pen/NdRNmm?editors=0010#0" target="_blank">State Exercise</a></li>
+</ul>
+<h1 id="resources">Resources</h1>
+<h1 id="homework">Homework</h1>
 <ul>
 <li><a href="Homework/Homework1.md">Directory of services with components</a></li>
 </ul>
@@ -696,7 +816,7 @@ create-react-app my-app
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Week 18","level":"1.7.1","depth":2,"next":{"title":"Week 19","level":"1.7.2","depth":2,"path":"react/lesson2.md","ref":"react/lesson2.md","articles":[]},"previous":{"title":"React","level":"1.7","depth":1,"ref":"","articles":[{"title":"Week 18","level":"1.7.1","depth":2,"path":"react/lesson1.md","ref":"react/lesson1.md","articles":[]},{"title":"Week 19","level":"1.7.2","depth":2,"path":"react/lesson2.md","ref":"react/lesson2.md","articles":[]},{"title":"Week 20","level":"1.7.3","depth":2,"path":"react/lesson3.md","ref":"react/lesson3.md","articles":[]},{"title":"Week 21","level":"1.7.4","depth":2,"path":"react/lesson4.md","ref":"react/lesson4.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["prism","-highlight"],"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"react/lesson1.md","mtime":"2017-09-02T10:25:05.766Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2017-09-02T10:26:24.914Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Week 18","level":"1.7.1","depth":2,"next":{"title":"Week 19","level":"1.7.2","depth":2,"path":"react/lesson2.md","ref":"react/lesson2.md","articles":[]},"previous":{"title":"React","level":"1.7","depth":1,"ref":"","articles":[{"title":"Week 18","level":"1.7.1","depth":2,"path":"react/lesson1.md","ref":"react/lesson1.md","articles":[]},{"title":"Week 19","level":"1.7.2","depth":2,"path":"react/lesson2.md","ref":"react/lesson2.md","articles":[]},{"title":"Week 20","level":"1.7.3","depth":2,"path":"react/lesson3.md","ref":"react/lesson3.md","articles":[]},{"title":"Week 21","level":"1.7.4","depth":2,"path":"react/lesson4.md","ref":"react/lesson4.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["prism","-highlight"],"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"react/lesson1.md","mtime":"2017-09-11T14:15:01.136Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2017-09-11T14:17:07.439Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
