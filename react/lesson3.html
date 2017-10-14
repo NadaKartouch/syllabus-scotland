@@ -594,31 +594,80 @@
                                 <section class="normal markdown-section">
                                 
                                 <h1 id="react-3">React 3</h1>
-<p><strong>What we will learn today?</strong></p>
+<h3 id="what-we-will-learn-today">What we will learn today?</h3>
 <ul>
-<li>React Router</li>
-<li>More testing</li>
+<li>Fetching data into components</li>
+<li>Installing React components from <a href="https://www.npmjs.com/search?q=react" target="_blank">npm</a></li>
+<li>How to build an app using <a href="https://www.npmjs.com/package/react-router" target="_blank">react-router</a></li>
 </ul>
-<h1 id="routing">Routing</h1>
-<p>React can be used as a <code>Single Page Application</code>, i.e. providing full experience of an application with many views within one page with several components.</p>
-<p>However it is still possible to support <code>routing</code> by associating and displaying different components for different URLs.</p>
-<p>Routing is usually achieved in React with a library such as <code>React Router</code>. You can find more information about this library with examples <a href="https://github.com/ReactTraining/react-router" target="_blank">here</a>.</p>
-<p><a href="https://github.com/reactjs/react-router-tutorial/tree/master/lessons/01-setting-up" target="_blank">Exercise: Use React Router</a></p>
-<h1 id="more-testing">More testing</h1>
-<h1 id="homework">HomeWork</h1>
-<p>Continue building last week&apos;s app. As we get familiar with retrieving data and displaying it, we take our project into the next step.</p>
-<p>We want to break the app into different pages which the users can navigate around (with the Back/Forward button or typing a url) without losing context.</p>
-<p>The App will consist of three pages:</p>
-<ol>
-<li>Home: displays a list of all areas (url: / )</li>
-<li>Area: shows the organisations in a specific area (url: /area/{areaName} )</li>
-<li>Organisation View: shows once specific organisation information (url: /organisations/{organisationName})</li>
-</ol>
-<p>In order to implement this behaviour, we will use <a href="https://github.com/ReactTraining/react-router" target="_blank">React-Router</a> library.</p>
-<p>Bonus:</p>
+<h2 id="challenge-1-render-a-list-of-albums">Challenge 1: render a list of albums</h2>
 <ul>
-<li>Implement a fuzzy search functionality in the Area page where users can search by name or website etc..</li>
-<li>Use a library called underscore, find it online, read its documentation and npm install it. And use it!</li>
+<li><p>Go to <a href="https://github.com/djgrant/beyonce-app" target="_blank">https://github.com/djgrant/beyonce-app</a> and follow the instructions to clone and install the app.</p>
+</li>
+<li><p>You&apos;ll find in the components folder an <code>Album</code> component already written for you to use, and an <code>Albums</code> component that you need to complete</p>
+</li>
+<li><p>In the <code>Albums</code> component fetch an array of albums from <a href="https://gist.githubusercontent.com/rarmatei/f5ae92ac93d9716affab822a3f54f95b/raw/dc014926ed07a10404934d25bfcea382daf53a7f/beyonce-albums.json" target="_blank">https://gist.githubusercontent.com/rarmatei/f5ae92ac93d9716affab822a3f54f95b/raw/dc014926ed07a10404934d25bfcea382daf53a7f/beyonce-albums.json</a>.</p>
+</li>
+<li><p>Using the data returned from the API, render an array of <code>Album</code> components, passing in the necessary props.</p>
+</li>
+</ul>
+<p>Things you will need to know:</p>
+<ul>
+<li>Fetch<ul>
+<li>Example: <a href="http://jsbin.com/qafekejato/edit?js,console" target="_blank">http://jsbin.com/qafekejato/edit?js,console</a>  </li>
+<li>Tutorial: <a href="https://css-tricks.com/using-fetch/" target="_blank">https://css-tricks.com/using-fetch/</a></li>
+</ul>
+</li>
+<li>lifecycle methods<ul>
+<li>Tutorial/Exmaple: <a href="https://github.com/CodeYourFuture/syllabus/blob/scotland/react/lesson2.md#talking-to-an-api" target="_blank">https://github.com/CodeYourFuture/syllabus/blob/scotland/react/lesson2.md#talking-to-an-api</a></li>
+</ul>
+</li>
+<li>State<ul>
+<li>Example: <a href="https://codesandbox.io/s/q83vz50yl9" target="_blank">https://codesandbox.io/s/q83vz50yl9</a></li>
+<li>Tutorial: <a href="https://reactjs.org/docs/state-and-lifecycle.html" target="_blank">https://reactjs.org/docs/state-and-lifecycle.html</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="challenge-2-add-routes-to-your-app">Challenge 2: add routes to your app</h2>
+<p>In this challenge we&apos;ll split your app into 3 pages.</p>
+<ul>
+<li><p>In your app install react-router by running <code>npm install react-router --save</code></p>
+</li>
+<li><p>Open <a href="https://codesandbox.io/s/pj6v9x94x0" target="_blank">https://codesandbox.io/s/pj6v9x94x0</a> to see a basic example of a React app using react-router.</p>
+</li>
+<li><p>Copy the <code>react-router</code> imports over to your app</p>
+</li>
+<li><p>Wrap your app in a <code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Router</span> <span class="token punctuation">/&gt;</span></span></code> component</p>
+</li>
+<li><p>Move the 3 sections in your app into <code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Route</span><span class="token punctuation">&gt;</span></span></code>s</p>
+</li>
+<li><p>Add a navigation bar to your app with links to the routes you&apos;ve created</p>
+</li>
+<li><p>Move the content of each Route into individual files, and import them in <code>index.js</code> using the  <code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Route</span><span class="token punctuation">&gt;</span></span></code> <code>component</code> prop.</p>
+</li>
+</ul>
+<h2 id="challenge-3-install-components-to-style-your-app">Challenge 3: install components to style your app</h2>
+<p>React components can be configured with props, which makes them ideal for sharing with others.</p>
+<p>There are <a href="https://github.com/brillout/awesome-react-components#ui-components" target="_blank">all sorts of React components</a> that you can install and use in your projects.</p>
+<p>In the challenge you&apos;ll add a video player to the <code>Album</code> component.</p>
+<ul>
+<li><p>Open the <code>Album</code> component</p>
+</li>
+<li><p>Using npm, install <a href="https://www.npmjs.com/package/react-player" target="_blank">react-player</a></p>
+</li>
+<li><p>Following the instructions on the <a href="https://www.npmjs.com/package/react-player" target="_blank">readme</a> add a react-player component into <code>Album</code></p>
+</li>
+<li><p>Update your <code>Albums</code> component to pass in a <code>videoUrl</code> to the <code>Album</code> component</p>
+</li>
+<li><p>Add <code>videoUrl</code> as a prop type to the <code>Album</code> component</p>
+</li>
+</ul>
+<h2 id="homework">Homework</h2>
+<ul>
+<li>Find some more content and add another route to your App</li>
+<li>Using react-router, show the About route content in tabs (see the how this is achieved in <a href="https://codesandbox.io/s/pj6v9x94x0" target="_blank">https://codesandbox.io/s/pj6v9x94x0</a>)<!-- - Add a form to the [TODO] page that posts to an API [TODO] --></li>
+<li>Enhance the albums page using components provided by <a href="http://www.material-ui.com/#/components/grid-list" target="_blank">Material UI</a></li>
+<li>(Advanced) Abstract the tabs functionality into a component that you could share with other developers</li>
 </ul>
 
                                 
@@ -663,7 +712,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Week 20","level":"1.7.3","depth":2,"next":{"title":"Week 21","level":"1.7.4","depth":2,"path":"react/lesson4.md","ref":"react/lesson4.md","articles":[]},"previous":{"title":"Week 19","level":"1.7.2","depth":2,"path":"react/lesson2.md","ref":"react/lesson2.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["prism","-highlight"],"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"react/lesson3.md","mtime":"2017-10-10T19:03:18.941Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2017-10-10T19:04:36.030Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Week 20","level":"1.7.3","depth":2,"next":{"title":"Week 21","level":"1.7.4","depth":2,"path":"react/lesson4.md","ref":"react/lesson4.md","articles":[]},"previous":{"title":"Week 19","level":"1.7.2","depth":2,"path":"react/lesson2.md","ref":"react/lesson2.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["prism","-highlight"],"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"react/lesson3.md","mtime":"2017-10-14T10:29:29.627Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2017-10-14T10:31:04.387Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
