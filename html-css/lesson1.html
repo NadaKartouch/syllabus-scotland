@@ -671,19 +671,6 @@
 <p>If you want to review the selectors, read the <a href="http://learn.shayhowe.com/advanced-html-css/complex-selectors/" target="_blank">Common Selectors section</a> of this page.</p>
 <p><strong>Exercise (pair programming):</strong> Work in pairs to make the blue buttons on the page red (<code>#ce5f31</code>). The white button, which says &quot;Volunteer&quot;, should remain white but the text should change to red.</p>
 </blockquote>
-<h2 id="css-inheritance">CSS Inheritance</h2>
-<p>Some CSS styles applied to one element will be &quot;inherited&quot; by their child elements. These are usually styles which apply to the content of the elements, such as font family and color. Other properties, like margins, paddings and borders, don&apos;t get passed down to children.</p>
-<blockquote>
-<p>In English, the word <strong>inherit</strong> refers to something, like the color of your eyes, which you can receive from your parent. We use this to describe how &quot;child&quot; HTML elements can inherit styles from &quot;parent&quot; HTML elements.</p>
-</blockquote>
-<p>We&apos;ll do two quick exercises to explore what gets inherited, what doesn&apos;t, and why.</p>
-<blockquote>
-<p><strong>Exercise:</strong> Work in pairs and use the <a href="http://www.htmldog.com/references/css/properties/background/" target="_blank">background properties</a> to add a <a href="background%20image">assets/jumbotron-background.jpg</a> to the jumbotron. Did these styles have &quot;inheritance&quot;? Why do you think they did or did not?</p>
-</blockquote>
-<p>Now that the background image is in place, the text is difficult to read. The text needs to be white.</p>
-<blockquote>
-<p><strong>Exercise:</strong> Work in pairs and use just one CSS rule to set all of the text in the jumbotron to white. To do this, you&apos;ll need to use inheritance. Why do you think some styles, like text color, get inherited?</p>
-</blockquote>
 <h2 id="pseudo-classes">Pseudo Classes</h2>
 <p>You can assign CSS rules to a class like this:</p>
 <pre class="language-"><code class="lang-css"><span class="token selector">.btn</span> <span class="token punctuation">{</span>
@@ -708,20 +695,6 @@
 <blockquote>
 <p><strong>Exercise:</strong> Work in pairs and use the pseudo classes to make the background color of the red buttons change when in a &quot;hover&quot; or &quot;focus&quot; state. See if you can make the white &quot;Volunteer&quot; button change to a different background without effecting the red buttons.</p>
 </blockquote>
-<h2 id="the-cascade">The Cascade</h2>
-<p>CSS stands for Cascading Style Sheets. The &quot;cascade&quot; is a set of rules which the browser uses to choose what to do when two CSS rules conflict. Take the following example:</p>
-<pre class="language-"><code class="lang-css"><span class="token selector">.btn</span> <span class="token punctuation">{</span>
-    <span class="token property">color</span><span class="token punctuation">:</span> red<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-<span class="token selector">.btn</span> <span class="token punctuation">{</span>
-    <span class="token property">color</span><span class="token punctuation">:</span> blue<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-</code></pre>
-<p>Should the <code>.btn</code> be red or blue? When identical selectors are next to each other like this, the browser lets the last one override the first one. But in a real-world scenario, you may have CSS scattered across different files. To solve this, we use the cascade.</p>
-<blockquote>
-<p><strong>Exercise:</strong> Read the section on <a href="https://developer.mozilla.org/en-US/docs/Learn/CSS/Introduction_to_CSS/Cascade_and_inheritance#The_cascade" target="_blank">the cascade</a>. Then pair up. In the example, there are two paragraphs. Pick one paragraph and explain to your partner why it has a particular background color. Then ask your partner to explain the other paragraph.</p>
-<p><strong>Exercise:</strong> Work in pairs to give each one of the navigation menu items a red border (<code>#ce5f31</code>). This border should only appear when the mouse is hovering over it or the item has focus. Then use what you&apos;ve learned about the cascade to give the first navigation menu item (&quot;Home&quot;) a different color border.</p>
-</blockquote>
 <h2 id="box-model">Box Model</h2>
 <p>In CSS, everything is a box. An image is a box. A link is a box. The area around this box can be modified with properites that we call margins, borders and padding. Here&apos;s a diagram showing what the box looks like.</p>
 <p><img src="https://mdn.mozillademos.org/files/13647/box-model-standard-small.png" alt="Box Model. Source: MDN"></p>
@@ -737,6 +710,63 @@
 <blockquote>
 <p><strong>Exercise:</strong> Use a transparent border so that the width of each navigation menu item stays the same even when it is hovered or focused.</p>
 </blockquote>
+<h2 id="git-conflicts">Git Conflicts</h2>
+<p>As a professional, you&apos;ll usually need to work alongside other coders to build an app or website. We use version control to coordinate changes and manage any conflicts that arise. <a href="https://git-scm.com/" target="_blank">Git</a> is a version control system which helps us merge code that we&apos;ve been working on separately into one common codebase.</p>
+<p>To manage conflicts, we will need a common code base in which all changes are coordinated. When working on our own, we&apos;ll make our changes in <code>branches</code> to keep the code separate. Then we&apos;ll learn how to refresh your individual <code>branch</code> with the common code base, and prepare your changes to be merged.</p>
+<blockquote>
+<p>Exercise: Get together in pairs and select a &quot;leader&quot;. The leader should fork <a href="https://github.com/CodeYourFuture/first-git-conflict" target="_blank">this repository</a> to their GitHub account. The other person should then fork the leader&apos;s repository. Both students should then clone their own personal forks locally.</p>
+</blockquote>
+<p>Now that you have the project set up on your computer, you need a place to safely make changes without effecting the common code base. To do this, we&apos;ll navigate to our project in the Terminal and create a new branch:</p>
+<pre class="language-"><code>cd <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>your-project-directory</span><span class="token punctuation">&gt;</span></span>
+git checkout -b my-first-branch
+</code></pre><p>When you commit changes on this branch, your changes will be saved separately from the common code base. This way both team members can make changes at the same time.</p>
+<blockquote>
+<p>Exercise: Add your name and a sentence about yourself to the <code>index.html</code> file. Then <code>git add</code> and <code>git commit</code> to commit to your personal branch.</p>
+</blockquote>
+<p>Now you have two branches: <code>master</code> and <code>my-first-branch</code>. These branches have <em>diverged</em>, which means you have changes in one that don&apos;t appear in the other. You can check this by running <code>git checkout master</code>, then looking at your <code>index.html</code> file.</p>
+<p>When you&apos;re done, run <code>git checkout my-first-branch</code> to go back to the branch with your changes. Git saves your changes in both branches and lets you switch between them. That&apos;s why we call it &quot;version control&quot;. It saves different versions so you can switch between them.</p>
+<p>Right now, your new branch only exists on your computer. Let&apos;s push it up to GitHub so you can see it in your profile.</p>
+<pre class="language-"><code>git checkout my-first-branch
+git push -u origin my-first-branch
+</code></pre><p>Now both students in each pair, the &quot;leader&quot; and the other student, should have branches with changes. Now let&apos;s try to merge these changes together into the &quot;leader&apos;s&quot; master branch.</p>
+<blockquote>
+<p>Exercise: Browse to the &quot;leader&apos;s&quot; GitHub repository and open a new Pull Request. The Pull Request should ask to merge your <code>my-first-branch</code> branch into the &quot;leader&apos;s&quot; <code>master</code> branch. Ask a mentor for help if you have trouble figuring out how to issue a Pull Request. When both students have issued a Pull Request to the correct place, merge <em>one</em> of them but not the other.</p>
+</blockquote>
+<p>Congrats, you&apos;ve merged one student&apos;s changes with the common code base in the <code>master</code> branch. If you check the other Pull Request, you&apos;ll see you have a problem. It can&apos;t be merged automatically because there&apos;s a conflict. Why?</p>
+<p>Conflicts emerge whenever the same file has been edited, and git can&apos;t determine what changes should be kept and what changes should be discarded. A human -- that&apos;s you -- needs to step in and sort it out. To help us, git writes into our code so we can see where it is confused. Here&apos;s an example of a merge conflict in our code:</p>
+<pre class="language-"><code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h2</span><span class="token punctuation">&gt;</span></span>Mozafar<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h2</span><span class="token punctuation">&gt;</span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">&gt;</span></span>I am a mentor at CodeYourFuture.<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span>
+=======
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h2</span><span class="token punctuation">&gt;</span></span>Daniel<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h2</span><span class="token punctuation">&gt;</span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">&gt;</span></span>I like to ride bikes<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; my-first-branch
+</code></pre><p>To resolve a conflict, we decide which lines to keep and which lines to remove. When we&apos;re done, we remove the extra lines that git added (<code>&lt;&lt;&lt;&lt;&lt; HEAD</code>, <code>========</code> and <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code>).</p>
+<p>Let&apos;s see how we can resolve this conflict with your branches. First we need to fetch the latest changes from the leader&apos;s <code>master</code> branch. If you&apos;re the <strong>leader</strong>, just do:</p>
+<pre class="language-"><code>git checkout master
+git pull
+</code></pre><p>If you&apos;re the <strong>other student</strong>, you need to set up the remote and pull from that master:</p>
+<pre class="language-"><code>git checkout master
+git remote add upstream <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>your-leaders-git-repository-url</span><span class="token punctuation">&gt;</span></span>
+git pull upstream master
+</code></pre><p>Now everyone&apos;s <code>master</code> branch should include the Pull Request that was merged. Whichever student still needs to get their Pull Request merged can bring those changes into their branch like this:</p>
+<pre class="language-"><code>git checkout my-first-branch
+git merge master
+</code></pre><p>You probably received a <strong>merge conflict</strong>.</p>
+<blockquote>
+<p>Exercise: Follow the steps we discussed before about how to resolve a merge conflict by editing the file. Make sure both students changes are included in the final version. When you&apos;re done, use <code>git add</code>, <code>git commit</code> and <code>git push</code> to share your changes with GitHub. If everything has gone correctly, you can now merge the Pull Request.</p>
+</blockquote>
+<p>Now everyone can sync their changes. If you&apos;re the <strong>leader</strong>, just do:</p>
+<pre class="language-"><code>git checkout master
+git pull
+</code></pre><p>If you&apos;re the <strong>other student</strong>, do this:</p>
+<pre class="language-"><code>git checkout master
+git pull upstream master
+</code></pre><blockquote>
+<p>Exercise: As a group, discuss why the <code>git pull</code> command is different for the <strong>leader</strong> and the <strong>other student</strong>.</p>
+<p>Exercise: Try to do the pull requests again, but this time switch the pull requests so that the other student must manage the merge conflict.</p>
+</blockquote>
+<p>If you&apos;re feeling confused, don&apos;t worry. Version control is one of the most difficult things you&apos;ll learn and we&apos;ll be going over it again and again and again.</p>
 <h1 id="resources">Resources</h1>
 <ol>
 <li><a href="https://developer.mozilla.org/en/docs/Web/Guide/HTML/HTML5" target="_blank">HTML5 - semantic elements</a></li>
@@ -752,6 +782,8 @@
 <li><p>(Est. 2 hours) Read about <a href="http://learn.shayhowe.com/advanced-html-css/complex-selectors/" target="_blank">advanced CSS selectors</a> and then practice by playing this <a href="https://flukeout.github.io/" target="_blank">CSS selector game</a>. It gets hard at the end, but try your best!</p>
 </li>
 <li><p>Fork this repo and follow the instructions on the README - <a href="https://github.com/Code-Your-Future/html-css-project" target="_blank">https://github.com/Code-Your-Future/html-css-project</a></p>
+</li>
+<li><p>You&apos;ll be put in groups of three. Over the next three weeks, you&apos;ll be asked to complete one of the <a href="https://github.com/CodeYourFuture/group-projects#starter-projects" target="_blank">Starter Projects</a> as a group.</p>
 </li>
 </ol>
 <p>(If you need help with Forking - then refer back to <a href="https://help.github.com/articles/fork-a-repo/" target="_blank">this tutorial</a>)</p>
@@ -798,7 +830,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Week 1 - Semantic HTML and CSS","level":"1.3.1","depth":2,"next":{"title":"Week 2 - Responsive Web and layout","level":"1.3.2","depth":2,"path":"html-css/lesson2.md","ref":"html-css/lesson2.md","articles":[]},"previous":{"title":"HTML/CSS","level":"1.3","depth":1,"ref":"","articles":[{"title":"Week 1 - Semantic HTML and CSS","level":"1.3.1","depth":2,"path":"html-css/lesson1.md","ref":"html-css/lesson1.md","articles":[]},{"title":"Week 2 - Responsive Web and layout","level":"1.3.2","depth":2,"path":"html-css/lesson2.md","ref":"html-css/lesson2.md","articles":[]},{"title":"Week 3 - Frameworks","level":"1.3.3","depth":2,"path":"html-css/lesson3.md","ref":"html-css/lesson3.md","articles":[]},{"title":"Coding 101","level":"1.3.4","depth":2,"path":"html-css/coding-101.md","ref":"html-css/coding-101.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["prism","-highlight"],"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"html-css/lesson1.md","mtime":"2018-01-21T12:30:09.922Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-01-21T12:31:38.809Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Week 1 - Semantic HTML and CSS","level":"1.3.1","depth":2,"next":{"title":"Week 2 - Responsive Web and layout","level":"1.3.2","depth":2,"path":"html-css/lesson2.md","ref":"html-css/lesson2.md","articles":[]},"previous":{"title":"HTML/CSS","level":"1.3","depth":1,"ref":"","articles":[{"title":"Week 1 - Semantic HTML and CSS","level":"1.3.1","depth":2,"path":"html-css/lesson1.md","ref":"html-css/lesson1.md","articles":[]},{"title":"Week 2 - Responsive Web and layout","level":"1.3.2","depth":2,"path":"html-css/lesson2.md","ref":"html-css/lesson2.md","articles":[]},{"title":"Week 3 - Frameworks","level":"1.3.3","depth":2,"path":"html-css/lesson3.md","ref":"html-css/lesson3.md","articles":[]},{"title":"Coding 101","level":"1.3.4","depth":2,"path":"html-css/coding-101.md","ref":"html-css/coding-101.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["prism","-highlight"],"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"html-css/lesson1.md","mtime":"2018-01-24T20:55:00.065Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-01-24T20:56:19.321Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
