@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Week 8 - DOM, Events · GitBook</title>
+        <title>Week 8 - JS in the Browser · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -239,7 +239,7 @@
                 <a href="../../js-core/week-05/lesson.html">
             
                     
-                    Week 5 - Arrays and Objects
+                    Week 5 - Arrays
             
                 </a>
             
@@ -252,7 +252,7 @@
                 <a href="../../js-core/week-06/lesson.html">
             
                     
-                    Week 6 - Debugging and more Data Structures
+                    Week 6 - More Arrays
             
                 </a>
             
@@ -284,7 +284,7 @@
                 <a href="../week-07/lesson.html">
             
                     
-                    Week 7 - In-depth Functions and Intro to DOM
+                    Week 7 - Objects
             
                 </a>
             
@@ -297,7 +297,7 @@
                 <a href="lesson.html">
             
                     
-                    Week 8 - DOM, Events
+                    Week 8 - JS in the Browser
             
                 </a>
             
@@ -310,7 +310,7 @@
                 <a href="../week-09/lesson.html">
             
                     
-                    Week 9 - AJAX, Async, Promises
+                    Week 9 - More JS in the Browser
             
                 </a>
             
@@ -749,7 +749,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="../.." >Week 8 - DOM, Events</a>
+        <a href="../.." >Week 8 - JS in the Browser</a>
     </h1>
 </div>
 
@@ -764,289 +764,139 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="javascript-core-in-the-browser">JavaScript Core: in the Browser</h1>
-<p><img src="https://img.shields.io/badge/status-ready-green.svg" alt=""></p>
-<p><strong> What we will learn today?</strong></p>
+                                <p><img src="https://img.shields.io/badge/status-draft-darkred.svg" alt="Draft lesson"></p>
+<h1 id="javascript-core-8">JavaScript Core 8</h1>
+<p><strong>What we will learn today?</strong></p>
 <ul>
-<li><a href="#dom">DOM</a></li>
-<li><a href="#browser-events">Events</a></li>
+<li><a href="#js-in-the-browser">JS In the Browser (The DOM)</a></li>
+<li><a href="#ajax">AJAX</a></li>
 </ul>
 <hr>
-<h2 id="the-dom">The DOM</h2>
-<p>Your webpages are made up of a bunch of HTML elements, nested within each other
-(parents and children). In JavaScript we have access to this &quot;DOM&quot; object
-(Document Object Model) which is actually a representation of our webpage that
-JavaScript can work with.</p>
-<p>In the browser the DOM is represented by the <code>window.document</code> object, which can
-also be accessed directly using <code>document</code>. We can use it to get information
-about the page loaded into the browser, query the content of the page and edit
-it. You can see full details of the functionality
-<a href="https://developer.mozilla.org/en-US/docs/Web/API/Document" target="_blank">here</a>.</p>
-<h3 id="querying">Querying</h3>
-<p>The DOM offers a lot of useful functions we can use to find elements on the
-page. Here are some we&apos;ll be using today:</p>
-<pre class="language-"><code class="lang-js"><span class="token comment" spellcheck="true">// gets an Element with id &apos;submit&apos;</span>
-<span class="token keyword">var</span> element <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">getElementById</span><span class="token punctuation">(</span><span class="token string">&quot;submit&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-</code></pre>
-<p><code>getElementById</code> accepts an id string as argument and returns an <code>Element</code> from
-the document with a matching id. If no matching <code>Element</code> is found the function
-returns <code>null</code>.</p>
-<pre class="language-"><code class="lang-js"><span class="token comment" spellcheck="true">// get an HTMLCollection containing elements with class &apos;link&apos;</span>
-<span class="token keyword">var</span> links <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">getElementsByClassName</span><span class="token punctuation">(</span><span class="token string">&quot;link&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-</code></pre>
-<p><code>getElementsByClassName</code> takes a string containing one or more classes and
-returns an <code>HTMLCollection</code>, which is an array-like object containing all
-elements whose class attributes match the string. We can pass multiple classes
-as an argument to query for elements matching all classes.</p>
-<pre class="language-"><code class="lang-js"><span class="token comment" spellcheck="true">// get an Element with id &apos;submit&apos;</span>
-<span class="token keyword">var</span> form <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">getElementById</span><span class="token punctuation">(</span><span class="token string">&quot;myform&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment" spellcheck="true">// get an HTMLCollection containing elements with class &apos;red&apos;</span>
-<span class="token comment" spellcheck="true">// which are children of the &apos;form&apos; element</span>
-<span class="token keyword">var</span> inputs <span class="token operator">=</span> form<span class="token punctuation">.</span><span class="token function">getElementsByClassName</span><span class="token punctuation">(</span><span class="token string">&quot;red&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-</code></pre>
-<p><code>getElementsByClassName</code> can be called on individual <code>elements</code> as well as the
-top-level <code>document</code> object. When calling <code>getElementsByClassName</code> on an
-<code>element</code>, the method will query only the children of the <code>element</code> rather than
-the entire <code>document</code></p>
-<pre class="language-"><code class="lang-js"><span class="token keyword">var</span> elements <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">getElementsByTagName</span><span class="token punctuation">(</span><span class="token string">&quot;div&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// or:</span>
-<span class="token keyword">var</span> elements <span class="token operator">=</span> someElement<span class="token punctuation">.</span><span class="token function">getElementsByTagName</span><span class="token punctuation">(</span><span class="token string">&quot;a&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-</code></pre>
-<p>Much like <code>getElementsByClassName</code>, <code>getElementsByTagName</code> allows us to query
-for elements using the tag name. <code>getElementsByTagName</code> also returns
-<code>HTMLCollection</code> and can be called on <code>element</code>s as well as <code>document</code>.</p>
-<p>All of the above calls return a live reference, which means that the objects
-will be automatically updated with all changes since the query.</p>
 <blockquote>
-<p><strong>Exercise</strong>:</p>
-<ul>
-<li style="list-style: none"><input type="checkbox" disabled="disabled"> Clone the repo from HTML and CSS class into new bikes directory. git
-clone git@github.com:dmitrigrabov/bikes-for-refugees.git bikes</li>
-<li style="list-style: none"><input type="checkbox" disabled="disabled"> Once cloned run npm install to download the dependencies:</li>
-<li style="list-style: none"><input type="checkbox" disabled="disabled"> Implement getTitle, getNumberOfBikes, getAllButtonText,
-getNavLinksText in src/functions.js using above methods to get all tests
-passing using npm test:</li>
-</ul>
+<p>Please make sure you&apos;re working on the <a href="https://github.com/CodeYourFuture/js-exercises" target="_blank">js-exercises repo</a> <strong>Week 5</strong> during this class.</p>
 </blockquote>
-<h3 id="query-selector">Query selector</h3>
-<p>The above selector functions are available in all browsers, but can be somewhat
-inflexible for example in situations that require complex lookups. Modern
-browsers have</p>
-<pre class="language-"><code class="lang-js">document<span class="token punctuation">.</span><span class="token function">querySelector</span><span class="token punctuation">(</span><span class="token string">&quot;#mainHeader&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-document<span class="token punctuation">.</span><span class="token function">querySelectorAll</span><span class="token punctuation">(</span><span class="token string">&quot;p&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<h2 id="js-in-the-browser">JS in the Browser</h2>
+<p>Up until now we&apos;ve been using <code>console.log</code> to see the results of our code running, because it allows us to focus on writing code and seeing the results instantly. But JavaScript was not meant to be run in <code>console.log</code>: it was meant to make web pages pages dynamic.</p>
+<p>Lots of websites are powered by JavaScript today, and some (like Facebook) cannot function at all without it: it&apos;s become that important to the look and feel of the website.</p>
+<h3 id="the-dom">The DOM</h3>
+<p>Your webpages are made up of a bunch of HTML elements, nested within each other (parents and children). But JavaScript doesn&apos;t know about any of that.</p>
+<p>Thankfully, in JavaScript we have access to this &quot;DOM&quot; object (Document Object Model) which is actually a representation of our webpage that JavaScript can work with.</p>
+<p>Here are two examples, HTML and then JavaScript, of how the DOM might look like:</p>
+<pre class="language-"><code class="lang-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">&gt;</span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h1</span><span class="token punctuation">&gt;</span></span> Welcome! <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h1</span><span class="token punctuation">&gt;</span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">&gt;</span></span> Hello world! <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">&gt;</span></span>
+</code></pre>
+<pre class="language-"><code class="lang-js"><span class="token keyword">var</span> document <span class="token operator">=</span> <span class="token punctuation">{</span>
+    body<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+        h1<span class="token punctuation">:</span> <span class="token string">&quot;Welcome&quot;</span><span class="token punctuation">,</span>
+        p<span class="token punctuation">:</span> <span class="token string">&quot;Hello world!&quot;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre>
+<p>The DOM offers a lot of useful functions we can use to find elements on the page. Here are some we&apos;ll be using today:</p>
+<pre class="language-"><code class="lang-js">    document<span class="token punctuation">.</span><span class="token function">querySelector</span><span class="token punctuation">(</span><span class="token string">&apos;#mainHeader&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    document<span class="token punctuation">.</span><span class="token function">querySelectorAll</span><span class="token punctuation">(</span><span class="token string">&apos;p&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre>
 <p>Both <code>.querySelector</code> and <code>querySelectorAll</code> accept a CSS selector as an input.
-<code>.querySelector</code> selects only the first element it finds, <code>querySelectorAll</code>
-selects all elements and returns a <code>NodeList</code>, which is a collection of <code>Nodes</code>
-(not an array). Unlike the selectors in the previous section, these functions
-return static results. That means any changes in the DOM will NOT result in
-updates to the elements.</p>
-<blockquote>
-<p><strong>Exercise</strong>:</p>
-<ul>
-<li style="list-style: none"><input type="checkbox" disabled="disabled"> Rewrite solutions to previous exercise using querySelector and
-querySelectorAll. You may need to look up documentation for NodeList.</li>
-</ul>
-</blockquote>
-<h3 id="dom-manipulation">DOM manipulation</h3>
-<p>We can use the DOM to edit elements. For example the <code>textContent</code> property of
-elements can used to read as well as set the text contents of an element.</p>
-<pre class="language-"><code class="lang-js"><span class="token keyword">var</span> x <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">querySelector</span><span class="token punctuation">(</span><span class="token string">&quot;.jumbotron h1&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>textContent<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// Bikes for Refugees</span>
-x<span class="token punctuation">.</span>textContent <span class="token operator">=</span> <span class="token string">&quot;Something else&quot;</span><span class="token punctuation">;</span>
-</code></pre>
-<p>Similarly, <code>innerHTML</code> property of elements can be used to get the HTML content
-of an element as well as</p>
-<pre class="language-"><code class="lang-js"><span class="token keyword">var</span> x <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">querySelector</span><span class="token punctuation">(</span><span class="token string">&quot;.jumbotron h1&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-x<span class="token punctuation">.</span>innerHTML <span class="token operator">=</span> <span class="token string">&quot;&lt;strong&gt;&quot;</span> <span class="token operator">+</span> x<span class="token punctuation">.</span>textContent <span class="token operator">+</span> <span class="token string">&quot;&lt;/strong&gt;&quot;</span><span class="token punctuation">;</span>
-</code></pre>
-<p>We can also access the <code>style</code> property of elements and update various
-properties</p>
-<pre class="language-"><code class="lang-js"><span class="token keyword">var</span> elements <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">querySelectorAll</span><span class="token punctuation">(</span><span class="token string">&quot;.btn-primary&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<code>.querySelector</code> selects only the first element it finds, <code>querySelectorAll</code> selects all elements (it returns an array).</p>
+<p>Once you retrieve an element using <code>.querySelector</code>, you can attach an <strong>event</strong> to it. An event is any action that can be performed on that element. For now, we will just use the <strong>click</strong> event:</p>
+<pre class="language-"><code class="lang-js">    <span class="token keyword">var</span> myButton <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">querySelector</span><span class="token punctuation">(</span><span class="token string">&apos;#myButton&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    myButton<span class="token punctuation">.</span><span class="token function">addEventListener</span><span class="token punctuation">(</span><span class="token string">&quot;click&quot;</span><span class="token punctuation">,</span> alertSomething<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-elements<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span>element<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  element<span class="token punctuation">.</span>style<span class="token punctuation">.</span>backgroundColor <span class="token operator">=</span> <span class="token string">&quot;red&quot;</span><span class="token punctuation">;</span>
+    <span class="token keyword">function</span> <span class="token function">alertSomething</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">alert</span><span class="token punctuation">(</span><span class="token string">&quot;Something&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+</code></pre>
+<p>You will notice in the example example that we passed a second argument to <code>addEventListener</code>. That second argument is the <strong>function</strong> that we want to invoke when that event has happened.</p>
+<p>The elements returned by <code>document.querySelector</code> have the same properties as a normal HTML element: for example, you can get access to their css <strong>styles</strong>.</p>
+<pre class="language-"><code class="lang-js">    <span class="token keyword">var</span> myElement <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">querySelector</span><span class="token punctuation">(</span><span class="token string">&apos;#myElement&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    myElement<span class="token punctuation">.</span>style<span class="token punctuation">.</span>backgroundColor <span class="token operator">=</span> <span class="token string">&apos;red&apos;</span><span class="token punctuation">;</span>
+</code></pre>
+<p>Using the <code>document</code>, you can also create new elements. These elements will not appear until you append them as a child of another element though:</p>
+<pre class="language-"><code class="lang-js">    <span class="token keyword">var</span> paragraph <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">createElement</span><span class="token punctuation">(</span><span class="token string">&apos;p&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// here we&apos;re just creating it, element is not visible yet</span>
+    myElement<span class="token punctuation">.</span><span class="token function">appendChild</span><span class="token punctuation">(</span>paragraph<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// now the element is added to our view, but it&apos;s empty</span>
+</code></pre>
+<p><code>document.createElement</code> accepts as an input any element type. So for example <code>document.createElement(&apos;article&apos;)</code> will create a new article element.</p>
+<p>You can then change the text displayed inside elements using the <code>innerText</code> property:</p>
+<pre class="language-"><code class="lang-js">    paragraph<span class="token punctuation">.</span>innerText <span class="token operator">=</span> <span class="token string">&quot;How are you?&quot;</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// now we can see the text displaying on the screen</span>
+</code></pre>
+<p>We&apos;ve been using <code>document.querySelector</code> to retrieve a single element.
+To retrieve an array of multiple elements (that match a specific class name for example, or a specific tag) we use <code>document.querySelectorAll</code>.</p>
+<pre class="language-"><code class="lang-js">    <span class="token comment" spellcheck="true">//change the background of all the paragraph items on our page</span>
+    <span class="token keyword">var</span> paragraphs <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">querySelectorAll</span><span class="token punctuation">(</span><span class="token string">&apos;p&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">var</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span> i<span class="token operator">&lt;</span>paragraphs<span class="token punctuation">.</span>length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        paragraphs<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>style<span class="token punctuation">.</span>backgroundColor <span class="token operator">=</span> <span class="token string">&quot;blue&quot;</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+</code></pre>
+<p>We&apos;ve learned that <code>style</code> and <code>innerText</code> are properties of DOM elements. Image tags can also have <code>width</code> and <code>height</code>.</p>
+<p>While it&apos;s really easy to change styles directly on elements using the <code>style</code> property, it is not usually a good idea to mix JavaScript and CSS (see separation of concerns in the first lesson). To solve this, we can use the <code>className</code> property to set the class for an element instead of changing its styles directly:</p>
+<pre class="language-"><code class="lang-js"><span class="token comment" spellcheck="true">//before: &lt;div id=&quot;myContainer&quot;&gt;&lt;/div&gt;</span>
+<span class="token keyword">var</span> container <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">querySelector</span><span class="token punctuation">(</span><span class="token string">&apos;#myContainer&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+container<span class="token punctuation">.</span>className <span class="token operator">=</span> <span class="token string">&quot;largeBlock&quot;</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">//after: &lt;div id=&quot;myContainer&quot; class=&quot;largeBlock&quot;&gt;&lt;/div&gt;</span>
+</code></pre>
+<p>To get the text from an Input field:</p>
+<pre class="language-"><code class="lang-js"><span class="token keyword">var</span> updateTitleBtn <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">querySelector</span><span class="token punctuation">(</span><span class="token string">&apos;#updateTitleBtn&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+updateTitleBtn<span class="token punctuation">.</span><span class="token function">addEventListener</span><span class="token punctuation">(</span><span class="token string">&apos;click&apos;</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">var</span> inputBox <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">querySelector</span><span class="token punctuation">(</span><span class="token string">&apos;#titleInput&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">var</span> title <span class="token operator">=</span> inputBox<span class="token punctuation">.</span>value<span class="token punctuation">;</span>
+
+    <span class="token keyword">var</span> titleElement <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">querySelector</span><span class="token punctuation">(</span><span class="token string">&apos;#lessonTitle&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    titleElement<span class="token punctuation">.</span>innerText <span class="token operator">=</span> title<span class="token punctuation">;</span>
+    inputBox<span class="token punctuation">.</span>value <span class="token operator">=</span> title<span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre>
-<p>Please note the use of camelCase style attribute names</p>
-<p>We can also check it exists, read, change and remove attributes of elements
-using <code>hasAttribute</code>, <code>getAttribute()</code>, <code>removeAttribute</code> and <code>setAttribute</code></p>
-<pre class="language-"><code class="lang-js"><span class="token keyword">var</span> elements <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">querySelectorAll</span><span class="token punctuation">(</span><span class="token string">&quot;a&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-elements<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span>element <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
-  <span class="token keyword">if</span> <span class="token punctuation">(</span>element<span class="token punctuation">.</span><span class="token function">hasAttribute</span><span class="token punctuation">(</span><span class="token string">&quot;href&quot;</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">var</span> href <span class="token operator">=</span> element<span class="token punctuation">.</span><span class="token function">getAttribute</span><span class="token punctuation">(</span><span class="token string">&quot;href&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    element<span class="token punctuation">.</span><span class="token function">setAttribute</span><span class="token punctuation">(</span><span class="token string">&quot;href&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;https://google.com&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<p>The above waits for click on a button. When the button is clicked, it gets the input box element (<code>inputBox</code> variable).
+To get the entered text from it, we use the <code>value</code> property: <code>var title = inputBox.value</code>.</p>
+<h2 id="ajax">AJAX</h2>
+<h3 id="clientserver-architecture">Client/Server architecture</h3>
+<p>A <strong>server</strong> is a device or program that provides functionality to other programs or devices. There are database servers, mail servers, game servers, etc. The vast majority of these servers are accessed over the internet. They can take the form of industrial server farms that provide a service to millions of users (used by Facebook, Google, etc.), to personal servers for storing your files.</p>
+<p>The server communicates with <strong>clients</strong>. A client can be a web browser, a Slack app, your phone, etc.</p>
+<p>Client&#x2013;server systems use the <strong>request&#x2013;response</strong> model: a client sends a request to the server, which performs some action and sends a response back to the client, typically with a result or acknowledgement.</p>
+<p><img src="client-server.png" alt=""></p>
+<h3 id="http-requests">HTTP Requests</h3>
+<p>A server stores the data, and the client (other programs or computers) requests data or sends some of its own. But how do they talk to each other?</p>
+<p><strong>For the client and the server to communicate they need an established language (a protocol)</strong>. Which is what HTTP (Hypertext Transfer Protocol) is for. It defines the methods you can use to communicate with a server and indicate your desired actions on the resources of the server.</p>
+<p>There are two main types of requests: <strong>GET</strong> and <strong>POST</strong>.</p>
+<table>
+<thead>
+<tr>
+<th>Request type</th>
+<th style="text-align:center">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td style="text-align:center">Ask for a specified resource (e.g. show me that photo)</td>
+</tr>
+<tr>
+<td>POST</td>
+<td style="text-align:center">Send content to the server (e.g. post a photo)</td>
+</tr>
+</tbody>
+</table>
+<p>HTTP is the language of the internet. In our case we&apos;re using Javascript, but you can send HTTP requests with other laguages as well.</p>
+<h3 id="what-is-ajax">What is AJAX?</h3>
+<p>AJAX is a technique for implementing client-server communication in the browser.</p>
+<p>Typically, the server holds the data, and only sends it to the client (web page) when there&apos;s a request. AJAX requests are sent after the page has loaded, usually in response to an action by the user. For example when the user clicks a button, some JavaScript will trigger an AJAX request to fetch data.</p>
+<h3 id="introduction-to-fetch-and-asynchronous-code">Introduction to Fetch and asynchronous code</h3>
+<p><strong>fetch</strong> is a way of creating HTTP requests in JavaScript.</p>
+<pre class="language-"><code class="lang-js"><span class="token function">fetch</span><span class="token punctuation">(</span><span class="token string">&apos;https://codeyourfuture.herokuapp.com/api/hello&apos;</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span>response<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> response<span class="token punctuation">.</span><span class="token function">text</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// or response.json()</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span>text<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>text<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// Print &apos;Hello CodeYourFuture!&apos;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre>
-<p>What will above code do?</p>
-<blockquote>
-<p><strong>Exercise</strong>:</p>
-<p>Use above functions to</p>
-<ul>
-<li style="list-style: none"><input type="checkbox" disabled="disabled"> place - around the text in the navbar links</li>
-<li style="list-style: none"><input type="checkbox" disabled="disabled"> convert links in &apos;Upcoming Events&apos; section to italic using <i> tag</i></li>
-<li style="list-style: none"><input type="checkbox" disabled="disabled"> make Learn more links green</li>
-<li style="list-style: none"><input type="checkbox" disabled="disabled"> Ensure all tests for above pass</li>
-</ul>
-</blockquote>
-<h3 id="creating-and-inserting-elements">Creating and inserting elements</h3>
-<p>We can use <code>document.createElement(tagName)</code> method to create a new element and
-<code>document.createTextNode(text)</code> to create new text contents. The elements
-created can be manipulated just like the elements above, but the changes will
-not be visible until we insert the new element into the DOM.</p>
-<p>We can insert elements into other elements using <code>element.appendChild</code> or
-<code>element.insertBefore</code>. For example.</p>
-<pre class="language-"><code class="lang-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>parent<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>
-  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">&gt;</span></span>some content<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
-</code></pre>
-<pre class="language-"><code class="lang-js"><span class="token keyword">var</span> spanNode <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">createElement</span><span class="token punctuation">(</span><span class="token string">&quot;span&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token keyword">var</span> textNode <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">createTextNode</span><span class="token punctuation">(</span><span class="token string">&quot;hello&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-spanNode<span class="token punctuation">.</span><span class="token function">appendChild</span><span class="token punctuation">(</span>textNode<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-<span class="token keyword">var</span> parentNode <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">getElementById</span><span class="token punctuation">(</span><span class="token string">&quot;parent&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-parentNode<span class="token punctuation">.</span><span class="token function">appendChild</span><span class="token punctuation">(</span>spanNode<span class="token punctuation">)</span><span class="token punctuation">;</span>
-</code></pre>
-<p>What do you think above code will do?</p>
-<p><code>insertBefore</code> is a bit more complicated.</p>
-<pre class="language-"><code class="lang-js"><span class="token keyword">var</span> insertedNode <span class="token operator">=</span> parentNode<span class="token punctuation">.</span><span class="token function">insertBefore</span><span class="token punctuation">(</span>newNode<span class="token punctuation">,</span> referenceNode<span class="token punctuation">)</span><span class="token punctuation">;</span>
-</code></pre>
-<p>Here <code>insertedNode</code> is the the node being inserted, that is <code>newNode</code>.
-<code>parentNode</code> is the the parent of the newly inserted node. <code>newNode</code> is the node
-to be inserted and <code>referenceNode</code> is the node before which newNode is inserted.</p>
-<blockquote>
-<p><strong>Exercise</strong>:</p>
-<ul>
-<li style="list-style: none"><input type="checkbox" disabled="disabled"> Use the inspector to examine the navbar</li>
-<li style="list-style: none"><input type="checkbox" disabled="disabled"> Using createElement etc. create a new navbar item link &apos;Code Your Future&apos;
-which links to https://codeyourfuture.io/. It should have same structure
-as the other links</li>
-<li style="list-style: none"><input type="checkbox" disabled="disabled"> Insert it at the end of the navbar</li>
-<li style="list-style: none"><input type="checkbox" disabled="disabled"> Ensure all tests for above pass</li>
-</ul>
-</blockquote>
-<h2 id="resources">Resources</h2>
-<ol>
-<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document" target="_blank">DOM: Document</a></li>
-<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Examples" target="_blank">MDN: DOM Examples and explanation</a></li>
-</ol>
-<h2 id="browser-events">Browser events</h2>
-<p>Browser events are actions that take place on our web page. They could be user
-triggered such as a mouse being clicked, a key being pressed or a form
-submitted. Alternatively, they could be triggered by the system such as a
-resource being loaded or an error occurring.</p>
-<p>We can subscribe to those events by registering an <code>eventHandler</code> to perform a
-certain action when an event is detected. For example, we may want to update a
-letter count on a text input when a user types or we may want to perform
-validation on a form before submitting it.</p>
-<p>For each event subscription we will need 3 things:</p>
-<ol>
-<li><code>target</code> - this is the object where we are listening for events on. For
-example, it could be a link on which we would like to listen to for clicks.</li>
-<li><code>eventType</code> - as the name suggests, this is the type of event we ar listening
-for. There are dozens of possible events (see
-<a href="https://developer.mozilla.org/en-US/docs/Web/Events" target="_blank">here</a> for the full
-list). Common ones include . <code>click</code> - mouse click . <code>submit</code> - form submit .
-<code>keydown</code> - keyboard key being pressed . <code>mouseenter</code> - a mouse cursor being
-moved onto an element . <code>change</code> - value of a form input changing</li>
-<li><code>eventHandler</code> - A function that we want to execute when the event is
-detected</li>
-</ol>
-<p>To subscribe to the actual event we use the <code>addEventListener</code> method of our
-<code>target</code> element like below</p>
-<pre class="language-"><code class="lang-js"><span class="token keyword">var</span> myButton <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">querySelector</span><span class="token punctuation">(</span><span class="token string">&quot;#myButton&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-myButton<span class="token punctuation">.</span><span class="token function">addEventListener</span><span class="token punctuation">(</span><span class="token string">&quot;click&quot;</span><span class="token punctuation">,</span> alertSomething<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-<span class="token keyword">function</span> <span class="token function">alertSomething</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  <span class="token function">alert</span><span class="token punctuation">(</span><span class="token string">&quot;Something&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-</code></pre>
-<p>In the above code <code>myButton</code> is the target on which we listen to for <code>click</code>
-events and call the event handler <code>alertSomething</code> when the click is detected.</p>
-<blockquote>
-<p><strong>Exercise</strong>:</p>
-<ul>
-<li style="list-style: none"><input type="checkbox" disabled="disabled"> Set a click listener on the donate buttons and increment the donated bikes
-counter with each click ( no tests )</li>
-</ul>
-</blockquote>
-<h3 id="event-object">Event object</h3>
-<p>Just knowing that an event has happened is not particularly useful in most
-cases. Usually, we will want to know more about what exactly happened such as
-the coordinates of a mouse <code>click</code> or the new <code>value</code> of an input after it has
-changed.</p>
-<p>Keep in mind that different event types will have characteristics that are
-specific to them. For example, <code>key</code> events will have a <code>event.char</code> property
-indicating the key that was pressed. <code>mouse</code> events will have <code>event.clientX</code>
-and <code>event.clientY</code> properties indicating the location of the mouse event on the
-screen, where (0,0) is the top left hand corner in the browser.</p>
-<p>Every <code>event</code> object has a <code>.preventDefault()</code> which when called will prevent
-the default action of the event from being triggered. This is particularly
-useful to intercepting events and altering the behaviour when needed. For
-example, we can call <code>event.preventDefault()</code> on a <code>submit</code> event if the data in
-the form is not valid.</p>
-<p>We can find out which element the event was triggered on from the <code>event.target</code>
-property.</p>
-<blockquote>
-<p><strong>Exercise</strong>:</p>
-<ul>
-<li style="list-style: none"><input type="checkbox" disabled="disabled"> Prevent clicks on links from triggering a url change in the browser and
-instead console.log the coordinates of the click as well as the text
-inside the link</li>
-</ul>
-</blockquote>
-<h3 id="bubbling">Bubbling</h3>
-<blockquote>
-<p><strong>Together</strong>:</p>
-<ul>
-<li>Let&apos;s place a <code>click</code> listener on the <code>.jumbotron</code> element and <code>console.log</code>
-the <code>event</code></li>
-<li>What happens when we click on the buttons?</li>
-</ul>
-</blockquote>
-<p>Most events, though not all, have a default behaviour know as <code>bubbling</code> which
-results in events being propagated to the target element&apos;s parents. That means
-an event listener placed on the parent will be triggered after the event
-listener placed on the child. Why is this behaviour desired?</p>
-<p>We can distinguish between the elements on which the event was triggered vs the
-element on which the event was detected.</p>
-<ul>
-<li><code>event.target</code> is the element on which received the initial event</li>
-<li><code>event.currentTarget</code> is the element on which the event listener detected the
-event</li>
-</ul>
-<p>In some cases we may want to prevent an event from bubbling up. We can do so by
-calling the <code>stopPropagation</code> method on the event. Once it has been called, any
-event handlers placed by parent elements will not be triggered.</p>
-<blockquote>
-<p><strong>Together</strong>:</p>
-<ul>
-<li>Let&apos;s prevent clicks on &apos;Volunteer&apos; button from bubbling up to above
-listener using <code>stopPropagation</code></li>
-</ul>
-</blockquote>
-<h1 id="resources">Resources</h1>
-<ol>
-<li><a href="https://javascript.info/introduction-browser-events" target="_blank">Introduction to browser events</a></li>
-<li><a href="https://developer.mozilla.org/en-US/docs/Web/Events" target="_blank">Events</a></li>
-</ol>
 <h1 id="homework">Homework</h1>
 <ol>
-<li>Fork
-<a href="https://github.com/CodeYourFuture/bookshelf-project" target="_blank">bookshelf-project</a>.
-Open up <strong>readme.md</strong> and follow the instructions in there. Submit Pull
-Request after completing each part</li>
-</ol>
-<h2 id="prepare-for-the-next-class">Prepare for the next class</h2>
-<ol>
-<li>Follow: Intro to
-<a href="https://classroom.udacity.com/courses/ud110" target="_blank">AJAX course by udacity</a>
-(register and signin if you need to). Follow the Requests and API lesson</li>
-<li>Read:
-<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" target="_blank">MDN - Promise</a></li>
-<li>Read
-<a href="https://developers.google.com/web/fundamentals/primers/promises" target="_blank">Google Primer on Promises</a></li>
+<li><a href="https://github.com/CodeYourFuture/js-exercises" target="_blank">The repo</a> contains few challenges - solve all the pending exercises in <code>week-5</code> and <code>week-5-practise</code>.</li>
 </ol>
 
                                 
@@ -1075,12 +925,12 @@ Request after completing each part</li>
 
             
                 
-                <a href="../week-07/lesson.html" class="navigation navigation-prev " aria-label="Previous page: Week 7 - In-depth Functions and Intro to DOM">
+                <a href="../week-07/lesson.html" class="navigation navigation-prev " aria-label="Previous page: Week 7 - Objects">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="../week-09/lesson.html" class="navigation navigation-next " aria-label="Next page: Week 9 - AJAX, Async, Promises">
+                <a href="../week-09/lesson.html" class="navigation navigation-next " aria-label="Next page: Week 9 - More JS in the Browser">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -1091,7 +941,7 @@ Request after completing each part</li>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Week 8 - DOM, Events","level":"1.5.2","depth":2,"next":{"title":"Week 9 - AJAX, Async, Promises","level":"1.5.3","depth":2,"path":"js-core-2/week-09/lesson.md","ref":"js-core-2/week-09/lesson.md","articles":[]},"previous":{"title":"Week 7 - In-depth Functions and Intro to DOM","level":"1.5.1","depth":2,"path":"js-core-2/week-07/lesson.md","ref":"js-core-2/week-07/lesson.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["prism","-highlight","todo","scripts"],"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"scripts":{"files":["./checkboxRemember.js"]},"todo":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"js-core-2/week-08/lesson.md","mtime":"2018-02-16T23:09:41.238Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-02-16T23:11:29.059Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Week 8 - JS in the Browser","level":"1.5.2","depth":2,"next":{"title":"Week 9 - More JS in the Browser","level":"1.5.3","depth":2,"path":"js-core-2/week-09/lesson.md","ref":"js-core-2/week-09/lesson.md","articles":[]},"previous":{"title":"Week 7 - Objects","level":"1.5.1","depth":2,"path":"js-core-2/week-07/lesson.md","ref":"js-core-2/week-07/lesson.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["prism","-highlight","todo","scripts"],"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"scripts":{"files":["./checkboxRemember.js"]},"todo":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"js-core-2/week-08/lesson.md","mtime":"2018-04-06T17:45:34.540Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-04-06T17:46:55.761Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
