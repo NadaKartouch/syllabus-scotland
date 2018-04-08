@@ -778,7 +778,7 @@
 <li><a href="#floats">Floats</a></li>
 <li><a href="#functions">Functions</a></li>
 <li><a href="#function-parameters">Function Parameters</a></li>
-<li><a href="#functions-nested">Function Nested</a></li>
+<li><a href="#functions-nested">Nested Functions</a></li>
 </ul>
 <hr>
 <blockquote>
@@ -788,7 +788,7 @@
 <h3 id="windows-and-mac-users">Windows and Mac users</h3>
 <p>Download the <em>installer</em> (.msi or .pkg) from <a href="https://nodejs.org/en/download" target="_blank">https://nodejs.org/en/download</a></p>
 <hr>
-<h3 id="inux-ubuntu-users">inux (Ubuntu) users</h3>
+<h3 id="linux-ubuntu-users">Linux (Ubuntu) users</h3>
 <p>Run the following commands in your terminal:</p>
 <pre class="language-"><code class="lang-sh">  curl -sL https://deb.nodesource.com/setup_8.x <span class="token operator">|</span> <span class="token function">sudo</span> -E <span class="token function">bash</span> -
   <span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> -y nodejs
@@ -816,24 +816,7 @@
 </ul>
 <h2 id="hello-world">Hello World</h2>
 <p>It is programming tradition that the first thing you do in any language is make it output &apos;Hello world!&apos;.</p>
-<p>We&apos;ll do this in JavaScript, using something called <code>console.log()</code>.</p>
-<p>Inside of <code>exercise.js</code> there&apos;s a line of code that will print &quot;Hello world!&quot;.</p>
-<h3 id="1-run-the-program">1. Run the program</h3>
-<ul>
-<li>Open a terminal window</li>
-<li>Change directory to this folder (<code>cd week-1/C-hello-world</code>)</li>
-<li>Run the program using node (<code>node exercise.js</code>)</li>
-</ul>
-<h3 id="2-experiment">2. Experiment</h3>
-<ul>
-<li>Try to <code>console.log()</code> something different. For example, &apos;Hello World. I just started learning JavaScript!&apos;.</li>
-<li>Try to console.log() several things at once.</li>
-<li>What happens when you get rid of the quote marks?</li>
-<li>What happens when you console.log() just a number without quotes?</li>
-</ul>
-<h2 id="variables">Variables</h2>
-<p>It is programming tradition that the first thing you do in any language is make it output &apos;Hello world!&apos;.</p>
-<p>We&apos;ll do this in JavaScript, using something called <code>console.log()</code>.</p>
+<p>We&apos;ll do this in JavaScript, using a command called <code>console.log()</code>.</p>
 <p>Inside of <code>exercise.js</code> there&apos;s a line of code that will print &quot;Hello world!&quot;.</p>
 <h3 id="1-run-the-program">1. Run the program</h3>
 <ul>
@@ -864,7 +847,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
 <blockquote>
 <p>Remember: to run this exercise you must change directory to the <code>D-variables</code>. If you already have a terminal window open for the previous exercise you can do this by running the command <code>cd ../D-variables</code>.</p>
 </blockquote>
-<h3 id="expected-result">Expected result</h3>
+<h4 id="expected-result">Expected result</h4>
 <pre class="language-"><code class="lang-sh">Hello world
 Hello world
 Hello world
@@ -885,7 +868,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
 <ul>
 <li>Write a program that logs a message and its type</li>
 </ul>
-<h3 id="expected-result">Expected result</h3>
+<h4 id="expected-result">Expected result</h4>
 <pre class="language-"><code class="lang-sh">This is a string
 string
 </code></pre>
@@ -902,7 +885,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
 <ul>
 <li>Write a program that logs a message with a greeting and your name</li>
 </ul>
-<h3 id="expected-result">Expected result</h3>
+<h4 id="expected-result">Expected result</h4>
 <pre class="language-"><code class="lang-sh">Hello, my name is Daniel
 </code></pre>
 <h2 id="numbers">Numbers</h2>
@@ -921,7 +904,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
 <li>Create two variables <code>numberOfStudents</code> and <code>numberOfMentors</code></li>
 <li>Log a message that displays the total number of students and mentors</li>
 </ul>
-<h3 id="expected-result">Expected result</h3>
+<h4 id="expected-result">Expected result</h4>
 <pre class="language-"><code class="lang-sh">Number of students: 15
 Number of mentors: 8
 Total numnber of students and mentors: 23
@@ -938,7 +921,7 @@ Total numnber of students and mentors: 23
 <ul>
 <li>Using the variables provided in the exercise calculate the percentage of mentors and students in the group</li>
 </ul>
-<h3 id="expected-result">Expected result</h3>
+<h4 id="expected-result">Expected result</h4>
 <pre class="language-"><code class="lang-sh">Percentage students: 65%
 Percentage mentors: 35%
 </code></pre>
@@ -956,7 +939,7 @@ b) assign the returned value to a variable</p>
 
 console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 4</span>
 </code></pre>
-<h3 id="exercise">Exercise</h3>
+<h3 id="exercise-1">Exercise 1</h3>
 <ul>
 <li>Complete the function in exercise.js so that it halves the input</li>
 <li>Try calling the function more than once with some different numbers</li>
@@ -964,14 +947,14 @@ console<span class="token punctuation">.</span><span class="token function">log<
 <blockquote>
 <p>Remember to use the return keyword to get a value out of the function</p>
 </blockquote>
-<h3 id="expected-result">Expected result</h3>
+<h4 id="expected-result">Expected result</h4>
 <pre class="language-"><code class="lang-sh">6
 </code></pre>
 <h3 id="exercise-2">Exercise 2</h3>
 <ul>
 <li>Complete the function in exercise2.js so that it triples the input</li>
 </ul>
-<h3 id="expected-result">Expected result</h3>
+<h4 id="expected-result">Expected result</h4>
 <pre class="language-"><code class="lang-sh">24
 </code></pre>
 <h2 id="function-parameters">Function Parameters</h2>
@@ -987,25 +970,25 @@ console<span class="token punctuation">.</span><span class="token function">log<
   <span class="token keyword">return</span> num1 <span class="token operator">+</span> num2<span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 </code></pre>
-<h3 id="exercise">Exercise</h3>
+<h3 id="exercise-1">Exercise 1</h3>
 <ul>
 <li>Write a function that multiplies two numbers together</li>
 </ul>
-<h3 id="expected-result">Expected result</h3>
+<h4 id="expected-result">Expected result</h4>
 <pre class="language-"><code class="lang-sh">12
 </code></pre>
 <h3 id="exercise-2">Exercise 2</h3>
 <ul>
 <li>From scratch, write a function that divides two numbers</li>
 </ul>
-<h3 id="expected-result">Expected result</h3>
+<h4 id="expected-result">Expected result</h4>
 <pre class="language-"><code class="lang-sh">0.75
 </code></pre>
 <h3 id="exercise-3">Exercise 3</h3>
 <ul>
 <li>Write a function that takes a name (a string) and returns a greeting</li>
 </ul>
-<h3 id="expected-result">Expected result</h3>
+<h4 id="expected-result">Expected result</h4>
 <pre class="language-"><code class="lang-sh">Hello, my name is Daniel
 </code></pre>
 <h3 id="exercise-4">Exercise 4</h3>
@@ -1013,17 +996,17 @@ console<span class="token punctuation">.</span><span class="token function">log<
 <li>Write a function that adds two numbers together</li>
 <li>Call the function, passing <code>13</code> and <code>124</code> as parameters, and assigning the returned value to a variable <code>sum</code></li>
 </ul>
-<h3 id="expected-result">Expected result</h3>
+<h4 id="expected-result">Expected result</h4>
 <pre class="language-"><code class="lang-js"><span class="token number">137</span>
 </code></pre>
 <h3 id="exercise-5">Exercise 5</h3>
 <ul>
 <li>Write a function that takes a name (a string) and an age (a number) and returns a greeting (a string)</li>
 </ul>
-<h3 id="expected-result">Expected result</h3>
+<h4 id="expected-result">Expected result</h4>
 <pre class="language-"><code class="lang-sh">Hello, my name is Daniel and I&apos;m 30 years old
 </code></pre>
-<h2 id="functions-nested">Functions nested</h2>
+<h2 id="nested-functions">Nested Functions</h2>
 <p>Functions are very powerful.</p>
 <ul>
 <li>You can write more than one line of code inside of functions.</li>
@@ -1050,7 +1033,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
 <blockquote>
 <p>Consider: should your percentage function do the rounding, or should it be done when the greeting is created?</p>
 </blockquote>
-<h2 id="expected-result">Expected result</h2>
+<h3 id="expected-result">Expected result</h3>
 <pre class="language-"><code class="lang-sh">Percentage students: 65%
 Percentage mentors: 35%
 </code></pre>
@@ -1060,7 +1043,7 @@ Percentage mentors: 35%
 <li>Your program should include a function that spells their name in uppercase, and a function that creates a shouty greeting.</li>
 <li>Log each greeting to the console.</li>
 </ul>
-<h2 id="expected-result">Expected result</h2>
+<h3 id="expected-result">Expected result</h3>
 <pre class="language-"><code class="lang-sh">HELLO DANIEL
 HELLO IRINA
 HELLO MIMI
@@ -1116,7 +1099,7 @@ JavaScript!</li>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Week 4 - Hello JavaScript","level":"1.4.1","depth":2,"next":{"title":"Week 5 - Arrays","level":"1.4.2","depth":2,"path":"js-core/week-05/lesson.md","ref":"js-core/week-05/lesson.md","articles":[]},"previous":{"title":"JavaScript I","level":"1.4","depth":1,"path":"js-core/index.md","ref":"js-core/index.md","articles":[{"title":"Week 4 - Hello JavaScript","level":"1.4.1","depth":2,"path":"js-core/week-04/lesson.md","ref":"js-core/week-04/lesson.md","articles":[]},{"title":"Week 5 - Arrays","level":"1.4.2","depth":2,"path":"js-core/week-05/lesson.md","ref":"js-core/week-05/lesson.md","articles":[]},{"title":"Week 6 - More Arrays","level":"1.4.3","depth":2,"path":"js-core/week-06/lesson.md","ref":"js-core/week-06/lesson.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["prism","-highlight","todo","scripts"],"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"scripts":{"files":["./checkboxRemember.js"]},"todo":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"js-core/week-04/lesson.md","mtime":"2018-04-06T17:45:34.540Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-04-06T17:46:55.761Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Week 4 - Hello JavaScript","level":"1.4.1","depth":2,"next":{"title":"Week 5 - Arrays","level":"1.4.2","depth":2,"path":"js-core/week-05/lesson.md","ref":"js-core/week-05/lesson.md","articles":[]},"previous":{"title":"JavaScript I","level":"1.4","depth":1,"path":"js-core/index.md","ref":"js-core/index.md","articles":[{"title":"Week 4 - Hello JavaScript","level":"1.4.1","depth":2,"path":"js-core/week-04/lesson.md","ref":"js-core/week-04/lesson.md","articles":[]},{"title":"Week 5 - Arrays","level":"1.4.2","depth":2,"path":"js-core/week-05/lesson.md","ref":"js-core/week-05/lesson.md","articles":[]},{"title":"Week 6 - More Arrays","level":"1.4.3","depth":2,"path":"js-core/week-06/lesson.md","ref":"js-core/week-06/lesson.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["prism","-highlight","todo","scripts"],"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"scripts":{"files":["./checkboxRemember.js"]},"todo":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"js-core/week-04/lesson.md","mtime":"2018-04-08T14:43:23.534Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-04-08T14:44:50.910Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
