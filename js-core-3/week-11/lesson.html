@@ -342,7 +342,7 @@
                 <a href="../week-10/lesson.html">
             
                     
-                    Week 10 - Good Code, TDD
+                    Week 10 - Unit Tests and TDD
             
                 </a>
             
@@ -778,14 +778,126 @@
                                 <section class="normal markdown-section">
                                 
                                 <p><img src="https://img.shields.io/badge/status-draft-darkred.svg" alt=""></p>
-<h1 id="javascript-core-3">JavaScript Core 3</h1>
+<h1 id="js-core-iii---2">JS Core III - 2</h1>
 <p><strong> What we will learn today?</strong></p>
 <ul>
-<li>Intro to ES6</li>
-<li>Classes and Context</li>
-<li>Inheritance</li>
+<li><a href="#good-design">Good Design</a></li>
+<li><a href="#async-vs-sync">Async and Sync revisited</a></li>
+<li><a href="#intro-to-es6">Intro to ES6</a></li>
 </ul>
 <hr>
+<h1 id="good-design">Good Design</h1>
+<p>Design is important if we want our code to be understandable (both to other
+humans, but also to us in the future), to be easy to use and easy to expand.</p>
+<p>There are three main principles you need to know now: clarity, reusability and
+extensibility. There are also others, but they are deeply related to these
+three.</p>
+<ul>
+<li><p>Ease of Maintenance / Clarity</p>
+<ul>
+<li>Naming</li>
+<li>Commenting</li>
+<li>Clear logic</li>
+<li>Concise</li>
+<li>Formatting</li>
+<li>Avoiding Redundancy</li>
+</ul>
+</li>
+<li><p>Reusability</p>
+<ul>
+<li>DRY</li>
+<li>Single Reponsibility<ul>
+<li>Avoiding global state (scope)</li>
+<li>Predictability and Ease of testing</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Extensibility</p>
+<ul>
+<li>Avoiding being unnecessarily specific (e.g. magic numbers)</li>
+</ul>
+</li>
+</ul>
+<p>Now let&apos;s take a look at a bigger example of a badly written function</p>
+<pre class="language-"><code class="lang-js"><span class="token keyword">function</span> <span class="token function">myFunction</span><span class="token punctuation">(</span>salary<span class="token punctuation">,</span> taxCode<span class="token punctuation">,</span> incomeTax1<span class="token punctuation">,</span> incomeTax2<span class="token punctuation">,</span> ownsCar<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">var</span> totalIncomeTax <span class="token operator">=</span> incomeTax1 <span class="token operator">+</span> incomeTax2<span class="token punctuation">;</span>
+  <span class="token keyword">var</span> studentLoan <span class="token operator">=</span> <span class="token punctuation">(</span>salary <span class="token operator">-</span> <span class="token number">17775</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">0.09</span><span class="token punctuation">;</span>
+  <span class="token keyword">var</span> originalSalary <span class="token operator">=</span> salary<span class="token punctuation">;</span>
+  <span class="token keyword">var</span> nationalInsurance <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>taxCode <span class="token operator">===</span> <span class="token string">&quot;1150L&quot;</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    nationalInsurance <span class="token operator">=</span> salary <span class="token operator">*</span> <span class="token number">0.1</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>taxCode <span class="token operator">===</span> <span class="token string">&quot;ST&quot;</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    nationalInsurance <span class="token operator">=</span> salary <span class="token operator">*</span> <span class="token number">0.05</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+    nationalInsurance <span class="token operator">=</span> salary <span class="token operator">*</span> <span class="token number">0.08</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">var</span> deductions <span class="token operator">=</span> <span class="token punctuation">[</span>nationalInsurance<span class="token punctuation">,</span> totalIncomeTax<span class="token punctuation">,</span> studentLoan<span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+  salary <span class="token operator">=</span> salary <span class="token operator">-</span> deductions<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+  salary <span class="token operator">=</span> salary <span class="token operator">-</span> deductions<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+  salary <span class="token operator">=</span> salary <span class="token operator">-</span> deductions<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">return</span> <span class="token punctuation">(</span>
+    <span class="token string">&quot;Your gross income is &#xA3;&quot;</span> <span class="token operator">+</span>
+    originalSalary<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span>
+    <span class="token string">&quot; and your net income is &#xA3;&quot;</span> <span class="token operator">+</span>
+    salary<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span>
+    <span class="token string">&quot;.&quot;</span>
+  <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token function">myFunction</span><span class="token punctuation">(</span><span class="token number">28000</span><span class="token punctuation">,</span> <span class="token string">&quot;1150L&quot;</span><span class="token punctuation">,</span> <span class="token number">1000</span><span class="token punctuation">,</span> <span class="token number">580</span><span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>What is wrong with this function?</p>
+<ol>
+<li><p>Naming: the function has a bad name, myFunction() tells you nothing about
+what the function does. It&apos;s also considered bad practice to name variables
+vaguely by separating them through numbers (incomeTax1, incomeTax2, etc). If
+you find yourself doing this then you should either use an array (such as
+incomeTax[]).</p>
+</li>
+<li><p>Commenting: the function isn&apos;t documented at all. It&apos;s very difficult to
+understand what the function&apos;s purpose is and how each part of the code
+contributes to it. By writing comments, the coder communicates their
+reasoning and helps the function be human readable.</p>
+</li>
+<li><p>Layout/formatting: unnecessary spacing between the if and else statement.</p>
+</li>
+<li><p>Single responsibility: the function doesn&apos;t have a single purpose. It
+calculates national insurance and salary deductions. Maybe the national
+insurance calculation could be moved to a separate function.</p>
+</li>
+<li><p>Input variable being overwritten: the function requires gross salary (before
+deductions) and net salary (after deductions) the <code>salary</code> input variable is
+therefore copied into an <code>originalSalary</code> variable so that it can be changed.
+It would be much clearer to create a new <code>netSalary</code> variable and leave
+<code>salary</code> unmodified.</p>
+</li>
+<li><p>DRY principle: the function validates the DRY (Don&apos;t Repeat Yourself) rule.
+The line where a deduction is taken from the salary is repeated 3 times with
+different indices. This can be replaced with a <code>for</code> loop.</p>
+</li>
+<li><p>Magic numbers. The code contains a lot of magic numbers, including <code>17775</code>,
+<code>0.09</code> and <code>0.1</code>.</p>
+</li>
+<li><p>Useless parameters: the code contains a variable which isn&apos;t used. They
+should be removed because they are confusing. It is tempting when you&apos;re
+starting to code a function to add more parameters thinking that you might
+need them, but it&apos;s important to remove them if you don&apos;t end up using them.</p>
+</li>
+</ol>
+<blockquote>
+<p>Exercise: Working in pairs, go through all of these issues and make
+appropriate improvements to the code.</p>
+</blockquote>
+<h1 id="async-vs-sync">Async vs Sync</h1>
+<p>ToDO: Trace async code on paper</p>
+<ul>
+<li>Different ways of doing async in JavaScript</li>
+</ul>
 <h1 id="intro-to-es6">Intro to ES6</h1>
 <p>ECMAScript 2015 (or ES6) is a significant update to JavaScript that introduces
 new syntax for writing complex applications including classes and modules and
@@ -855,207 +967,6 @@ works.</p>
 if gender is &apos;female&apos; or not, and use it in sayGreeting. Let&apos;s try and make
 the code as compact as possible together using ES6 features.</p>
 </blockquote>
-<h1 id="classes-and-context">Classes and Context</h1>
-<p>A class is an important concept in object-oriented programming. In general, a
-class can be described as a &quot;blueprint&quot; or a &quot;plan&quot; for creating objects. After
-a class is created, new objects with all of the features defined in that class
-can then be created. These objects are called <em>instances</em> of the class.</p>
-<p>Secondly, It&apos;s hard to talk about objects without talking about context and the
-<code>this</code> keyword. When we execute a function in javascript, that function is
-associated with some enclosing object. That object could be one that we made
-ourselves, or it could be the global scope (the <code>Window</code> object). Understanding
-context allows us to understand when and where we can manipulate an object&apos;s
-properties.</p>
-<h2 id="a-warning-about-javascript-classes">A warning about javascript &quot;classes&quot;</h2>
-<p>Speaking strictly, javascript does not have proper classes. However ES6 provides
-functionality that allows us to create things that usually look and act like
-proper classes. At this point in your learning, this difference might not seem
-important but it will be useful to remember when you are doing more complex work
-in the future. Part of the homework after this class is to read about these
-differences.</p>
-<h1 id="creating-a-class">Creating a class</h1>
-<p>I own a library and want to keep track of the books that people are borrowing
-and returning. Using the style that we previously learned, we could implement a
-system like this:</p>
-<pre class="language-"><code class="lang-js"><span class="token keyword">let</span> myBooks <span class="token operator">=</span> <span class="token punctuation">[</span>
-  <span class="token string">&quot;Wild Swans&quot;</span><span class="token punctuation">,</span>
-  <span class="token string">&quot;The Dharma Bums&quot;</span><span class="token punctuation">,</span>
-  <span class="token string">&quot;Nausea&quot;</span><span class="token punctuation">,</span>
-  <span class="token string">&quot;The Very Hungry Caterpillar&quot;</span>
-<span class="token punctuation">]</span><span class="token punctuation">;</span>
-<span class="token keyword">let</span> library <span class="token operator">=</span> <span class="token punctuation">{</span>
-  books<span class="token punctuation">:</span> myBooks<span class="token punctuation">,</span>
-  availableBooks<span class="token punctuation">:</span> myBooks<span class="token punctuation">,</span>
-  checkoutBook<span class="token punctuation">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span>book<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">this</span><span class="token punctuation">.</span>availableBooks <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>availableBooks<span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span>b <span class="token operator">=</span><span class="token operator">&gt;</span> b <span class="token operator">!==</span> book<span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span class="token punctuation">;</span>
-</code></pre>
-<p>Now our book system has become popular in the library world, and we need to
-represent a lot of different libraries, each one requiring a copy of the object
-format we specified above. We might even need to extend our library object to
-suit specific cases. We can prepare for this scenario by creating a class called
-<code>Library</code>, provided a plan for our library objects.</p>
-<pre class="language-"><code class="lang-js"><span class="token keyword">class</span> <span class="token class-name">Library</span> <span class="token punctuation">{</span>
-  <span class="token function">constructor</span><span class="token punctuation">(</span>books<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">this</span><span class="token punctuation">.</span>books <span class="token operator">=</span> books<span class="token punctuation">;</span>
-    <span class="token keyword">this</span><span class="token punctuation">.</span>availableBooks <span class="token operator">=</span> books<span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-
-  <span class="token function">checkoutBook</span><span class="token punctuation">(</span>book<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">this</span><span class="token punctuation">.</span>availableBooks <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>availableBooks<span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span>b <span class="token operator">=</span><span class="token operator">&gt;</span> b <span class="token operator">!==</span> book<span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">let</span> myBooks <span class="token operator">=</span> <span class="token punctuation">[</span>
-  <span class="token string">&quot;Wild Swans&quot;</span><span class="token punctuation">,</span>
-  <span class="token string">&quot;The Dharma Bums&quot;</span><span class="token punctuation">,</span>
-  <span class="token string">&quot;Nausea&quot;</span><span class="token punctuation">,</span>
-  <span class="token string">&quot;The Very Hungry Caterpillar&quot;</span>
-<span class="token punctuation">]</span><span class="token punctuation">;</span>
-<span class="token keyword">let</span> myLibrary <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Library</span><span class="token punctuation">(</span>myBooks<span class="token punctuation">)</span><span class="token punctuation">;</span>
-</code></pre>
-<blockquote>
-<p>Exercise: Add a <code>returnBook</code> function which appends a book onto the
-<code>availableBooks</code> variable in our <code>myLibrary</code> object.</p>
-<p>Exercise: check out &quot;Nausea&quot; and return it to the library.</p>
-<p>Exercise: Alter the <code>checkoutBook</code> function to return <code>false</code> when a book
-isn&apos;t available, and true otherwise.</p>
-</blockquote>
-<h2 id="using-inheritance-to-extend-our-library">Using Inheritance to extend our library</h2>
-<p>We want to store information about a new library which contains audiobooks as
-well as ordinary books. Audiobooks cannot be checked out, so they only need to
-be stored. This new library should have all the same functionality regarding
-ordinary books as our old <code>Library</code> object, but the class should be extended to
-allow for the storage of an <code>audiobooks</code> array.</p>
-<h2 id="more-on-this">More on <code>this</code></h2>
-<blockquote>
-<p>Exercise: what does <code>this</code> refer to in the following code snippets?</p>
-</blockquote>
-<pre class="language-"><code class="lang-js"><span class="token keyword">function</span> <span class="token function">getThis</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-</code></pre>
-<pre class="language-"><code class="lang-js"><span class="token keyword">class</span> <span class="token class-name">MyClass</span> <span class="token punctuation">{</span>
-  <span class="token function">getThis</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">let</span> myClass <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">MyClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>myClass<span class="token punctuation">.</span><span class="token function">getThis</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-</code></pre>
-<pre class="language-"><code class="lang-js"><span class="token keyword">class</span> <span class="token class-name">MyClass</span> <span class="token punctuation">{</span>
-  <span class="token function">getThis</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">let</span> myObject <span class="token operator">=</span> <span class="token punctuation">{</span>
-      thisFunction<span class="token punctuation">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">;</span>
-      <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span><span class="token punctuation">;</span>
-    <span class="token keyword">return</span> myObject<span class="token punctuation">.</span><span class="token function">thisFunction</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">let</span> myClass <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">MyClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>myClass<span class="token punctuation">.</span><span class="token function">getThis</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-</code></pre>
-<pre class="language-"><code class="lang-js"><span class="token keyword">class</span> <span class="token class-name">MyClass</span> <span class="token punctuation">{</span>
-  <span class="token function">getThis</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">let</span> myObject <span class="token operator">=</span> <span class="token punctuation">{</span> thisFunction<span class="token punctuation">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token keyword">this</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
-    <span class="token keyword">return</span> myObject<span class="token punctuation">.</span><span class="token function">thisFunction</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">let</span> myClass <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">MyClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>myClass<span class="token punctuation">.</span><span class="token function">getThis</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-</code></pre>
-<h2 id="more-es6">More ES6</h2>
-<p>There are so many features in ES6. They&apos;re mostly what we call <code>syntax sugar</code>.
-They don&apos;t provide new functionality, but new (more elegant) ways of
-accomplishing the same tasks.</p>
-<p>Since not all ES6 features are supported in all browsers, many developers and
-projects use what is called <code>Transpilation</code> - a process that
-transpiles/translates ES6 code to ES5 syntax that is supported by all browsers.</p>
-<p>On Node, most ES6 features are now natively supported in Node 8.</p>
-<blockquote>
-<p>From now on, we expect you to use ES6 syntax in your assignments and the code
-you write.</p>
-</blockquote>
-<h1 id="tdd-again">TDD again</h1>
-<blockquote>
-<p>Exercise: Clone the repo <a href="https://github.com/CodeYourFuture/js-core-2-exercises" target="_blank">https://github.com/CodeYourFuture/js-core-2-exercises</a></p>
-<p>Let&apos;s talk about TDD again?</p>
-<ol>
-<li>Why do we do TDD</li>
-<li>How do we run the tests? Read some of the tests</li>
-<li>Notice we&apos;re separating our tests from our code now. We are making use of
-<strong>modules</strong></li>
-<li>Also notice the <strong>coverage</strong></li>
-</ol>
-</blockquote>
-<h2 id="how-do-modules-work">How do modules work?</h2>
-<p>So far, all our programs have been in their own single files. But Node programs
-can become really large, and having all our code in only one file will not be
-maintainable.</p>
-<p>We can therefore split our code into so-called <em>modules</em>. A module is basically
-a JavaScript file that makes its functionality available to other modules and
-programs.</p>
-<h2 id="creating-modules-exporting-code">Creating modules, exporting code</h2>
-<p>It is really simple to take existing JavaScript code and turn it into a module
-by exporting its functionality:</p>
-<pre class="language-"><code class="lang-js"><span class="token keyword">function</span> <span class="token function">printName</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&quot;My name is &quot;</span> <span class="token operator">+</span> name<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-
-module<span class="token punctuation">.</span>exports <span class="token operator">=</span> printName<span class="token punctuation">;</span>
-</code></pre>
-<p>The key here is the line containing <code>module.exports</code>. As you see, this is an
-assignment, and whatever is assigned to <code>module.exports</code> will be made available
-to other modules and program when this file is imported.</p>
-<h2 id="using-modules-importing-code">Using modules, importing code</h2>
-<p>But how do we make use of another module in our program? We need to <em>import</em> it,
-and this is done using a function called <code>require()</code>.</p>
-<blockquote>
-<p>There are different module formats for JavaScript. The one we are using here,
-which is natively supported by Node, is called <strong>CommonJS</strong>.</p>
-</blockquote>
-<pre class="language-"><code class="lang-js"><span class="token keyword">var</span> printName <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">&quot;./printName.js&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-</code></pre>
-<blockquote>
-<p>The string passed to the <code>require()</code> function is a <em>path</em> to the file you are
-importing. <code>./</code> signifies the current directory, so the above command will
-import a file called &quot;printName.js&quot; that is in the same directory as our
-program.</p>
-</blockquote>
-<p>Assuming our program is in the same folder as <code>printName.js</code>, we can use the
-above code to import the functionality provided by that module and store it in
-the <code>printName</code> variable.</p>
-<p>We can then continue to use the <code>printName</code> function as if it we defined it in
-our own program!</p>
-<pre class="language-"><code>var printName = require(&apos;./printName.js&apos;);
-
-printName();
-</code></pre><blockquote>
-<p>Modules can not only export functions, but all variable types you already
-learned about. Most commonly, they export a function or an object containing
-multiple functions.</p>
-<p><em>Together:</em> Edit the file <code>modules/main.js</code> and follow the instructions.</p>
-</blockquote>
-<h2 id="separating-code-and-tests">Separating code and tests</h2>
-<p>Exporting and importing modules is really useful for testing, too.</p>
-<p>As a rule of thumb, we never want to mix our actual code with our tests. It is
-therefore common to put them in separate files. We are going to call the file
-containing the tests after the file containing the code to be tested, just
-appending <code>.test</code> at the end of the filename. Like so:</p>
-<pre class="language-"><code>main.js               # Our main program
-main.test.js          # Tests for our main program
-someOtherCode.js      # A module called &quot;someOtherCode&quot;
-someOtherCode.test.js # Tests for the &quot;someOtherCode&quot; module
-</code></pre><blockquote>
-<p>The naming is really up to convention - you can even put your tests in a
-different folder! However, for Jest it is important to call test files
-&quot;*.test.js&quot;.</p>
-</blockquote>
 <h1 id="resources">Resources</h1>
 <ul>
 <li><a href="http://es6-features.org/" target="_blank">ES6 features</a></li>
@@ -1063,11 +974,17 @@ different folder! However, for Jest it is important to call test files
 </ul>
 <h1 id="homework">Homework</h1>
 <ol>
+<li><p>Find examples in your own code where you violated the three principles of
+good code (Clarity, Reusability, Extensibility). For each principle, find one
+example.</p>
+</li>
+<li><p>Clone the repo of the
+<a href="https://github.com/codeyourfuture/cyf-election" target="_blank">election project</a> and finish
+all of the part 1 exercises.</p>
+</li>
 <li><p>Do part 2 of <a href="https://github.com/CodeYourFuture/cyf-election" target="_blank">cyf-election</a>.</p>
 </li>
 <li><p>Clone <a href="https://github.com/Samatar26/es6-challenge-cyf" target="_blank">this repo</a> and do the exercises involving converting ES5 code to ES6.</p>
-</li>
-<li><p>Read and understand examples #1 to #4 in <a href="https://blog.kevinchisholm.com/javascript/context-object-literals/" target="_blank">this blog post about context and <code>this</code></a>.</p>
 </li>
 </ol>
 
@@ -1097,7 +1014,7 @@ different folder! However, for Jest it is important to call test files
 
             
                 
-                <a href="../week-10/lesson.html" class="navigation navigation-prev " aria-label="Previous page: Week 10 - Good Code, TDD">
+                <a href="../week-10/lesson.html" class="navigation navigation-prev " aria-label="Previous page: Week 10 - Unit Tests and TDD">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
@@ -1113,7 +1030,7 @@ different folder! However, for Jest it is important to call test files
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Week 11 - More TDD, ES6","level":"1.6.2","depth":2,"next":{"title":"Week 12 - Recap","level":"1.6.3","depth":2,"path":"js-core-3/week-12/lesson.md","ref":"js-core-3/week-12/lesson.md","articles":[]},"previous":{"title":"Week 10 - Good Code, TDD","level":"1.6.1","depth":2,"path":"js-core-3/week-10/lesson.md","ref":"js-core-3/week-10/lesson.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["prism","-highlight","todo","scripts"],"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"scripts":{"files":["./checkboxRemember.js"]},"todo":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"js-core-3/week-11/lesson.md","mtime":"2018-04-08T14:50:34.190Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-04-08T14:51:58.129Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Week 11 - More TDD, ES6","level":"1.6.2","depth":2,"next":{"title":"Week 12 - Recap","level":"1.6.3","depth":2,"path":"js-core-3/week-12/lesson.md","ref":"js-core-3/week-12/lesson.md","articles":[]},"previous":{"title":"Week 10 - Unit Tests and TDD","level":"1.6.1","depth":2,"path":"js-core-3/week-10/lesson.md","ref":"js-core-3/week-10/lesson.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["prism","-highlight","todo","scripts"],"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"scripts":{"files":["./checkboxRemember.js"]},"todo":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"js-core-3/week-11/lesson.md","mtime":"2018-04-13T22:10:55.179Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-04-13T22:12:14.409Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>

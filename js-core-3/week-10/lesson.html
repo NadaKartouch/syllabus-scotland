@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Week 10 - Good Code, TDD · GitBook</title>
+        <title>Week 10 - Unit Tests and TDD · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -342,7 +342,7 @@
                 <a href="lesson.html">
             
                     
-                    Week 10 - Good Code, TDD
+                    Week 10 - Unit Tests and TDD
             
                 </a>
             
@@ -762,7 +762,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="../.." >Week 10 - Good Code, TDD</a>
+        <a href="../.." >Week 10 - Unit Tests and TDD</a>
     </h1>
 </div>
 
@@ -778,180 +778,96 @@
                                 <section class="normal markdown-section">
                                 
                                 <p><img src="https://img.shields.io/badge/status-review-orange.svg" alt=""></p>
+<h1 id="js-core-iii---1">JS Core III - 1</h1>
 <p><strong>What will we learn today?</strong></p>
 <ul>
-<li><a href="#functions">Functions</a></li>
-<li><a href="#good-design">Good Design</a></li>
+<li><a href="#tracing-code">Tracing Code</a></li>
+<li><a href="#testing-our-code">Testing</a></li>
 <li><a href="#unit-testing">Unit Testing</a></li>
-<li><a href="#test-driven-development-tdd">Test-driven Development</a></li>
+<li><a href="#jest">Unit Testing Frameworks - JEST</a></li>
+<li><a href="#test-driven-development">Test-driven Development</a></li>
+<li>More on Testing<ul>
+<li><a href="#test-coverage">Test coverage</a></li>
 <li><a href="#refactoring">Refactoring</a></li>
-<li><a href="#unit-testing-frameworks">Unit testing frameworks</a></li>
+<li><a href="#modules">Modules</a></li>
 </ul>
-<h2 id="functions">Functions</h2>
-<h3 id="why-functions">Why Functions?</h3>
-<p>The function is considered one of the greatest inventions in computer science.
-It makes programs easier to read and to understand. It allows for us to more
-easily modify and extend code. It saves space and improves performance.</p>
-<p>At the most basic level, a function is a series of instructions that can take an
-input and produce an output. Parameters dictate how the function behaves.</p>
-<p><img src="../assets/function-diagram.png" alt="Function Diagram"></p>
-<p>We&apos;ve used functions a bit, but now we need to know how to use them well.</p>
-<p>There are many ways to write code that does the same thing. But are they all
-equal?</p>
+</li>
+</ul>
 <blockquote>
-<p>Exercise: Let&apos;s look at a really obvious example of a function with redundant
-code. What could we do to improve it?</p>
+<p>Fork and Clone the <a href="https://github.com/CodeYourFuture/js-exercises-tdd" target="_blank">js-exercises-tdd repo</a></p>
 </blockquote>
-<pre class="language-"><code class="lang-js"><span class="token keyword">function</span> <span class="token function">printHelloFiveTimes</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&quot;Hello&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&quot;Hello&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&quot;Hello&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&quot;Hello&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&quot;Hello&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-</code></pre>
+<h2 id="tracing-code">Tracing Code</h2>
+<p>What is Code? Computer code is a <strong>set of rules or instructions</strong>. It is made up of words and numbers and when you put them in the <strong>right order</strong> it will tell your computer what you want it to do. </p>
+<p>Let&apos;s trace these code samples together:</p>
+<ul>
+<li><p><a href="https://github.com/CodeYourFuture/js-exercises-tdd/blob/master/week-1/I.write-tests/01-greet-people/greet-people.js" target="_blank">Sample 1</a> </p>
+</li>
+<li><p><a href="https://github.com/CodeYourFuture/js-exercises-tdd/blob/master/week-1/I.write-tests/02-remove-vowels/remove-vowel.js" target="_blank">Sample 2</a> </p>
+</li>
+<li><p><a href="https://github.com/CodeYourFuture/js-exercises-tdd/blob/master/week-1/I.write-tests/03-remove-vowels-for-words/remove-vowels-in-array.js" target="_blank">Sample 3</a> </p>
+</li>
+</ul>
+<h2 id="testing-our-code">Testing our code</h2>
+<p>We have just traced the output of some code on paper, but how do ensure that the code actually does what it is supposed to do when we run it.</p>
 <blockquote>
-<p>Exercise: write an improved version of this function</p>
+<p>Discussion: How have we been testing our code so far? How do ensure it is <em>correct</em>. What is &quot;<em>correct</em>&quot; anyhow?</p>
 </blockquote>
-<p>Now, let&apos;s look at a different example. Let&apos;s say we wanted to welcome mentors:</p>
-<pre class="language-"><code class="lang-js"><span class="token keyword">function</span> <span class="token function">welcomeMentors</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&quot;Hello Mozafar&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&quot;Hello Rares&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&quot;Hello Tim&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&quot;Hello Ashleigh&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&quot;Hello Gordon&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-</code></pre>
-<p>We could be lazy and change how we welcome the mentors.</p>
-<pre class="language-"><code class="lang-js"><span class="token keyword">function</span> <span class="token function">welcomeMentors</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  <span class="token keyword">var</span> mentorNames <span class="token operator">=</span> <span class="token string">&quot;Mozafar, Rares, Tim, Ashleigh, Gordon&quot;</span><span class="token punctuation">;</span>
-  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&quot;Hello &quot;</span> <span class="token operator">+</span> mentorNames<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-</code></pre>
-<p>But it&apos;s not quite the output we wanted. And we can be smarter about it. Why not
-a loop?</p>
+<p>In many organisations, there are full teams dedicated to <strong>testing</strong> and ensuring that the code written behaves correctly, to report <strong>bugs</strong> and make sure that they are fixed on time. In general, <strong>Quality Assurance</strong> is a responsibility of everyone in a team starting from Project Manager, Scrum Masters, Developers and Testers.</p>
+<p>There are typically several levels of testing when working on a project:</p>
+<ul>
+<li>Unit testing</li>
+<li>Integration testing</li>
+<li>Functional, End to End testing and User Acceptance Testing (UAT)</li>
+</ul>
+<p><a href="https://stackoverflow.com/a/4904533" target="_blank">This answer from Stack OverFlow</a> has a good explanation of types of testing. The defintions for Functional, e2e and UAT are often mean different things in different teams, the responisibility for them also falls on different individuals depending on the team.</p>
+<p><em>Unit testing</em> though is always the responsibility of the Developer, and it is a very important skill for any professional developer to be able to write tests, and also write code that is testable.</p>
 <blockquote>
-<p>Exercise: write an improved version of this function</p>
+<p>Discussion: What is testable code?</p>
 </blockquote>
-<p>So functions help us to organise and enhance our code. But what makes good
-design? Is it just &quot;shorter is always better&quot;?</p>
-<h2 id="good-design">Good Design</h2>
-<p>Design is important if we want our code to be understandable (both to other
-humans, but also to us in the future), to be easy to use and easy to expand.</p>
-<p>There are three main principles you need to know now: clarity, reusability and
-extensibility. There are also others, but they are deeply related to these
-three.</p>
-<ul>
-<li><p>Ease of Maintenance / Clarity</p>
-<ul>
-<li>Naming</li>
-<li>Commenting</li>
-<li>Clear logic</li>
-<li>Concise</li>
-<li>Formatting</li>
-<li>Avoiding Redundancy</li>
-</ul>
-</li>
-<li><p>Reusability</p>
-<ul>
-<li>DRY</li>
-<li>Single Reponsibility<ul>
-<li>Avoiding global state (scope)</li>
-<li>Predictability and Ease of testing</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>Extensibility</p>
-<ul>
-<li>Avoiding being unnecessarily specific (e.g. magic numbers)</li>
-</ul>
-</li>
-</ul>
-<p>Now let&apos;s take a look at a bigger example of a badly written function</p>
-<pre class="language-"><code class="lang-js"><span class="token keyword">function</span> <span class="token function">myFunction</span><span class="token punctuation">(</span>salary<span class="token punctuation">,</span> taxCode<span class="token punctuation">,</span> incomeTax1<span class="token punctuation">,</span> incomeTax2<span class="token punctuation">,</span> ownsCar<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  <span class="token keyword">var</span> totalIncomeTax <span class="token operator">=</span> incomeTax1 <span class="token operator">+</span> incomeTax2<span class="token punctuation">;</span>
-  <span class="token keyword">var</span> studentLoan <span class="token operator">=</span> <span class="token punctuation">(</span>salary <span class="token operator">-</span> <span class="token number">17775</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">0.09</span><span class="token punctuation">;</span>
-  <span class="token keyword">var</span> originalSalary <span class="token operator">=</span> salary<span class="token punctuation">;</span>
-  <span class="token keyword">var</span> nationalInsurance <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+<pre class="language-"><code class="lang-js"><span class="token keyword">var</span> result<span class="token punctuation">;</span>
 
-  <span class="token keyword">if</span> <span class="token punctuation">(</span>taxCode <span class="token operator">===</span> <span class="token string">&quot;1150L&quot;</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    nationalInsurance <span class="token operator">=</span> salary <span class="token operator">*</span> <span class="token number">0.1</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>taxCode <span class="token operator">===</span> <span class="token string">&quot;ST&quot;</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    nationalInsurance <span class="token operator">=</span> salary <span class="token operator">*</span> <span class="token number">0.05</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
-    nationalInsurance <span class="token operator">=</span> salary <span class="token operator">*</span> <span class="token number">0.08</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
+<span class="token keyword">function</span> <span class="token function">getMentorInfo</span><span class="token punctuation">(</span>mentors<span class="token punctuation">,</span> name<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">var</span> greeting <span class="token operator">=</span> <span class="token string">&apos;Hello &apos;</span><span class="token punctuation">;</span>
 
-  <span class="token keyword">var</span> deductions <span class="token operator">=</span> <span class="token punctuation">[</span>nationalInsurance<span class="token punctuation">,</span> totalIncomeTax<span class="token punctuation">,</span> studentLoan<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    result <span class="token operator">=</span> mentors<span class="token punctuation">.</span><span class="token function">find</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span>person<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> person<span class="token punctuation">.</span>name <span class="token operator">===</span> name<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-  salary <span class="token operator">=</span> salary <span class="token operator">-</span> deductions<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-  salary <span class="token operator">=</span> salary <span class="token operator">-</span> deductions<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-  salary <span class="token operator">=</span> salary <span class="token operator">-</span> deductions<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">var</span> mentorTitle <span class="token operator">=</span> <span class="token string">&apos;Junior Developer&apos;</span><span class="token punctuation">;</span>
 
-  <span class="token keyword">return</span> <span class="token punctuation">(</span>
-    <span class="token string">&quot;Your gross income is &#xA3;&quot;</span> <span class="token operator">+</span>
-    originalSalary<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span>
-    <span class="token string">&quot; and your net income is &#xA3;&quot;</span> <span class="token operator">+</span>
-    salary<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span>
-    <span class="token string">&quot;.&quot;</span>
-  <span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>result<span class="token punctuation">.</span>yearsOfExp <span class="token operator">&gt;</span> <span class="token number">10</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        mentorTitle <span class="token operator">=</span> <span class="token string">&apos;Senior Developer&apos;</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>result<span class="token punctuation">.</span>yearsOfExp <span class="token operator">&gt;</span> <span class="token number">20</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        mentorTitle <span class="token operator">=</span> <span class="token string">&apos;Very Senior Developer&apos;</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    result<span class="token punctuation">.</span>jobTitle <span class="token operator">=</span> mentorTitle<span class="token punctuation">;</span>
+    result<span class="token punctuation">.</span>fullName <span class="token operator">=</span> result<span class="token punctuation">.</span>title <span class="token operator">+</span> <span class="token string">&apos; &apos;</span> <span class="token operator">+</span> result<span class="token punctuation">.</span>name<span class="token punctuation">;</span>
+
+    <span class="token keyword">return</span> result<span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 
-console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token function">myFunction</span><span class="token punctuation">(</span><span class="token number">28000</span><span class="token punctuation">,</span> <span class="token string">&quot;1150L&quot;</span><span class="token punctuation">,</span> <span class="token number">1000</span><span class="token punctuation">,</span> <span class="token number">580</span><span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">/*
+  var mentors = [
+      {
+          name: &apos;Irina&apos;,
+          title: &apos;Dr.&apos;,
+          yearsOfExperience: 10
+      }, {
+          name: &apos;Ashleigh&apos;,
+          title: &apos;Dame&apos;,
+          yearsOfExperience: 20
+      }, {
+          name: &apos;Etza&apos;,
+          title: &apos;Professor&apos;,
+          yearsOfExperience: 30
+      }
+  ];
+
+  var result = getMentorInfo(mentors, &apos;Etza&apos;)
+  Trace the value of &quot;result&quot;
+*/</span>
 </code></pre>
-<p>What is wrong with this function?</p>
-<ol>
-<li><p>Naming: the function has a bad name, myFunction() tells you nothing about
-what the function does. It&apos;s also considered bad practice to name variables
-vaguely by separating them through numbers (incomeTax1, incomeTax2, etc). If
-you find yourself doing this then you should either use an array (such as
-incomeTax[]).</p>
-</li>
-<li><p>Commenting: the function isn&apos;t documented at all. It&apos;s very difficult to
-understand what the function&apos;s purpose is and how each part of the code
-contributes to it. By writing comments, the coder communicates their
-reasoning and helps the function be human readable.</p>
-</li>
-<li><p>Layout/formatting: unnecessary spacing between the if and else statement.</p>
-</li>
-<li><p>Single responsibility: the function doesn&apos;t have a single purpose. It
-calculates national insurance and salary deductions. Maybe the national
-insurance calculation could be moved to a separate function.</p>
-</li>
-<li><p>Input variable being overwritten: the function requires gross salary (before
-deductions) and net salary (after deductions) the <code>salary</code> input variable is
-therefore copied into an <code>originalSalary</code> variable so that it can be changed.
-It would be much clearer to create a new <code>netSalary</code> variable and leave
-<code>salary</code> unmodified.</p>
-</li>
-<li><p>DRY principle: the function validates the DRY (Don&apos;t Repeat Yourself) rule.
-The line where a deduction is taken from the salary is repeated 3 times with
-different indices. This can be replaced with a <code>for</code> loop.</p>
-</li>
-<li><p>Magic numbers. The code contains a lot of magic numbers, including <code>17775</code>,
-<code>0.09</code> and <code>0.1</code>.</p>
-</li>
-<li><p>Useless parameters: the code contains a variable which isn&apos;t used. They
-should be removed because they are confusing. It is tempting when you&apos;re
-starting to code a function to add more parameters thinking that you might
-need them, but it&apos;s important to remove them if you don&apos;t end up using them.</p>
-</li>
-</ol>
-<blockquote>
-<p>Exercise: Working in pairs, go through all of these issues and make
-appropriate improvements to the code.</p>
-<p>Exercise: Write a function that will print out the number of vowels that are
-in mentors&apos; names.</p>
-</blockquote>
-<h2 id="tdd">TDD</h2>
-<h3 id="before-we-get-started">Before we get started</h3>
-<blockquote>
-<p><strong>Fork</strong> &gt;
-<a href="https://github.com/CodeYourFuture/js-core-3-exercises" target="_blank">this repository</a> to
-your own Github account, then <strong>clone</strong> it to your computer.\
-Today&apos;s exercises will be based on this repository.</p>
-</blockquote>
 <h2 id="unit-testing">Unit Testing</h2>
 <p>Testing is a key skill for any software programmer. We need to make sure our
 software is thoroughly tested, otherwise bad things happen. Testing makes sure
@@ -992,42 +908,9 @@ function result to an expected value.</p>
 </code></pre>
 <p>As you can see in this example, instead of using a number as the first argument to the <code>equals()</code> function, we have used a function instead; the one we wish to test.</p>
 <blockquote>
-<p><em>Together:</em> Follow the instructions in <code>unit-testing/sum.js</code>!</p>
-<p><em>Exercise:</em> Now you! Take the provided <code>unit-testing/findNeedle.js</code> and turn
-it into a function that returns a result instead of printing it. Then run it
-using multiple inputs and make sure it returns the correct results each time!</p>
+<p>Exercise: Write tests for the the exercises under <code>I.write-tests</code></p>
 </blockquote>
-<h2 id="test-driven-development-tdd">Test-driven development (TDD)</h2>
-<blockquote>
-<p>Test-driven development (TDD) is a software development process that relies on
-the repetition of a very short development cycle: requirements are turned into
-very specific test cases, then the software is improved to pass the new tests,
-only. (<a href="https://en.wikipedia.org/wiki/Test-driven_development" target="_blank">Wikipedia</a>)</p>
-</blockquote>
-<p>A key principle in TDD is that we write think about our requirements before we
-dive into code: What should our program be able to do? What are our edge cases?</p>
-<p>We formalise those requirements by writing tests - <em>even before our program is
-written</em>! At this time, all our tests will fail, because we haven&apos;t written any
-code yet. Our tests are now <strong>RED</strong> (the colour represents a failing test).</p>
-<p>Now we want to turn this <strong>RED</strong> into <strong>GREEN</strong>. We do this by implementing our
-function in a way that covers all our test cases.</p>
-<blockquote>
-<p><em>Exercise:</em> Follow the instructions in <code>tdd/findNeedle.js</code>!</p>
-</blockquote>
-<h2 id="refactoring">Refactoring</h2>
-<p>There are times when we want to make our code better without changing any
-functionality, for example because we just learnt about a better way to solve a
-certain problem (like, finding needles in haystacks). This is called
-<em>refactoring</em>.</p>
-<p>When previously <strong>GREEN</strong> code - working code! - suddenly does not work anymore,
-we call this a <em>regression</em>. Our existing tests can make sure that when we
-refactor, the functionality of our code actually stays the same, and does not
-regress.</p>
-<blockquote>
-<p><em>Together:</em> Refactor the <code>findNeedle</code> function we just wrote to be implemented
-using <code>.map()</code> and <code>.filter()</code>.</p>
-</blockquote>
-<h2 id="unit-testing-frameworks">Unit testing frameworks</h2>
+<h3 id="unit-testing-frameworks">Unit testing frameworks</h3>
 <p>There are lots of other things you might want to test for than two things being
 equal. You might want to test if a number is smaller or greater than another, if
 a function was called, if an error happened, or if one thing happened before
@@ -1069,6 +952,22 @@ into the <code>jest/</code> folder and call it <code>findNeedle.test.js</code>. 
 be used with Jest, similar to <code>sum.test.js</code>. Make sure you cover multiple
 inputs and give all tests meaningful descriptions! Run the tests using Jest.</p>
 </blockquote>
+<h2 id="test-driven-development">Test Driven Development</h2>
+<p>Test-driven development (TDD) is a software development process that relies on the repetition of a very short development cycle: requirements are turned into very specific test cases, then the software is improved to pass the new tests, only. This is opposed to software development that allows software to be added that is not proven to meet requirements. [Wikipedia]</p>
+<p>When developing following TDD, you normally follow this sequence:</p>
+<ol>
+<li>Add a test</li>
+<li>Run all tests and see if the new test fails (Red)</li>
+<li>Write the simplest code to make the test pass (Green)</li>
+<li>Refactor</li>
+<li>Repeat</li>
+</ol>
+<p>Read more on the <a href="https://en.wikipedia.org/wiki/Test-driven_development" target="_blank">Wikipedia article</a> and the resources at the end.</p>
+<p><a href="https://www.codecademy.com/articles/tdd-red-green-refactor" target="_blank">Red Green Refactor</a></p>
+<blockquote>
+<p>Exercise: Two mentors pair on a problem doing &quot;ping pong&quot; TDD. One writing the test, the other writing the implementation.</p>
+</blockquote>
+<h2 id="more-on-testing">More on Testing</h2>
 <h3 id="test-coverage">Test coverage</h3>
 <p>Test coverage describes the extent to which a code base is tested. When Jest
 runs your tests, it generates a so-called <em>coverage report</em>. This report tells
@@ -1087,6 +986,83 @@ generate a coverage report when we run the following command in the terminal:</p
 <p><em>Exercise:</em> Check your code coverage for the tests you wrote. Is any of the
 numbers below 100%? If so, try and bring it up to 100%!</p>
 </blockquote>
+<h3 id="refactoring">Refactoring</h3>
+<p>There are times when we want to make our code better without changing any
+functionality, for example because we just learnt about a better way to solve a
+certain problem (like, finding needles in haystacks). This is called
+<em>refactoring</em>.</p>
+<p>When previously <strong>GREEN</strong> code - working code! - suddenly does not work anymore,
+we call this a <em>regression</em>. Our existing tests can make sure that when we
+refactor, the functionality of our code actually stays the same, and does not
+regress.</p>
+<blockquote>
+<p>Exercise: Refactor some of the exercise we&apos;ve written tests for.</p>
+</blockquote>
+<h2 id="modules">Modules</h2>
+<p>So far, all our programs have been in their own single files. But Node programs
+can become really large, and having all our code in only one file will not be
+maintainable.</p>
+<p>We can therefore split our code into so-called <em>modules</em>. A module is basically
+a JavaScript file that makes its functionality available to other modules and
+programs.</p>
+<h3 id="creating-modules-exporting-code">Creating modules, exporting code</h3>
+<p>It is really simple to take existing JavaScript code and turn it into a module
+by exporting its functionality:</p>
+<pre class="language-"><code class="lang-js"><span class="token keyword">function</span> <span class="token function">printName</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&quot;My name is &quot;</span> <span class="token operator">+</span> name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+module<span class="token punctuation">.</span>exports <span class="token operator">=</span> printName<span class="token punctuation">;</span>
+</code></pre>
+<p>The key here is the line containing <code>module.exports</code>. As you see, this is an
+assignment, and whatever is assigned to <code>module.exports</code> will be made available
+to other modules and program when this file is imported.</p>
+<h3 id="using-modules-importing-code">Using modules, importing code</h3>
+<p>But how do we make use of another module in our program? We need to <em>import</em> it,
+and this is done using a function called <code>require()</code>.</p>
+<blockquote>
+<p>There are different module formats for JavaScript. The one we are using here,
+which is natively supported by Node, is called <strong>CommonJS</strong>.</p>
+</blockquote>
+<pre class="language-"><code class="lang-js"><span class="token keyword">var</span> printName <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">&quot;./printName.js&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<blockquote>
+<p>The string passed to the <code>require()</code> function is a <em>path</em> to the file you are
+importing. <code>./</code> signifies the current directory, so the above command will
+import a file called &quot;printName.js&quot; that is in the same directory as our
+program.</p>
+</blockquote>
+<p>Assuming our program is in the same folder as <code>printName.js</code>, we can use the
+above code to import the functionality provided by that module and store it in
+the <code>printName</code> variable.</p>
+<p>We can then continue to use the <code>printName</code> function as if it we defined it in
+our own program!</p>
+<pre class="language-"><code>var printName = require(&apos;./printName.js&apos;);
+
+printName();
+</code></pre><blockquote>
+<p>Modules can not only export functions, but all variable types you already
+learned about. Most commonly, they export a function or an object containing
+multiple functions.</p>
+<p><em>Together:</em> Edit the file <code>modules/main.js</code> and follow the instructions.</p>
+</blockquote>
+<h3 id="separating-code-and-tests">Separating code and tests</h3>
+<p>Exporting and importing modules is really useful for testing, too.</p>
+<p>As a rule of thumb, we never want to mix our actual code with our tests. It is
+therefore common to put them in separate files. We are going to call the file
+containing the tests after the file containing the code to be tested, just
+appending <code>.test</code> at the end of the filename. Like so:</p>
+<pre class="language-"><code>main.js               # Our main program
+main.test.js          # Tests for our main program
+someOtherCode.js      # A module called &quot;someOtherCode&quot;
+someOtherCode.test.js # Tests for the &quot;someOtherCode&quot; module
+</code></pre><blockquote>
+<p>The naming is really up to convention - you can even put your tests in a
+different folder! However, for Jest it is important to call test files
+&quot;*.test.js&quot;.</p>
+</blockquote>
+<h1 id="glossary">Glossary</h1>
+<p>You should know these terms by the end of this class: Testing, Quality Assurance, Unit Tests, Integration Tests, Refactoring, Regression Tests .. any more?</p>
 <h1 id="resources">Resources</h1>
 <ol>
 <li><a href="http://bdcampbell.net/javascript/book/javascript_the_good_parts.pdf" target="_blank">JavaScript: The Good Parts by Douglas Crockford, chapter 4 - Functions</a></li>
@@ -1095,16 +1071,23 @@ numbers below 100%? If so, try and bring it up to 100%!</p>
 <li><a href="https://en.wikipedia.org/wiki/Test-driven_development" target="_blank">Test-driven development</a></li>
 <li><a href="https://facebook.github.io/jest/" target="_blank">Jest</a></li>
 <li><a href="https://nodejs.org/api/modules.html" target="_blank">Modules</a></li>
+<li><a href="https://medium.com/software-developer/debugging-facebooks-jest-for-react-in-visual-studio-code-9059223e1e71" target="_blank">Setup VS Code for Debugging</a></li>
 </ol>
+<h2 id="tracing-code-resources">Tracing code resources</h2>
+<p>Check out these videos. They contain code that is not JavaScript being traced on paper.</p>
+<p><a href="https://www.youtube.com/watch?v=TZss5ukwN8s" target="_blank">Hand Tracing - Intro to Java Programming</a></p>
+<p><a href="https://www.youtube.com/watch?v=tJGrie7k97c" target="_blank">Tracing code by hand</a></p>
+<p><a href="https://www.youtube.com/watch?v=SEtNBShckCg" target="_blank">Tracing a flowchart</a></p>
+<p><a href="https://www.youtube.com/watch?v=niwBxBUzDu4" target="_blank">Java Tracing Arrays Worksheet 1</a></p>
+<p><a href="https://www.youtube.com/watch?v=5mxT9x5rgCg" target="_blank">Nested loops</a></p>
 <h1 id="homework">Homework</h1>
 <ol>
-<li>Find examples in your own code where you violated the three principles of
-good code (Clarity, Reusability, Extensibility). For each principle, find one
-example.</li>
-<li>Clone the repo of the
-<a href="https://github.com/codeyourfuture/cyf-election" target="_blank">election project</a> and finish
-all of the part 1 exercises.</li>
-<li>Register yourself on the Marc Littlemore&apos;s free <a href="https://www.marclittlemore.com/courses/javascript-testing-beginners-course/?signup=cyf-course" target="_blank">JavaScript Testing for Beginners</a> course and work your way through the 7 lessons, which are delivered via a daily email. The course uses a Mocha/Chai framework, which is in common use within the web development industry. This will give you more TDD practice using a different approach to Jest, as well as more exposure to ES2015/ES6 JavaScript.</li>
+<li><p>Finish the Katas and exercises in the project we&apos;ve worked on <a href="https://github.com/CodeYourFuture/js-exercises-tdd" target="_blank">today</a></p>
+</li>
+<li><p>Follow this tutorial about <a href="For%20homework,%20will%20also%20ask%20to%20follow%20this%20tutorial%20about%20using%20Chrome%20Dev%20Tools%20%0Ahttps:/developers.google.com/web/tools/chrome-devtools/javascript">Debugging with Chrome</a></p>
+</li>
+<li><p>Register yourself on the Marc Littlemore&apos;s free <a href="https://www.marclittlemore.com/courses/javascript-testing-beginners-course/?signup=cyf-course" target="_blank">JavaScript Testing for Beginners</a> course and work your way through the 7 lessons, which are delivered via a daily email. The course uses a Mocha/Chai framework, which is in common use within the web development industry. This will give you more TDD practice using a different approach to Jest, as well as more exposure to ES2015/ES6 JavaScript.</p>
+</li>
 </ol>
 <h2 id="research">Research</h2>
 <ol>
@@ -1156,7 +1139,7 @@ modules and how do their differ from CommonJS?</li>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Week 10 - Good Code, TDD","level":"1.6.1","depth":2,"next":{"title":"Week 11 - More TDD, ES6","level":"1.6.2","depth":2,"path":"js-core-3/week-11/lesson.md","ref":"js-core-3/week-11/lesson.md","articles":[]},"previous":{"title":"JavaScript III","level":"1.6","depth":1,"path":"js-core-3/index.md","ref":"js-core-3/index.md","articles":[{"title":"Week 10 - Good Code, TDD","level":"1.6.1","depth":2,"path":"js-core-3/week-10/lesson.md","ref":"js-core-3/week-10/lesson.md","articles":[]},{"title":"Week 11 - More TDD, ES6","level":"1.6.2","depth":2,"path":"js-core-3/week-11/lesson.md","ref":"js-core-3/week-11/lesson.md","articles":[]},{"title":"Week 12 - Recap","level":"1.6.3","depth":2,"path":"js-core-3/week-12/lesson.md","ref":"js-core-3/week-12/lesson.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["prism","-highlight","todo","scripts"],"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"scripts":{"files":["./checkboxRemember.js"]},"todo":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"js-core-3/week-10/lesson.md","mtime":"2018-04-08T14:50:34.190Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-04-08T14:51:58.129Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Week 10 - Unit Tests and TDD","level":"1.6.1","depth":2,"next":{"title":"Week 11 - More TDD, ES6","level":"1.6.2","depth":2,"path":"js-core-3/week-11/lesson.md","ref":"js-core-3/week-11/lesson.md","articles":[]},"previous":{"title":"JavaScript III","level":"1.6","depth":1,"path":"js-core-3/index.md","ref":"js-core-3/index.md","articles":[{"title":"Week 10 - Unit Tests and TDD","level":"1.6.1","depth":2,"path":"js-core-3/week-10/lesson.md","ref":"js-core-3/week-10/lesson.md","articles":[]},{"title":"Week 11 - More TDD, ES6","level":"1.6.2","depth":2,"path":"js-core-3/week-11/lesson.md","ref":"js-core-3/week-11/lesson.md","articles":[]},{"title":"Week 12 - Recap","level":"1.6.3","depth":2,"path":"js-core-3/week-12/lesson.md","ref":"js-core-3/week-12/lesson.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["prism","-highlight","todo","scripts"],"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"scripts":{"files":["./checkboxRemember.js"]},"todo":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"js-core-3/week-10/lesson.md","mtime":"2018-04-13T22:10:55.179Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-04-13T22:12:14.409Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
