@@ -912,8 +912,7 @@ appropriate improvements to the code.</p>
 </ul>
 <h1 id="intro-to-es6">Intro to ES6</h1>
 <p>ECMAScript 2015 (or ES6) is a significant update to JavaScript that introduces
-new syntax for writing complex applications including classes and modules and
-other features.</p>
+new syntax for writing complex applications. </p>
 <h2 id="const-and-let">const and let</h2>
 <p>You have already come across the <code>var</code> keyword as a way to create new variables.
 The <code>let</code> and <code>const</code> keywords are also used for variable creation, but the
@@ -972,13 +971,75 @@ elegant way of accomplishing the same.</p>
 <span class="token punctuation">}</span>
 </code></pre>
 <h2 id="arrow-functions">Arrow functions</h2>
+<p>ES6 also has a new way of declaring functions. Let&apos;s see how it works.</p>
+<pre class="language-"><code class="lang-js"><span class="token comment" spellcheck="true">// before </span>
+<span class="token keyword">function</span> <span class="token function">sum</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span> b<span class="token punctuation">,</span> c<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> a <span class="token operator">+</span> b <span class="token operator">+</span> c<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment" spellcheck="true">// ES6</span>
+<span class="token keyword">const</span> sum <span class="token operator">=</span> <span class="token punctuation">(</span>a<span class="token punctuation">,</span> b<span class="token punctuation">,</span> c<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> a <span class="token operator">+</span> b <span class="token operator">+</span> c<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>If the function only contains one expression, the curly braces and the <code>return</code> 
+are optional and we can write the whole function in one line. </p>
+<pre class="language-"><code class="lang-js"><span class="token keyword">const</span> sum <span class="token operator">=</span> <span class="token punctuation">(</span>a<span class="token punctuation">,</span> b<span class="token punctuation">,</span> c<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> a <span class="token operator">+</span> b <span class="token operator">+</span> c<span class="token punctuation">;</span>
+</code></pre>
 <blockquote>
-<p>Exercise: ES6 also has a new way of declaring functions. Let&apos;s see how it
-works.</p>
 <p>Exercise: Refactor the previous code to have a separate function that checks
 if gender is &apos;female&apos; or not, and use it in sayGreeting. Let&apos;s try and make
 the code as compact as possible together using ES6 features.</p>
 </blockquote>
+<h2 id="default-parameters">Default parameters</h2>
+<p>ES6 allows us to declare defaults for function arguments. The default value is 
+used when the argument/parameter is either missing or <code>undefined</code>. </p>
+<p>This function returns the sum of three numbers. Let&apos;s assume we want to use the 
+same function with only two arguments: </p>
+<pre class="language-"><code class="lang-js"><span class="token comment" spellcheck="true">// without default parameter</span>
+<span class="token keyword">const</span> sum <span class="token operator">=</span> <span class="token punctuation">(</span>a<span class="token punctuation">,</span> b<span class="token punctuation">,</span> c<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+  c <span class="token operator">=</span> c <span class="token operator">||</span> <span class="token number">0</span><span class="token punctuation">;</span>
+  <span class="token keyword">return</span> a <span class="token operator">+</span> b <span class="token operator">+</span> c<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token function">sum</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">// 8</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token function">sum</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">// NaN</span>
+
+<span class="token comment" spellcheck="true">// with default parameter </span>
+<span class="token keyword">const</span> sum <span class="token operator">=</span> <span class="token punctuation">(</span>a<span class="token punctuation">,</span> b<span class="token punctuation">,</span> c <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> a <span class="token operator">+</span> b <span class="token operator">+</span> c<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token function">sum</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">// 7</span>
+</code></pre>
+<h2 id="destructuring">Destructuring</h2>
+<p>In ES6 we can extract data from objects or arrays using destructuring. </p>
+<pre class="language-"><code class="lang-js"><span class="token comment" spellcheck="true">// before </span>
+<span class="token keyword">var</span> chicken <span class="token operator">=</span> <span class="token punctuation">{</span>
+  name<span class="token punctuation">:</span> <span class="token string">&apos;Maggie&apos;</span><span class="token punctuation">,</span> 
+  age<span class="token punctuation">:</span> <span class="token number">2</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">var</span> name <span class="token operator">=</span> chicken<span class="token punctuation">.</span>name<span class="token punctuation">;</span>
+<span class="token keyword">var</span> age <span class="token operator">=</span> chicken<span class="token punctuation">.</span>age<span class="token punctuation">;</span>
+
+<span class="token keyword">var</span> numbers <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+<span class="token keyword">var</span> firstNumber <span class="token operator">=</span> numbers<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">var</span> secondNumber <span class="token operator">=</span> numbers<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+
+<span class="token comment" spellcheck="true">// in ES6</span>
+<span class="token keyword">const</span> chicken <span class="token operator">=</span> <span class="token punctuation">{</span>
+  name<span class="token punctuation">:</span> <span class="token string">&apos;Maggie&apos;</span><span class="token punctuation">,</span> 
+  age<span class="token punctuation">:</span> <span class="token number">2</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">const</span> <span class="token punctuation">{</span> name<span class="token punctuation">,</span> age <span class="token punctuation">}</span> <span class="token operator">=</span> chicken<span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> numbers <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> <span class="token punctuation">[</span>firstNumber<span class="token punctuation">,</span> secondNumber<span class="token punctuation">]</span> <span class="token operator">=</span> numbers<span class="token punctuation">;</span>
+</code></pre>
 <h1 id="resources">Resources</h1>
 <ul>
 <li><a href="http://es6-features.org/" target="_blank">ES6 features</a></li>
@@ -1037,7 +1098,7 @@ the code as compact as possible together using ES6 features.</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Week 11 - More TDD, ES6","level":"1.6.2","depth":2,"next":{"title":"Week 12 - Recap","level":"1.6.3","depth":2,"path":"js-core-3/week-12/lesson.md","ref":"js-core-3/week-12/lesson.md","articles":[]},"previous":{"title":"Week 10 - Unit Tests and TDD","level":"1.6.1","depth":2,"path":"js-core-3/week-10/lesson.md","ref":"js-core-3/week-10/lesson.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["prism","-highlight","todo","scripts"],"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"scripts":{"files":["./checkboxRemember.js"]},"todo":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"js-core-3/week-11/lesson.md","mtime":"2018-04-20T23:10:16.245Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-04-20T23:11:32.708Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Week 11 - More TDD, ES6","level":"1.6.2","depth":2,"next":{"title":"Week 12 - Recap","level":"1.6.3","depth":2,"path":"js-core-3/week-12/lesson.md","ref":"js-core-3/week-12/lesson.md","articles":[]},"previous":{"title":"Week 10 - Unit Tests and TDD","level":"1.6.1","depth":2,"path":"js-core-3/week-10/lesson.md","ref":"js-core-3/week-10/lesson.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["prism","-highlight","todo","scripts"],"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"scripts":{"files":["./checkboxRemember.js"]},"todo":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"js-core-3/week-11/lesson.md","mtime":"2018-04-21T12:22:05.899Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-04-21T12:23:27.162Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
