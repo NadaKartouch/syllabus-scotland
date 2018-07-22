@@ -799,7 +799,6 @@
 </ul>
 <p><strong>What we will learn today?</strong></p>
 <ul>
-<li>Why NoSQL why SQL?</li>
 <li>Checking out a project and adding hotel.sql to the repo</li>
 <li>How to run SQLite <em>with node</em> on your machine - setting up a development environment.</li>
 <li>How to run a database query that retrieves tabular data in node express to an endpoint.</li>
@@ -808,15 +807,8 @@
 <li>Dealing with unclear user stories. There is a TRAP in one of these user stories we will be giving you today.</li>
 <li>What is the difference between user story, use case and user acceptance test. </li>
 </ul>
-<h3 id="should-i-use-sql-or-should-i-use-nosql">SHOULD I USE SQL OR SHOULD I USE NOSQL?</h3>
-<p>Short answer: if in doubt, you should just use SQL. Always.</p>
-<p>Long answer: There are two forms of NoSQL.</p>
-<p>1) Extremely high scale -- Cassandra --- constraints are not enforced due to high load and high levels of data.</p>
-<p>2) For beginner programmers - Mongo --- constraints (among other features) are not there to simplify things for beginners.</p>
-<p>This lesson will primarily be about taking what you have stored in a <em>flat file</em>, and changing it such that it is stored in a database instead. This will be done to appease Marriott hotel manager grumpy cat. With all the constraints you have already added to the database, on your <code>hotel.sql</code> file, the application should be much safer now - if you screw up (and you will, because bugs are as inevitable as taxes), you can <em>see</em> the bugs getting deployed before they start affecting guests.</p>
-<p>Use <code>/server/class2.js</code> for the exercises of this class.</p>
 <h3 id="setting-up-the-environment">Setting up the environment</h3>
-<p><strong>Task</strong> Clone the <a href="https://github.com/CodeYourFuture/cyf-hotel-db" target="_blank">repo</a>, and follow the instructions to set the environment up.</p>
+<p><strong>Task</strong> Clone the <a href="ADD%20THE%20LINK%20!!!">repo</a>, and follow the instructions to set the environment up.</p>
 <p>You have already worked with back end servers using Express. This is just another yet another one, that we will be connecting to a database.</p>
 <p>In order for us to interact with the server, we are going to use <a href="https://www.getpostman.com/" target="_blank">Postman</a>, which will accurately mimic API calls made from react. In the last three lessons you&apos;re going to make react do to this back end what postman is going to do today.</p>
 <p>We&apos;re going to use it for debugging. Can anybody tell me what debugging is?</p>
@@ -830,13 +822,21 @@
 <p><strong>Use case</strong> When a user does a GET request to /customers it should return customer titles, first names, surnames.</p>
 <p><strong>User acceptance test</strong>: Do a GET request and get back [{&quot;title&quot;: &quot;mr&quot;, &quot;firstname&quot;: &quot;Donald&quot;, &quot;surname&quot;: &quot;Trump&quot;}, {&quot;title&quot;: &quot;Mrs&quot;, &quot;firstname&quot;: &quot;Hillary&quot;, &quot;surname&quot;: &quot;Clinton&quot;}]</p>
 <p>Remove the code that is returning a JSON object on end point <code>/customers</code>, and use what you have learned about to SQL to fill in the query that fetches all the customers from the database.</p>
+<p>You will need to install a package to deal with sqlite <code>npm install --save sqlite3</code> then add this code before the routes in <code>class2.js</code></p>
+<pre class="language-"><code class="lang-javascript"><span class="token comment" spellcheck="true">// Add these lines before the routes definition</span>
+<span class="token keyword">const</span> filename <span class="token operator">=</span> <span class="token string">&apos;./database/database.sqlite&apos;</span>
+<span class="token keyword">const</span> knex <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">&apos;knex&apos;</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  client<span class="token punctuation">:</span> <span class="token string">&apos;sqlite3&apos;</span><span class="token punctuation">,</span>
+  connection<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+    filename
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre>
 <ul>
 <li>select everything</li>
 </ul>
-<pre class="language-"><code class="lang-javascript"><span class="token keyword">const</span> filename <span class="token operator">=</span> <span class="token string">&apos;./database/database.sqlite&apos;</span><span class="token punctuation">;</span>
-<span class="token keyword">const</span> sqlite3    <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">&apos;sqlite3&apos;</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">verbose</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token keyword">let</span> db <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">sqlite3<span class="token punctuation">.</span>Database</span><span class="token punctuation">(</span>filename<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
+<pre class="language-"><code class="lang-javascript">
+<span class="token comment" spellcheck="true">// This is the route we will need to update</span>
 router<span class="token punctuation">.</span><span class="token keyword">get</span><span class="token punctuation">(</span><span class="token string">&apos;/customers&apos;</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span>req<span class="token punctuation">,</span> res<span class="token punctuation">)</span> <span class="token punctuation">{</span>
   res<span class="token punctuation">.</span><span class="token function">status</span><span class="token punctuation">(</span><span class="token number">200</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">json</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
     customers<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>
@@ -851,16 +851,12 @@ router<span class="token punctuation">.</span><span class="token keyword">get</s
 </code></pre>
 <p>Who can tell me what this is currently doing? What do we need to make it do?</p>
 <p>So, the answer is here:</p>
-<pre class="language-"><code class="lang-javascript">router<span class="token punctuation">.</span><span class="token keyword">get</span><span class="token punctuation">(</span><span class="token string">&apos;/customers&apos;</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span>req<span class="token punctuation">,</span> res<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  res<span class="token punctuation">.</span><span class="token function">status</span><span class="token punctuation">(</span><span class="token number">200</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">json</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
-    db<span class="token punctuation">.</span><span class="token function">all</span><span class="token punctuation">(</span>sql<span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>err<span class="token punctuation">,</span> <span class="token string">&apos;select * from customers&apos;</span> <span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
-      res<span class="token punctuation">.</span><span class="token function">status</span><span class="token punctuation">(</span><span class="token number">200</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">json</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
-        customers<span class="token punctuation">:</span> rows
-      <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<pre class="language-"><code class="lang-javascript"><span class="token keyword">const</span> sqlStatement <span class="token operator">=</span> <span class="token string">&apos;select * from customers&apos;</span><span class="token punctuation">;</span>
+knex<span class="token punctuation">.</span><span class="token function">raw</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span>data<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  res<span class="token punctuation">.</span><span class="token function">json</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre>
+<p>This is <a href="https://knexjs.org/" target="_blank">the library</a> we will use for building queries. <code>Knex</code> provides helpers for creating queries so we normally won&apos;t use <code>knex.raw</code> in real applications, but we will use it today to practice SQL more, and write &quot;raw&quot; SQL statements.</p>
 <h3 id="exercise-1">Exercise 1</h3>
 <p><strong>User Story:</strong> As a staff member I need to check the details of a given customer given its id.</p>
 <p><strong>User Acceptance test</strong>: Complete the end-point <code>/customers/:id</code>, so that it extracts that customer information from the database, and replies back with that information as JSON.</p>
@@ -882,7 +878,7 @@ router<span class="token punctuation">.</span><span class="token keyword">get</s
 <pre class="language-"><code class="lang-sql"><span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> customers <span class="token keyword">where</span> surname ilike <span class="token string">&apos;%clint%&apos;</span><span class="token punctuation">;</span>
 </code></pre>
 <p>This will. Why?</p>
-<h3 id="exercise-2">EXERCISE 2</h3>
+<h3 id="exercise-2a">EXERCISE 2A</h3>
 <p><strong>User Story:</strong> As a staff member I want to search for a customer through its <code>surname</code>, but we don&apos;t know that it might be misspelled.</p>
 <p><strong>User Acceptance test</strong>: Complete the end-point <code>/customers/:surname</code>, so that it extracts that customer information from the database, and replies back with that information as JSON.</p>
 <ul>
@@ -1012,7 +1008,7 @@ The delete request is actually pretty straight forward. We only need to select t
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Week 17 - SQL with Node","level":"1.8.2","depth":2,"next":{"title":"Week 18 - Data Integrity & Analytics","level":"1.8.3","depth":2,"path":"node-db/week-18/lesson.md","ref":"node-db/week-18/lesson.md","articles":[]},"previous":{"title":"Week 16 - Basic SQL","level":"1.8.1","depth":2,"path":"node-db/week-16/lesson.md","ref":"node-db/week-16/lesson.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["prism","-highlight","todo","scripts"],"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"scripts":{"files":["./checkboxRemember.js"]},"todo":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"node-db/week-17/lesson.md","mtime":"2018-07-15T13:02:50.124Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-07-15T13:03:59.861Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Week 17 - SQL with Node","level":"1.8.2","depth":2,"next":{"title":"Week 18 - Data Integrity & Analytics","level":"1.8.3","depth":2,"path":"node-db/week-18/lesson.md","ref":"node-db/week-18/lesson.md","articles":[]},"previous":{"title":"Week 16 - Basic SQL","level":"1.8.1","depth":2,"path":"node-db/week-16/lesson.md","ref":"node-db/week-16/lesson.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["prism","-highlight","todo","scripts"],"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"scripts":{"files":["./checkboxRemember.js"]},"todo":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"node-db/week-17/lesson.md","mtime":"2018-07-22T08:50:27.186Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-07-22T08:51:26.425Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
